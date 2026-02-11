@@ -1,0 +1,3174 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>WorkoutBuddy Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    colors: {
+                        ios: {
+                            bg: '#F2F2F7',
+                            card: '#FFFFFF',
+                            text: '#000000',
+                            gray: '#8E8E93',
+                            separator: '#C6C6C8',
+                            green: '#34C759',
+                            blue: '#007AFF',
+                            orange: '#FF9500',
+                            pink: '#FF2D55',
+                            indigo: '#5856D6'
+                        },
+                        dark: {
+                            bg: '#000000',
+                            card: '#1C1C1E',
+                            elevated: '#2C2C2E',
+                            text: '#FFFFFF',
+                            gray: '#8E8E93'
+                        },
+                        brand: {
+                            neon: '#CCFF00',
+                            lime: '#A3E635',
+                            electric: '#00D9FF',
+                            hot: '#FF3366'
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'neon': '0 0 20px rgba(204, 255, 0, 0.3)',
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.1)'
+                    }
+                }
+            }
+        } 
+    </script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overscroll-behavior: none;
+        }
+
+        /* Smooth theme transition */
+        *,
+        *::before,
+        *::after {
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* iOS-style blur */
+        .glass-panel {
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        /* Custom scrollbar hide */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(204, 255, 0, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(204, 255, 0, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(204, 255, 0, 0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .animate-pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Chart bars animation */
+        .chart-bar {
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Toggle switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #CCFF00;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #CCFF00;
+        }
+
+        /* Progress ring */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.5s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Liquid gradient */
+        .liquid-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Nike-style button press */
+        .btn-press:active {
+            transform: scale(0.96);
+        }
+
+        /* Bottom sheet */
+        .bottom-sheet {
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bottom-sheet.open {
+            transform: translateY(0);
+        }
+
+        /* Dark mode specific adjustments */
+        .dark .glass-panel {
+            background: rgba(28, 28, 30, 0.85);
+        }
+
+        .dark .shadow-soft {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* iOS inertia scroll */
+        .ios-scroll {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+    <style>
+        .bottom-sheet {
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bottom-sheet.active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-ios-bg text-ios-text dark:bg-dark-bg dark:text-dark-text antialiased transition-colors duration-300">
+
+    <!-- Status Bar Spacer (iPhone notch) -->
+    <div class="h-safe-top bg-transparent"></div>
+
+    <!-- App Container -->
+    <div id="app" class="pb-24 max-w-md mx-auto relative min-h-screen flex flex-col">
+
+        <!-- Header Global -->
+        <header
+            class="sticky top-0 z-40 px-5 py-3 glass-panel bg-white/80 dark:bg-dark-card/80 border-b border-ios-separator/30 dark:border-gray-800">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-neon to-brand-lime flex items-center justify-center shadow-neon">
+                        <i data-lucide="zap" class="w-5 h-5 text-black"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xs font-bold uppercase tracking-widest text-ios-gray dark:text-dark-gray">
+                            WorkoutBuddy</h1>
+                        <p class="text-lg font-black leading-none" id="header-greeting">Bom dia</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <button onclick="app.toggleTheme()"
+                        class="w-10 h-10 rounded-full bg-ios-bg dark:bg-dark-elevated flex items-center justify-center btn-press transition-transform relative overflow-hidden">
+                        <i data-lucide="moon"
+                            class="w-5 h-5 absolute transition-all duration-500 dark:opacity-0 dark:rotate-90 dark:scale-0"></i>
+                        <i data-lucide="sun"
+                            class="w-5 h-5 absolute transition-all duration-500 opacity-0 -rotate-90 scale-0 dark:opacity-100 dark:rotate-0 dark:scale-100 text-brand-neon"></i>
+                    </button>
+
+                    <!-- Edit Profile (Hidden by default) -->
+                    <button id="header-edit-btn" onclick="app.openEditProfile()"
+                        class="hidden w-10 h-10 rounded-full bg-ios-bg dark:bg-dark-elevated flex items-center justify-center btn-press text-black dark:text-brand-neon transition-transform relative overflow-hidden">
+                        <i data-lucide="pencil" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Profile -->
+                    <button id="header-profile-btn" onclick="app.showProfile()"
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 overflow-hidden border-2 border-brand-neon/30">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop"
+                            class="w-full h-full object-cover" id="user-avatar">
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 px-5 py-6 ios-scroll">
+
+            <!-- DASHBOARD SCREEN -->
+            <div id="screen-dashboard" class="screen space-y-6 animate-fade-in">
+
+                <!-- Top Stats: Streak & Health Score -->
+                <div class="flex items-center justify-between">
+                    <div
+                        class="flex items-center gap-2 bg-white dark:bg-dark-card px-4 py-2 rounded-full shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                        <span class="text-lg">🔥</span>
+                        <div class="flex flex-col leading-none">
+                            <span class="text-[10px] text-ios-gray uppercase font-bold">Streak</span>
+                            <span class="text-sm font-black">3 dias</span>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 bg-white dark:bg-dark-card px-4 py-2 rounded-full shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                        <span class="text-lg">❤️</span>
+                        <div class="flex flex-col leading-none">
+                            <span class="text-[10px] text-ios-gray uppercase font-bold">Health Score</span>
+                            <span class="text-sm font-black">85</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Rings Summary (Carousel) -->
+                <div class="glass-panel bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft relative overflow-hidden">
+                    
+                    <!-- Background Glow -->
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-brand-neon/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
+
+                    <!-- Main Dashboard Carousel -->
+                    <div id="dashboard-carousel" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 pb-2 gap-4" onscroll="app.handleDashboardScroll()">
+
+                        <!-- PAGE 1: Calories & Main Macros (Ring + P/C/F) -->
+                        <div class="w-full flex-shrink-0 snap-center flex flex-col">
+                            <!-- Header -->
+                            <div class="flex justify-between items-start mb-2 relative z-10">
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] font-bold text-ios-gray uppercase tracking-widest mb-1">Calorias Restantes</span>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-4xl font-black text-black dark:text-white" id="dash-cals-remaining">--</span>
+                                        <span class="text-sm font-bold text-ios-gray">kcal</span>
+                                    </div>
+                                </div>
+                                <div class="bg-brand-neon/20 px-3 py-1 rounded-full">
+                                    <span class="text-[10px] font-black text-brand-neon uppercase">Meta: <span id="dash-cals-goal">--</span></span>
+                                </div>
+                            </div>
+
+                            <!-- Main Ring Content -->
+                            <div class="flex flex-col items-center justify-center my-6 relative z-10">
+                                <div class="relative w-40 h-40 flex items-center justify-center">
+                                    <!-- SVG Ring -->
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle cx="80" cy="80" r="70" stroke="currentColor" stroke-width="12" fill="transparent" class="text-gray-100 dark:text-dark-elevated" />
+                                        <circle id="dash-ring-progress" cx="80" cy="80" r="70" stroke="#CCFF00" stroke-width="12" fill="transparent" stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round" class="transition-all duration-1000" />
+                                    </svg>
+                                    <!-- Center Info -->
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <i data-lucide="flame" class="w-6 h-6 text-brand-neon fill-brand-neon mb-1"></i>
+                                        <span class="text-3xl font-black text-black dark:text-white" id="dash-cals-consumed">0</span>
+                                        <span class="text-[9px] font-bold text-ios-gray uppercase tracking-wide">Consumidas</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Macros Grid (P/C/F) -->
+                            <div class="grid grid-cols-3 gap-3 mt-auto">
+                                <!-- Protein -->
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between h-36">
+                                    <div>
+                                        <div class="text-xl font-black text-black dark:text-white leading-none"><span id="protein-remaining">180</span>g</div>
+                                        <div class="text-[9px] text-ios-gray font-bold uppercase tracking-wide mt-1">Proteína</div>
+                                    </div>
+                                    <div class="self-center relative w-14 h-14 flex items-center justify-center">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
+                                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle id="protein-ring" cx="32" cy="32" r="28" stroke="#CCFF00" stroke-width="6" fill="transparent" stroke-dasharray="175" stroke-dashoffset="175" stroke-linecap="round" class="transition-all duration-1000" />
+                                        </svg>
+                                        <i data-lucide="beef" class="w-4 h-4 text-brand-neon absolute"></i>
+                                    </div>
+                                </div>
+                                <!-- Carbs -->
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between h-36">
+                                    <div>
+                                        <div class="text-xl font-black text-black dark:text-white leading-none"><span id="carbs-remaining">250</span>g</div>
+                                        <div class="text-[9px] text-ios-gray font-bold uppercase tracking-wide mt-1">Carbo</div>
+                                    </div>
+                                    <div class="self-center relative w-14 h-14 flex items-center justify-center">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
+                                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle id="carbs-ring" cx="32" cy="32" r="28" stroke="#00D9FF" stroke-width="6" fill="transparent" stroke-dasharray="175" stroke-dashoffset="175" stroke-linecap="round" class="transition-all duration-1000" />
+                                        </svg>
+                                        <i data-lucide="wheat" class="w-4 h-4 text-brand-electric absolute"></i>
+                                    </div>
+                                </div>
+                                <!-- Fats -->
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between h-36">
+                                    <div>
+                                        <div class="text-xl font-black text-black dark:text-white leading-none"><span id="fat-remaining">65</span>g</div>
+                                        <div class="text-[9px] text-ios-gray font-bold uppercase tracking-wide mt-1">Gordura</div>
+                                    </div>
+                                    <div class="self-center relative w-14 h-14 flex items-center justify-center">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
+                                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle id="fat-ring" cx="32" cy="32" r="28" stroke="#FF3366" stroke-width="6" fill="transparent" stroke-dasharray="175" stroke-dashoffset="175" stroke-linecap="round" class="transition-all duration-1000" />
+                                        </svg>
+                                        <i data-lucide="droplet" class="w-4 h-4 text-brand-hot absolute"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 2: Fibra/Açúcar/Sódio + Health Score -->
+                        <div class="w-full flex-shrink-0 snap-center flex flex-col gap-4">
+                            <!-- Top Grid: Fibra, Açúcar, Sódio -->
+                            <div class="grid grid-cols-3 gap-3">
+                                <!-- Fibra -->
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between h-36">
+                                    <div>
+                                        <div class="text-xl font-black text-black dark:text-white leading-none">35g</div>
+                                        <div class="text-[9px] text-ios-gray font-bold uppercase tracking-wide mt-1">Fibra</div>
+                                    </div>
+                                    <div class="self-center relative w-14 h-14 flex items-center justify-center">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
+                                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle cx="32" cy="32" r="28" stroke="#5856D6" stroke-width="6" fill="transparent" stroke-dasharray="175" stroke-dashoffset="130" stroke-linecap="round" class="transition-all duration-1000" />
+                                        </svg>
+                                        <i data-lucide="grape" class="w-4 h-4 text-ios-indigo absolute"></i>
+                                    </div>
+                                </div>
+                                <!-- Açúcar -->
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between h-36">
+                                    <div>
+                                        <div class="text-xl font-black text-black dark:text-white leading-none">42g</div>
+                                        <div class="text-[9px] text-ios-gray font-bold uppercase tracking-wide mt-1">Açúcar</div>
+                                    </div>
+                                    <div class="self-center relative w-14 h-14 flex items-center justify-center">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
+                                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle cx="32" cy="32" r="28" stroke="#FF2D55" stroke-width="6" fill="transparent" stroke-dasharray="175" stroke-dashoffset="100" stroke-linecap="round" class="transition-all duration-1000" />
+                                        </svg>
+                                        <i data-lucide="candy" class="w-4 h-4 text-ios-pink absolute"></i>
+                                    </div>
+                                </div>
+                                <!-- Sódio -->
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between h-36">
+                                    <div>
+                                        <div class="text-xl font-black text-black dark:text-white leading-none">2229mg</div>
+                                        <div class="text-[9px] text-ios-gray font-bold uppercase tracking-wide mt-1">Sódio</div>
+                                    </div>
+                                    <div class="self-center relative w-14 h-14 flex items-center justify-center">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 64 64">
+                                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle cx="32" cy="32" r="28" stroke="#FF9500" stroke-width="6" fill="transparent" stroke-dasharray="175" stroke-dashoffset="160" stroke-linecap="round" class="transition-all duration-1000" />
+                                        </svg>
+                                        <i data-lucide="triangle" class="w-4 h-4 text-ios-orange absolute"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom: Health Score -->
+                            <div class="bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex-1 flex flex-col justify-center">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="text-lg font-bold">Pontuação de Saúde</h3>
+                                    <span class="text-xl font-black">8/10</span>
+                                </div>
+                                <div class="h-2 w-full bg-ios-gray/20 rounded-full overflow-hidden mb-3">
+                                    <div class="h-full bg-brand-neon w-[80%] rounded-full"></div>
+                                </div>
+                                <p class="text-xs text-ios-gray leading-relaxed">
+                                    Seu consumo de calorias, proteínas e gorduras está abaixo dos objetivos, ótimo para perda; foque em aumentar a proteína.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 3: Steps & Burned Cals -->
+                        <div class="w-full flex-shrink-0 snap-center flex gap-3">
+                            <!-- Steps (Large) -->
+                            <div class="bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex-1 flex flex-col justify-between relative overflow-hidden">
+                                <div>
+                                    <div class="text-[10px] text-ios-gray font-bold uppercase tracking-wide mb-1">Passos</div>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-3xl font-black">2.520</span>
+                                        <span class="text-xs text-ios-gray">/10.000</span>
+                                    </div>
+                                </div>
+                                <div class="self-center relative w-32 h-32 flex items-center justify-center mt-4">
+                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                        <circle cx="50" cy="50" r="45" stroke="#1C1C1E" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="210" stroke-linecap="round" class="dark:stroke-white" />
+                                    </svg>
+                                    <i data-lucide="footprints" class="w-8 h-8 text-black dark:text-white absolute"></i>
+                                </div>
+                            </div>
+
+                            <!-- Burned Cals (Small) -->
+                            <div class="w-1/3 flex flex-col gap-3">
+                                <div class="bg-white dark:bg-dark-card rounded-3xl p-4 shadow-sm border border-ios-separator/30 dark:border-gray-800 h-full flex flex-col justify-center items-center text-center relative overflow-hidden group">
+                                    <!-- Streak Badge -->
+                                    <div class="absolute top-3 right-3 flex items-center gap-1 bg-brand-hot/10 dark:bg-brand-hot/20 px-2 py-1 rounded-xl border border-brand-hot/20">
+                                        <span class="text-[10px] font-black text-brand-hot">3</span>
+                                        <i data-lucide="flame" class="w-3 h-3 text-brand-hot fill-current"></i>
+                                    </div>
+
+                                    <div class="relative mb-3">
+                                        <div class="absolute inset-0 bg-brand-hot/20 blur-xl rounded-full -z-10 animate-pulse"></div>
+                                        <i data-lucide="flame" class="w-10 h-10 text-brand-hot fill-brand-hot/20"></i>
+                                    </div>
+                                    
+                                    <div class="text-3xl font-black leading-none text-black dark:text-white">148</div>
+                                    <div class="text-[10px] text-ios-gray font-bold uppercase tracking-widest mt-2">Calorias</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 4: Walking, Exercise & Water -->
+                        <div class="w-full flex-shrink-0 snap-center flex flex-col gap-3 h-full">
+                            <!-- Top Row: Walking & Exercise (2/3 height) -->
+                            <div class="flex gap-3" style="flex: 2;">
+                                <!-- Walking (Passos) -->
+                                <div class="flex-1 bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between relative overflow-hidden">
+                                    <div class="relative z-10">
+                                        <div class="text-xs text-ios-gray font-bold uppercase tracking-wide mb-1">Passos</div>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="text-4xl font-black">2.520</span>
+                                            <span class="text-sm text-ios-gray">/10k</span>
+                                        </div>
+                                    </div>
+                                    <div class="self-center relative w-32 h-32 flex items-center justify-center my-auto">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-100 dark:text-gray-800" />
+                                            <circle cx="50" cy="50" r="45" stroke="#1C1C1E" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="210" stroke-linecap="round" class="dark:stroke-white" />
+                                        </svg>
+                                        <i data-lucide="footprints" class="w-8 h-8 text-black dark:text-white absolute"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Exercise (Calorias Queimadas) -->
+                                <div class="flex-1 bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between relative overflow-hidden group">
+                                    <!-- Background Decoration -->
+                                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-hot/5 rounded-full blur-2xl group-hover:bg-brand-hot/10 transition-colors"></div>
+                                    
+                                    <div class="relative z-10">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <div class="text-xs text-ios-gray font-bold uppercase tracking-wide mb-1">Calorias</div>
+                                                <div class="flex items-baseline gap-1">
+                                                    <span class="text-4xl font-black text-black dark:text-white">148</span>
+                                                    <span class="text-sm text-ios-gray font-bold">cal</span>
+                                                </div>
+                                            </div>
+                                            <!-- Streak indicator inside large card -->
+                                            <div class="flex items-center gap-1.5 bg-brand-hot/10 dark:bg-brand-hot/20 px-3 py-1.5 rounded-2xl border border-brand-hot/20 shadow-sm shadow-brand-hot/5">
+                                                <i data-lucide="flame" class="w-4 h-4 text-brand-hot fill-brand-hot"></i>
+                                                <span class="text-sm font-black text-brand-hot">3 dias</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col items-center justify-center flex-1 py-4">
+                                        <div class="relative">
+                                            <div class="absolute inset-0 bg-brand-hot/20 blur-2xl rounded-full scale-150 animate-pulse"></div>
+                                            <i data-lucide="flame" class="w-16 h-16 text-brand-hot fill-brand-hot/10 relative z-10 transform group-hover:scale-110 transition-transform duration-500"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-between mt-2 pt-4 border-t border-ios-separator/30 dark:border-gray-800/50 relative z-10">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 bg-brand-hot/10 rounded-full flex items-center justify-center">
+                                                <i data-lucide="trending-up" class="w-4 h-4 text-brand-hot"></i>
+                                            </div>
+                                            <span class="text-[10px] font-bold text-ios-gray uppercase">Meta: 500</span>
+                                        </div>
+                                        <div class="text-[10px] font-black text-brand-hot bg-brand-hot/10 px-2 py-0.5 rounded-lg">
+                                            29%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Row: Water (1/3 height) -->
+                            <div class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex items-center justify-between" style="flex: 1;">
+                                <div class="flex items-center gap-5">
+                                    <div class="w-14 h-14 rounded-2xl bg-ios-blue/10 flex items-center justify-center text-ios-blue">
+                                        <i data-lucide="glass-water" class="w-7 h-7"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-ios-gray font-bold uppercase tracking-wide mb-1">Hidratação</div>
+                                        <div class="text-3xl font-black">750 <span class="text-lg text-ios-gray font-bold">ml</span></div>
+                                    </div>
+                                </div>
+                                <button class="px-6 py-3 bg-ios-blue/10 text-ios-blue border border-ios-blue/20 rounded-2xl text-sm font-bold shadow-sm active:scale-95 transition-transform">
+                                    + Copo
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Carousel Indicators -->
+                    <div class="flex justify-center gap-1.5 mt-4 mb-0" id="dashboard-indicators">
+                        <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-100 transition-opacity"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-20 transition-opacity"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-20 transition-opacity"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-20 transition-opacity"></div>
+                    </div>
+                    
+                    <!-- Meals List (Restored) -->
+                    <div class="mt-6 pt-4 border-t border-ios-separator/30 dark:border-gray-800/50">
+                         <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-bold text-ios-gray uppercase tracking-wide">Refeições Hoje</span>
+                            <button onclick="app.navigate('scanner')"
+                                class="w-6 h-6 rounded-full bg-brand-neon flex items-center justify-center text-black btn-press shadow-neon">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div id="today-meals-list" class="flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+
+
+
+                <!-- Missão Única do Dia (Upgrade Crítico) -->
+                <div
+                    class="glass-panel bg-white dark:bg-dark-card rounded-3xl p-5 shadow-soft border border-brand-neon/50 relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-base flex items-center gap-2">
+                            <i data-lucide="target" class="w-5 h-5 text-brand-neon"></i>
+                            Missão do Dia
+                        </h3>
+                        <span class="text-xs font-bold text-brand-neon bg-brand-neon/10 px-2 py-1 rounded-md">+50
+                            Buddy</span>
+                    </div>
+                    <p class="text-sm font-medium mb-3">Bata 120g de proteína hoje</p>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-1 h-3 bg-gray-100 dark:bg-dark-elevated rounded-full overflow-hidden">
+                            <div class="h-full bg-brand-neon rounded-full" style="width: 76%"></div>
+                        </div>
+                        <span class="text-xs font-bold text-ios-gray">92g/120g</span>
+                    </div>
+                </div>
+
+                <!-- Weekly Consistency -->
+                <div
+                    class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <h3 class="font-bold text-lg mb-4">Consistência Semanal</h3>
+                    <div class="flex justify-between items-end h-32 gap-2">
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 100%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">S</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 80%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">T</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 100%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Q</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-300 dark:bg-gray-700 rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Q</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon/50 rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 60%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">S</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">S</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">D</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recently Uploaded (Feed) -->
+                <div id="recents-section" class="space-y-3">
+                    <div class="flex justify-between items-center px-1">
+                        <h3 class="font-bold text-lg">Recentes</h3>
+                        <button class="text-xs text-brand-neon font-bold">Ver todos</button>
+                    </div>
+                    <div id="recents-list" class="flex flex-col gap-3">
+                        <!-- Items injected by renderRecents -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+                    <button onclick="app.navigate('scanner')"
+                        class="flex-shrink-0 bg-black dark:bg-white text-white dark:text-black px-6 py-4 rounded-2xl font-bold flex items-center gap-2 btn-press shadow-lg">
+                        <i data-lucide="camera" class="w-5 h-5"></i>
+                        Scan Refeição
+                    </button>
+                    <button onclick="app.toggleRecording()"
+                        class="flex-shrink-0 bg-brand-neon text-black px-6 py-4 rounded-2xl font-bold flex items-center gap-2 btn-press shadow-neon">
+                        <i data-lucide="mic" class="w-5 h-5"></i>
+                        Gravar Áudio
+                    </button>
+                    <button onclick="app.navigate('workout')"
+                        class="flex-shrink-0 bg-white dark:bg-dark-card border border-ios-separator/30 dark:border-gray-700 text-black dark:text-white px-6 py-4 rounded-2xl font-bold flex items-center gap-2 btn-press">
+                        <i data-lucide="play" class="w-5 h-5"></i>
+                        Iniciar Treino
+                    </button>
+                </div>
+            </div>
+
+            <!-- WORKOUT SCREEN -->
+            <div id="screen-workout" class="screen hidden px-5 pt-6 space-y-6">
+                <!-- Workout Carousel -->
+                <div id="workout-carousel" class="flex overflow-x-auto gap-4 snap-x snap-mandatory no-scrollbar pb-4 -mx-5 px-5" onscroll="app.handleCarouselScroll()">
+                    
+                    <!-- Card 1: Peito & Tríceps (HOJE) -->
+                    <div data-workout-id="chest-triceps" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=600&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <div class="absolute top-4 right-4">
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
+                                <i data-lucide="bookmark" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span
+                                    class="bg-brand-neon text-black text-xs font-black px-2 py-1 rounded-md uppercase">Hoje</span>
+                                <span class="text-white/80 text-sm font-medium">45-60 min • Intenso</span>
+                            </div>
+                            <h2 class="text-3xl font-black text-white mb-2">Peito & Tríceps</h2>
+                            <p class="text-white/70 text-sm mb-4">Foco em hipertrofia com ênfase no peitoral superior</p>
+
+                            <button onclick="app.startWorkout()"
+                                class="w-full bg-brand-neon text-black py-4 rounded-2xl font-black text-lg btn-press shadow-neon flex items-center justify-center gap-2">
+                                <i data-lucide="play-circle" class="w-6 h-6"></i>
+                                Começar Agora
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Bíceps & Costas -->
+                    <div data-workout-id="back-biceps" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
+                        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&h=600&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <div class="absolute top-4 right-4">
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
+                                <i data-lucide="bookmark" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-white/80 text-sm font-medium">50-65 min • Moderado</span>
+                            </div>
+                            <h2 class="text-3xl font-black text-white mb-2">Bíceps & Costas</h2>
+                            <p class="text-white/70 text-sm mb-4">Desenvolvimento de dorsais e pico de bíceps</p>
+
+                            <button onclick="app.startWorkout()"
+                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
+                                <i data-lucide="play-circle" class="w-6 h-6"></i>
+                                Ver Treino
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Pernas & Panturrilha -->
+                    <div data-workout-id="legs" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
+                        <img src="https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=800&h=600&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <div class="absolute top-4 right-4">
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
+                                <i data-lucide="bookmark" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-white/80 text-sm font-medium">60-75 min • Muito Intenso</span>
+                            </div>
+                            <h2 class="text-3xl font-black text-white mb-2">Pernas & Panturrilha</h2>
+                            <p class="text-white/70 text-sm mb-4">Foco total em quadríceps e posteriores</p>
+
+                            <button onclick="app.startWorkout()"
+                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
+                                <i data-lucide="play-circle" class="w-6 h-6"></i>
+                                Ver Treino
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Trapézio & Ombro -->
+                    <div data-workout-id="shoulders" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
+                        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&h=600&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <div class="absolute top-4 right-4">
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
+                                <i data-lucide="bookmark" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-white/80 text-sm font-medium">40-50 min • Moderado</span>
+                            </div>
+                            <h2 class="text-3xl font-black text-white mb-2">Trapézio & Ombro</h2>
+                            <p class="text-white/70 text-sm mb-4">Construção de deltoides 3D e trapézio denso</p>
+
+                            <button onclick="app.startWorkout()"
+                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
+                                <i data-lucide="play-circle" class="w-6 h-6"></i>
+                                Ver Treino
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Abdominal -->
+                    <div data-workout-id="abs" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=600&fit=crop"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <div class="absolute top-4 right-4">
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
+                                <i data-lucide="bookmark" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-white/80 text-sm font-medium">15-20 min • Intenso</span>
+                            </div>
+                            <h2 class="text-3xl font-black text-white mb-2">Abdominal</h2>
+                            <p class="text-white/70 text-sm mb-4">Fortalecimento do core e definição</p>
+
+                            <button onclick="app.startWorkout()"
+                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
+                                <i data-lucide="play-circle" class="w-6 h-6"></i>
+                                Ver Treino
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Exercise List with Progression -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end">
+                        <h3 class="font-black text-xl">Exercícios</h3>
+                        <span id="exercise-count" class="text-sm text-ios-gray">4 exercícios • 16 séries</span>
+                    </div>
+
+                    <div id="exercise-list-container" class="space-y-4">
+                        <!-- Exercises will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS SCREEN -->
+            <div id="screen-stats" class="screen hidden px-5 pt-6 space-y-6">
+                <h2 class="text-3xl font-black mb-4">Seu Progresso</h2>
+
+                <!-- Sleep Analysis Card -->
+                <div
+                    class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <div>
+                            <h3 class="font-bold text-lg flex items-center gap-2">
+                                <i data-lucide="moon" class="w-5 h-5"></i>
+                                Análise do Sono
+                            </h3>
+                            <p class="text-indigo-100 text-sm">Sem dados</p>
+                        </div>
+                        <span class="bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">--</span>
+                    </div>
+
+                    <!-- Sleep Stages Chart -->
+                    <div class="flex items-end justify-between h-24 gap-2 mb-3 relative z-10">
+                        <div class="flex-1 flex flex-col justify-end gap-1">
+                            <div class="text-[10px] text-center text-indigo-200">Profundo</div>
+                            <div class="bg-white/30 rounded-t-lg chart-bar" style="height: 0%"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col justify-end gap-1">
+                            <div class="text-[10px] text-center text-indigo-200">Leve</div>
+                            <div class="bg-white/50 rounded-t-lg chart-bar" style="height: 0%"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col justify-end gap-1">
+                            <div class="text-[10px] text-center text-indigo-200">REM</div>
+                            <div class="bg-white/40 rounded-t-lg chart-bar" style="height: 0%"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col justify-end gap-1">
+                            <div class="text-[10px] text-center text-indigo-200">Acordado</div>
+                            <div class="bg-white/20 rounded-t-lg chart-bar" style="height: 10%"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between text-xs text-indigo-200 relative z-10">
+                        <span>22:30</span>
+                        <span>05:50</span>
+                    </div>
+                </div>
+
+                <!-- Strength Progression -->
+                <div
+                    class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg">Progressão de Força</h3>
+                        <span class="text-xs font-bold text-brand-neon bg-brand-neon/10 px-2 py-1 rounded-lg">+12% esta
+                            semana</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-dark-elevated flex items-center justify-center">
+                                <i data-lucide="trending-up" class="w-6 h-6 text-brand-neon"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-bold text-sm">Volume Total</span>
+                                    <span class="text-sm font-black">24,500 kg</span>
+                                </div>
+                                <div class="h-2 bg-gray-100 dark:bg-dark-elevated rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-brand-neon to-brand-lime rounded-full"
+                                        style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-dark-elevated flex items-center justify-center">
+                                <i data-lucide="trophy" class="w-6 h-6 text-orange-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-bold text-sm">Novos PRs</span>
+                                    <span class="text-sm font-black">3 este mês</span>
+                                </div>
+                                <div class="flex gap-2 mt-2">
+                                    <span
+                                        class="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-md font-bold">Supino:
+                                        80kg</span>
+                                    <span
+                                        class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-md font-bold">Agacha:
+                                        120kg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Activity -->
+                <div
+                    class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <h3 class="font-bold text-lg mb-4">Atividade Mensal</h3>
+                    <div class="flex justify-between items-end h-40 gap-2">
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-32 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 60%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Jan</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-32 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 85%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Fev</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-32 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Mar</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div
+                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-32 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar"
+                                    style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Abr</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body Composition -->
+                <div
+                    class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <h3 class="font-bold text-lg mb-4">Composição Corporal</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-ios-gray">Peso Atual</span>
+                            <span class="font-bold text-xl">78.5 kg</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 dark:bg-dark-elevated rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-500 rounded-full" style="width: 70%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-ios-gray">
+                            <span>Meta: 75kg</span>
+                            <span>-3.5kg restantes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFILE SCREEN -->
+            <div id="screen-profile" class="screen hidden px-5 pt-6 space-y-6">
+                <!-- Profile content retained -->
+                <div class="text-center">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 mx-auto mb-4 overflow-hidden border-4 border-brand-neon/30">
+                        <img id="profile-screen-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop"
+                            class="w-full h-full object-cover">
+                    </div>
+                    <h2 class="text-2xl font-black">Alexandre Silva</h2>
+                    <p class="text-ios-gray">@alexfit • Nível 12</p>
+
+                    <div class="flex justify-center gap-3 mt-4">
+                        <div
+                            class="bg-white dark:bg-dark-card px-4 py-2 rounded-2xl shadow-sm border border-ios-separator/30 dark:border-gray-800">
+                            <div class="text-xs text-ios-gray">Peso</div>
+                            <div class="font-bold">78.5 kg</div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-dark-card px-4 py-2 rounded-2xl shadow-sm border border-ios-separator/30 dark:border-gray-800">
+                            <div class="text-xs text-ios-gray">Altura</div>
+                            <div class="font-bold">182 cm</div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-dark-card px-4 py-2 rounded-2xl shadow-sm border border-ios-separator/30 dark:border-gray-800">
+                            <div class="text-xs text-ios-gray">BF</div>
+                            <div class="font-bold">12%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div
+                    class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <h3 class="font-bold text-lg mb-4">Estatísticas Totais</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-ios-bg dark:bg-dark-elevated rounded-2xl">
+                            <div class="text-2xl font-black text-brand-neon">156</div>
+                            <div class="text-xs text-ios-gray font-bold uppercase">Treinos</div>
+                        </div>
+                        <div class="text-center p-4 bg-ios-bg dark:bg-dark-elevated rounded-2xl">
+                            <div class="text-2xl font-black text-blue-500">4,200</div>
+                            <div class="text-xs text-ios-gray font-bold uppercase">Refeições</div>
+                        </div>
+                        <div class="text-center p-4 bg-ios-bg dark:bg-dark-elevated rounded-2xl">
+                            <div class="text-2xl font-black text-purple-500">890k</div>
+                            <div class="text-xs text-ios-gray font-bold uppercase">Kg levantados</div>
+                        </div>
+                        <div class="text-center p-4 bg-ios-bg dark:bg-dark-elevated rounded-2xl">
+                            <div class="text-2xl font-black text-orange-500">45</div>
+                            <div class="text-xs text-ios-gray font-bold uppercase">Dias seguidos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div
+                    class="bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <button
+                        class="w-full px-5 py-4 flex items-center justify-between border-b border-ios-separator/30 dark:border-gray-800 btn-press">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="bell" class="w-5 h-5 text-ios-gray"></i>
+                            <span class="font-semibold">Notificações</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-ios-gray"></i>
+                    </button>
+                    <button
+                        class="w-full px-5 py-4 flex items-center justify-between border-b border-ios-separator/30 dark:border-gray-800 btn-press">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shield" class="w-5 h-5 text-ios-gray"></i>
+                            <span class="font-semibold">Privacidade</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-ios-gray"></i>
+                    </button>
+                    <button class="w-full px-5 py-4 flex items-center justify-between btn-press text-red-500">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="log-out" class="w-5 h-5"></i>
+                            <span class="font-semibold">Sair</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MEAL DETAILS SCREEN -->
+            <div id="screen-meal-details" class="screen hidden bg-white dark:bg-dark-bg fixed inset-0 z-[60] flex flex-col">
+                 <!-- Scrollable Area -->
+                 <div class="flex-1 overflow-y-auto px-5 pt-6 pb-6 space-y-6 no-scrollbar">
+                     <!-- Header -->
+                     <div class="flex items-center justify-between mb-4">
+                        <button onclick="app.closeMealDetails()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center text-ios-gray">
+                            <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                        </button>
+                        <h2 class="text-lg font-bold">Nutrição</h2>
+                        <div class="flex gap-2">
+                            <button class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center text-ios-gray">
+                                 <i data-lucide="share" class="w-5 h-5"></i>
+                            </button>
+                            <button class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center text-ios-gray">
+                                 <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                     </div>
+
+                     <!-- Content Container -->
+                     <div id="meal-details-content" class="space-y-6">
+                         <!-- Image -->
+                         <div class="w-full aspect-square rounded-3xl overflow-hidden shadow-soft relative bg-gray-100 dark:bg-dark-card">
+                             <img id="detail-meal-image" src="" class="w-full h-full object-cover">
+                         </div>
+
+                         <!-- Title & Time -->
+                         <div class="flex items-start justify-between">
+                             <div>
+                                 <div class="flex items-center gap-2 mb-1">
+                                     <i data-lucide="bookmark" class="w-5 h-5 text-ios-gray"></i>
+                                     <span id="detail-meal-time" class="bg-gray-100 dark:bg-dark-elevated px-3 py-1 rounded-full text-xs font-bold text-ios-gray">00:00</span>
+                                 </div>
+                                 <h1 id="detail-meal-name" class="text-3xl font-black leading-tight">Nome da Refeição</h1>
+                             </div>
+                             <button class="flex items-center gap-2 bg-white dark:bg-dark-card border border-ios-separator/30 dark:border-gray-800 px-4 py-2 rounded-2xl shadow-sm">
+                                 <span class="font-bold">1</span>
+                                 <i data-lucide="pencil" class="w-4 h-4 text-ios-gray"></i>
+                             </button>
+                         </div>
+
+                         <!-- Macros -->
+                         <div class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                             <div class="flex items-center gap-4 mb-6">
+                                 <div class="flex items-center gap-2">
+                                     <i data-lucide="flame" class="w-6 h-6 text-black dark:text-white"></i>
+                                     <span class="text-xs text-ios-gray font-bold uppercase">Calorias</span>
+                                 </div>
+                                 <div class="text-5xl font-black" id="detail-meal-cal">0</div>
+                             </div>
+                             
+                             <div class="grid grid-cols-3 gap-4">
+                                 <div class="bg-gray-50 dark:bg-dark-elevated p-4 rounded-2xl border border-gray-100 dark:border-gray-700">
+                                     <div class="flex items-center gap-2 mb-2">
+                                         <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                         <span class="text-xs font-bold text-ios-gray">Proteína</span>
+                                     </div>
+                                     <div class="text-xl font-bold" id="detail-meal-prot">0g</div>
+                                 </div>
+                                 <div class="bg-gray-50 dark:bg-dark-elevated p-4 rounded-2xl border border-gray-100 dark:border-gray-700">
+                                     <div class="flex items-center gap-2 mb-2">
+                                         <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                         <span class="text-xs font-bold text-ios-gray">Carboidratos</span>
+                                     </div>
+                                     <div class="text-xl font-bold" id="detail-meal-carb">0g</div>
+                                 </div>
+                                 <div class="bg-gray-50 dark:bg-dark-elevated p-4 rounded-2xl border border-gray-100 dark:border-gray-700">
+                                     <div class="flex items-center gap-2 mb-2">
+                                         <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                         <span class="text-xs font-bold text-ios-gray">Gorduras</span>
+                                     </div>
+                                     <div class="text-xl font-bold" id="detail-meal-fat">0g</div>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <!-- Ingredients -->
+                         <div>
+                             <div class="flex justify-between items-center mb-4">
+                                 <h3 class="font-bold text-lg">Ingredientes</h3>
+                                 <button class="flex items-center gap-1 text-ios-gray text-sm font-bold">
+                                     <i data-lucide="plus" class="w-4 h-4"></i>
+                                     Adicionar
+                                 </button>
+                             </div>
+                             <div id="detail-meal-ingredients" class="space-y-3">
+                                 <!-- Ingredients list will be injected here -->
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <!-- Footer Actions (Fixed) -->
+                <div class="px-5 py-4 bg-white dark:bg-dark-card border-t border-ios-separator/30 dark:border-gray-800 pb-safe">
+                    <div class="flex gap-4">
+                        <button onclick="app.editCurrentMeal()" class="flex-1 py-4 rounded-2xl border border-ios-separator/30 dark:border-gray-800 font-bold flex items-center justify-center gap-2 bg-white dark:bg-dark-card text-black dark:text-white">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                            Corrigir problema
+                        </button>
+                         <button onclick="app.finishMealDetails()" class="flex-1 py-4 rounded-2xl bg-black dark:bg-white text-white dark:text-black font-bold shadow-lg">
+                            Concluído
+                        </button>
+                     </div>
+                </div>
+            </div>
+
+            <!-- SCANNER SCREEN -->
+            <div id="screen-scanner"
+                class="screen hidden relative h-[80vh] rounded-3xl overflow-hidden mx-5 mt-6 bg-black">
+                <img id="gallery-image" class="absolute inset-0 w-full h-full object-cover hidden"
+                    crossorigin="anonymous">
+                <video id="camera-feed" class="absolute inset-0 w-full h-full object-cover" autoplay
+                    playsinline></video>
+                <input id="gallery-input" type="file" accept="image/*,video/*" class="hidden"
+                    onchange="app.handleGalleryChange(event)">
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none">
+                </div>
+
+                <!-- Scanner UI Overlay -->
+                <div class="absolute top-6 left-6 right-6 flex justify-between items-center pointer-events-auto">
+                    <button onclick="app.navigate('dashboard')"
+                        class="w-10 h-10 rounded-full bg-black/40 backdrop-blur flex items-center justify-center text-white">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                    <span
+                        class="bg-black/40 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">AI
+                        Scanner</span>
+                    <button onclick="app.openGallery()"
+                        class="w-10 h-10 rounded-full bg-black/40 backdrop-blur flex items-center justify-center text-white">
+                        <span
+                            class="bg-black/40 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">AI
+                            Scanner</span>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-64 h-64 border-2 border-white/30 rounded-3xl relative">
+                        <div
+                            class="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-brand-neon rounded-tl-xl">
+                        </div>
+                        <div
+                            class="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-brand-neon rounded-tr-xl">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-brand-neon rounded-bl-xl">
+                        </div>
+                        <div
+                            class="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-brand-neon rounded-br-xl">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button for Analysis -->
+                <div id="scanner-action-bar"
+                    class="absolute bottom-24 left-0 right-0 flex justify-center items-center gap-6 pointer-events-auto z-20 transition-all duration-300">
+                    <button onclick="app.toggleRecording()"
+                        class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border-2 border-white btn-press">
+                        <i data-lucide="mic" class="w-6 h-6"></i>
+                    </button>
+                    <button onclick="app.analyzeMedia()"
+                        class="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center bg-white/20 backdrop-blur-md btn-press shadow-neon">
+                        <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center">
+                            <i data-lucide="scan-search" class="w-8 h-8 text-black"></i>
+                        </div>
+                    </button>
+                    <button onclick="app.openGallery()"
+                        class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border-2 border-white btn-press">
+                        <i data-lucide="image" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <div class="absolute bottom-0 left-0 right-0 p-6 pointer-events-auto">
+                    <div id="analysis-panel"
+                        class="glass-panel bg-black/80 backdrop-blur-xl rounded-2xl p-4 mb-20 border border-white/10 hidden max-h-[60vh] overflow-y-auto">
+                        <div
+                            class="flex justify-between items-center mb-3 sticky top-0 bg-black/50 backdrop-blur-md -mx-4 -mt-4 p-4 border-b border-white/10 z-10">
+                            <div>
+                                <h3 id="analysis-title" class="text-white font-bold text-lg">Análise pronta</h3>
+                                <p id="analysis-confidence" class="text-white/60 text-xs">Confiança 90%</p>
+                            </div>
+                            <button onclick="app.addAllItems(event)"
+                                class="bg-brand-neon text-black px-4 py-2 rounded-xl font-bold text-sm btn-press">
+                                Adicionar tudo
+                            </button>
+                        </div>
+                        <div class="flex justify-between text-center">
+                            <div>
+                                <div class="text-lg font-black text-white" id="preview-cals">--</div>
+                                <div class="text-[10px] text-white/60 uppercase">Kcal</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-black text-brand-neon" id="preview-prot">--</div>
+                                <div class="text-[10px] text-white/60 uppercase">Prot</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-black text-brand-electric" id="preview-carbs">--</div>
+                                <div class="text-[10px] text-white/60 uppercase">Carb</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-black text-brand-hot" id="preview-fat">--</div>
+                                <div class="text-[10px] text-white/60 uppercase">Gord</div>
+                            </div>
+                        </div>
+                        <div id="analysis-items" class="mt-3 flex flex-wrap gap-2"></div>
+                        <div id="analysis-editor" class="mt-3 space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav id="nav-bar" class="fixed bottom-0 left-0 right-0 z-50 pb-safe">
+            <div class="max-w-md mx-auto px-6 pb-4 pt-2">
+                <div
+                    class="glass-panel bg-white/90 dark:bg-dark-card/90 backdrop-blur-xl rounded-full shadow-2xl border border-white/20 dark:border-gray-800 flex justify-between items-center h-16 relative px-2">
+
+                    <button onclick="app.navigate('dashboard')"
+                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-brand-neon transition-all duration-300"
+                        data-screen="dashboard">
+                        <i data-lucide="home" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Início</span>
+                    </button>
+
+                    <button onclick="app.navigate('workout')"
+                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
+                        data-screen="workout">
+                        <i data-lucide="dumbbell" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Treino</span>
+                    </button>
+
+                    <!-- Center Action Button -->
+                    <div class="relative -top-6">
+                        <button onclick="app.toggleScannerMenu()"
+                            class="w-16 h-16 rounded-full bg-brand-neon text-black flex items-center justify-center shadow-neon btn-press transform hover:scale-105 transition-transform border-4 border-ios-bg dark:border-dark-bg">
+                            <i data-lucide="plus" class="w-8 h-8"></i>
+                        </button>
+                    </div>
+
+                    <button onclick="app.navigate('stats')"
+                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
+                        data-screen="stats">
+                        <i data-lucide="bar-chart-2" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Stats</span>
+                    </button>
+
+                    <button onclick="app.navigate('profile')"
+                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
+                        data-screen="profile">
+                        <i data-lucide="user" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Perfil</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 z-[60] transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
+        <div
+            class="bg-black/80 dark:bg-white/90 backdrop-blur-md text-white dark:text-black px-6 py-3 rounded-full shadow-2xl flex items-center gap-3">
+            <div class="w-2 h-2 rounded-full bg-brand-neon"></div>
+            <span class="text-sm font-bold" id="toast-message">Notification</span>
+        </div>
+    </div>
+
+    <!-- Audio Recording Overlay -->
+    <div id="recording-overlay"
+        class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm hidden flex-col items-center justify-center transition-opacity duration-300">
+        <div class="relative w-32 h-32 mb-8 flex items-center justify-center">
+            <div class="absolute inset-0 bg-brand-neon/20 rounded-full animate-pulse-ring"></div>
+            <div class="absolute inset-0 bg-brand-neon/20 rounded-full animate-ping"></div>
+            <div class="relative w-24 h-24 bg-brand-neon rounded-full flex items-center justify-center shadow-neon">
+                <i data-lucide="mic" class="w-10 h-10 text-black"></i>
+            </div>
+        </div>
+        <h3 class="text-white font-black text-2xl mb-2">Ouvindo...</h3>
+        <p class="text-white/60 text-sm mb-8">Diga o nome do alimento</p>
+        <button onclick="app.stopRecording()"
+            class="bg-white/10 text-white border border-white/20 px-8 py-3 rounded-full font-bold backdrop-blur-md active:scale-95 transition-transform">
+            Parar e Buscar
+        </button>
+    </div>
+
+    <!-- Audio Search Results Overlay -->
+    <div id="audio-search-results"
+        class="fixed inset-0 z-[80] bg-black/90 backdrop-blur-md hidden flex-col transition-opacity duration-300">
+        <div class="p-6 pt-12 flex-1 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-white font-black text-2xl">Resultados</h3>
+                <button onclick="app.closeAudioSearch()"
+                    class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <p class="text-white/60 text-sm mb-4">Selecione o alimento correto:</p>
+            <div id="audio-search-list" class="space-y-3">
+                <!-- Items populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCANNER MENU MODAL -->
+    <div id="scanner-menu-modal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="app.toggleScannerMenu()"></div>
+        
+        <!-- Menu Content -->
+        <div class="absolute bottom-24 left-6 right-6 bg-white dark:bg-dark-card rounded-3xl p-4 shadow-2xl border border-ios-separator/30 dark:border-gray-800 transform transition-all duration-300 scale-95 opacity-0 translate-y-4" id="scanner-menu-content">
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Registrar exercício -->
+                <button onclick="app.navigate('workout'); app.toggleScannerMenu()" class="flex flex-col items-center justify-center gap-3 bg-gray-50 dark:bg-dark-elevated p-6 rounded-2xl border border-gray-100 dark:border-gray-700 btn-press active:scale-95 transition-transform hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="dumbbell" class="w-8 h-8 text-black dark:text-white"></i>
+                    <span class="text-xs font-bold text-center">Registrar<br>exercício</span>
+                </button>
+                
+                <!-- Alimentos salvos -->
+                <button onclick="app.toggleScannerMenu()" class="flex flex-col items-center justify-center gap-3 bg-gray-50 dark:bg-dark-elevated p-6 rounded-2xl border border-gray-100 dark:border-gray-700 btn-press active:scale-95 transition-transform hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="bookmark" class="w-8 h-8 text-black dark:text-white"></i>
+                    <span class="text-xs font-bold text-center">Alimentos<br>salvos</span>
+                </button>
+                
+                <!-- Banco de alimentos -->
+                <button onclick="app.toggleScannerMenu()" class="flex flex-col items-center justify-center gap-3 bg-gray-50 dark:bg-dark-elevated p-6 rounded-2xl border border-gray-100 dark:border-gray-700 btn-press active:scale-95 transition-transform hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="search" class="w-8 h-8 text-black dark:text-white"></i>
+                    <span class="text-xs font-bold text-center">Banco de<br>alimentos</span>
+                </button>
+                
+                <!-- Escanear alimento -->
+                <button onclick="app.navigate('scanner'); app.toggleScannerMenu()" class="flex flex-col items-center justify-center gap-3 bg-gray-50 dark:bg-dark-elevated p-6 rounded-2xl border border-gray-100 dark:border-gray-700 btn-press active:scale-95 transition-transform hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="scan-line" class="w-8 h-8 text-black dark:text-white"></i>
+                    <span class="text-xs font-bold text-center">Escanear<br>alimento</span>
+                </button>
+
+                <!-- Gravar Áudio -->
+                <button onclick="app.startRecording(); app.toggleScannerMenu()" class="col-span-2 flex items-center justify-center gap-3 bg-gray-50 dark:bg-dark-elevated p-4 rounded-2xl border border-gray-100 dark:border-gray-700 btn-press active:scale-95 transition-transform hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="mic" class="w-5 h-5 text-black dark:text-white"></i>
+                    <div class="flex items-center gap-0.5 h-3 opacity-80">
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-2.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-3 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-2 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-2.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-3 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-2 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-2.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-3 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1.5 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-2 bg-black dark:bg-white rounded-full"></div>
+                        <div class="w-0.5 h-1 bg-black dark:bg-white rounded-full"></div>
+                    </div>
+                </button>
+            </div>
+            
+            <!-- Arrow/Pointer (Optional visual cue pointing to button) -->
+            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white dark:bg-dark-card rotate-45 border-r border-b border-ios-separator/30 dark:border-gray-800"></div>
+        </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div id="edit-profile-modal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="app.closeEditProfile()"></div>
+        
+        <!-- Modal Content -->
+        <div class="absolute bottom-0 left-0 right-0 bg-ios-bg dark:bg-dark-card rounded-t-[32px] p-6 space-y-6 transform transition-transform duration-300 translate-y-full" id="edit-profile-content">
+            <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-2"></div>
+            
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black">Editar Perfil</h2>
+                <button onclick="app.closeEditProfile()" class="p-2 bg-gray-200 dark:bg-gray-800 rounded-full">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form onsubmit="app.saveProfile(event)" class="space-y-4">
+                <!-- Photo Upload Placeholder -->
+                <div class="flex justify-center mb-6">
+                    <div class="relative w-24 h-24" onclick="document.getElementById('profile-upload').click()">
+                         <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" class="w-full h-full rounded-full object-cover border-4 border-brand-neon" id="edit-profile-preview">
+                         <div class="absolute bottom-0 right-0 bg-brand-neon text-black p-2 rounded-full border-2 border-white dark:border-dark-card">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                         </div>
+                    </div>
+                    <input type="file" id="profile-upload" accept="image/*" class="hidden" onchange="app.handleProfileImageChange(event)">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-ios-gray uppercase ml-1">Nome</label>
+                    <input type="text" name="name" id="edit-name" class="w-full bg-white dark:bg-dark-elevated p-4 rounded-2xl border border-transparent focus:border-brand-neon outline-none font-bold" placeholder="Seu nome">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-ios-gray uppercase ml-1">Username</label>
+                    <input type="text" name="username" id="edit-username" class="w-full bg-white dark:bg-dark-elevated p-4 rounded-2xl border border-transparent focus:border-brand-neon outline-none" placeholder="@usuario">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-ios-gray uppercase ml-1">Telefone</label>
+                    <input type="tel" name="phone" id="edit-phone" class="w-full bg-white dark:bg-dark-elevated p-4 rounded-2xl border border-transparent focus:border-brand-neon outline-none" placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-ios-gray uppercase ml-1">Email</label>
+                    <input type="email" name="email" id="edit-email" class="w-full bg-white dark:bg-dark-elevated p-4 rounded-2xl border border-transparent focus:border-brand-neon outline-none" placeholder="email@exemplo.com">
+                </div>
+
+                <button type="submit" class="w-full bg-brand-neon text-black font-black py-4 rounded-2xl mt-4 btn-press shadow-neon">
+                    Salvar Alterações
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // App Logic
+        const app = {
+            state: {
+                darkMode: false,
+                currentScreen: 'dashboard',
+                usingGallery: false,
+                cameraStream: null,
+                galleryURL: null,
+                goals: { protein: 180, carbs: 250, fat: 65, calories: 2300 },
+                totals: { protein: 0, carbs: 0, fat: 0, calories: 0 },
+                lastAnalysis: null,
+                vision: { enabled: true, provider: 'huggingface', endpoint: '', apiKey: '' },
+                mealsToday: [],
+                recentMeals: [],
+                mediaRecorder: null,
+                audioChunks: [],
+                isRecording: false,
+                userName: '',
+                userProfile: {
+                    name: 'Alexandre Silva',
+                    username: '@alexfit',
+                    phone: '(11) 99999-9999',
+                    email: 'alexandre@email.com',
+                    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop'
+                },
+                currentWorkoutId: 'chest-triceps',
+            },
+
+            workouts: {
+                'chest-triceps': {
+                    title: 'Peito & Tríceps',
+                    subtitle: '4 séries • 8-12 reps',
+                    exercises: [
+                        { name: 'Supino Inclinado', sets: 4, reps: '8-12', weight: 75, history: [60, 65, 70, 75], image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=200&h=200&fit=crop' },
+                        { name: 'Crucifixo Máquina', sets: 3, reps: '10-12', weight: 45, history: [35, 40, 40, 45], image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop' },
+                        { name: 'Tríceps Corda', sets: 4, reps: '12-15', weight: 25, history: [20, 20, 25, 25], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' },
+                        { name: 'Mergulho', sets: 3, reps: 'Falha', weight: 0, history: [0, 0, 0, 0], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' }
+                    ]
+                },
+                'back-biceps': {
+                    title: 'Bíceps & Costas',
+                    subtitle: '4 séries • 8-12 reps',
+                    exercises: [
+                        { name: 'Puxada Alta', sets: 4, reps: '10-12', weight: 60, history: [50, 55, 60, 60], image: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=200&h=200&fit=crop' },
+                        { name: 'Remada Curvada', sets: 4, reps: '8-10', weight: 50, history: [40, 45, 50, 50], image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=200&h=200&fit=crop' },
+                        { name: 'Rosca Direta', sets: 3, reps: '10-12', weight: 15, history: [10, 12, 12, 15], image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop' },
+                        { name: 'Rosca Martelo', sets: 3, reps: '12-15', weight: 14, history: [10, 12, 12, 14], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' }
+                    ]
+                },
+                'legs': {
+                    title: 'Pernas & Panturrilha',
+                    subtitle: '4 séries • 8-12 reps',
+                    exercises: [
+                        { name: 'Agachamento Livre', sets: 4, reps: '8-10', weight: 90, history: [80, 85, 90, 90], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' },
+                        { name: 'Leg Press', sets: 4, reps: '12-15', weight: 200, history: [180, 190, 200, 200], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' },
+                        { name: 'Cadeira Extensora', sets: 3, reps: '12-15', weight: 60, history: [50, 55, 60, 60], image: 'https://images.unsplash.com/photo-1579758629938-03607ccdbaba?w=200&h=200&fit=crop' },
+                        { name: 'Panturrilha Sentado', sets: 4, reps: '15-20', weight: 40, history: [35, 40, 40, 40], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' }
+                    ]
+                },
+                'shoulders': {
+                    title: 'Trapézio & Ombro',
+                    subtitle: '4 séries • 10-15 reps',
+                    exercises: [
+                        { name: 'Desenvolvimento c/ Halteres', sets: 4, reps: '8-10', weight: 24, history: [20, 22, 24, 24], image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=200&h=200&fit=crop' },
+                        { name: 'Elevação Lateral', sets: 4, reps: '12-15', weight: 12, history: [10, 10, 12, 12], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' },
+                        { name: 'Encolhimento c/ Barra', sets: 4, reps: '10-12', weight: 80, history: [70, 75, 80, 80], image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=200&h=200&fit=crop' },
+                        { name: 'Crucifixo Inverso', sets: 3, reps: '12-15', weight: 10, history: [8, 10, 10, 10], image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=200&h=200&fit=crop' }
+                    ]
+                },
+                'abs': {
+                    title: 'Abdominal',
+                    subtitle: '3 séries • 15-20 reps',
+                    exercises: [
+                        { name: 'Crunch na Máquina', sets: 3, reps: '15-20', weight: 40, history: [35, 40, 40, 40], image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=200&h=200&fit=crop' },
+                        { name: 'Elevação de Pernas', sets: 3, reps: '12-15', weight: 0, history: [0, 0, 0, 0], image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop' },
+                        { name: 'Prancha', sets: 3, reps: '60s', weight: 0, history: [0, 0, 0, 0], image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop' },
+                        { name: 'Russian Twist', sets: 3, reps: '20', weight: 10, history: [5, 10, 10, 10], image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200&h=200&fit=crop' }
+                    ]
+                }
+            },
+
+            init() {
+                // Check system preference for dark mode 
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                this.toggleTheme(prefersDark);
+
+                this.loadUserName();
+                this.loadUserProfile(); // Load saved profile
+                this.loadRecentMeals();
+                this.updateTime();
+                setInterval(() => this.updateTime(), 60000);
+                lucide.createIcons();
+                this.renderExercises(this.state.currentWorkoutId);
+
+                // Simulate camera 
+                this.initCamera();
+                this.bindMediaReady();
+            },
+
+            loadUserProfile() {
+                const savedProfile = localStorage.getItem('workout_buddy_profile');
+                if (savedProfile) {
+                    try {
+                        this.state.userProfile = JSON.parse(savedProfile);
+                        // Update UI with saved data
+                        const p = this.state.userProfile;
+                        this.state.userName = p.name;
+                        
+                        const profileName = document.querySelector('#screen-profile h2');
+                        const profileUser = document.querySelector('#screen-profile p');
+                        const profileAvatar = document.getElementById('profile-screen-avatar');
+                        const headerAvatar = document.getElementById('user-avatar');
+
+                        if(profileName) profileName.textContent = p.name;
+                        if(profileUser) profileUser.textContent = `${p.username} • Nível 12`;
+                        if(profileAvatar && p.avatar) profileAvatar.src = p.avatar;
+                        if(headerAvatar && p.avatar) headerAvatar.src = p.avatar;
+                    } catch (e) {
+                        console.error('Error loading profile:', e);
+                    }
+                }
+            },
+
+            toggleTheme(forceDark = null) {
+                const html = document.documentElement;
+                if (forceDark === true || (forceDark === null && !this.state.darkMode)) {
+                    html.classList.add('dark');
+                    this.state.darkMode = true;
+                } else {
+                    html.classList.remove('dark');
+                    this.state.darkMode = false;
+                }
+                // Recreate icons for color change 
+                setTimeout(() => lucide.createIcons(), 100);
+            },
+
+            handleProfileImageChange(event) {
+                const file = event.target.files && event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const preview = document.getElementById('edit-profile-preview');
+                        if (preview) preview.src = e.target.result;
+                        this.state.tempProfileImage = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            },
+
+            openEditProfile() {
+                const modal = document.getElementById('edit-profile-modal');
+                const content = document.getElementById('edit-profile-content');
+                if (modal && content) {
+                    modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        content.classList.remove('translate-y-full');
+                    }, 10);
+                    
+                    const p = this.state.userProfile || {};
+                    if(document.getElementById('edit-name')) document.getElementById('edit-name').value = p.name || 'Alexandre Silva';
+                    if(document.getElementById('edit-username')) document.getElementById('edit-username').value = p.username || '@alexfit';
+                    if(document.getElementById('edit-phone')) document.getElementById('edit-phone').value = p.phone || '';
+                    if(document.getElementById('edit-email')) document.getElementById('edit-email').value = p.email || '';
+                    if(document.getElementById('edit-profile-preview')) document.getElementById('edit-profile-preview').src = p.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop';
+                    
+                    this.state.tempProfileImage = null; // Reset temp image
+                }
+            },
+
+            closeEditProfile() {
+                const modal = document.getElementById('edit-profile-modal');
+                const content = document.getElementById('edit-profile-content');
+                if (modal && content) {
+                    content.classList.add('translate-y-full');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                    }, 300);
+                }
+            },
+
+            saveProfile(e) {
+                e.preventDefault();
+                const form = e.target;
+                const name = form.name.value;
+                const username = form.username.value;
+                const phone = form.phone.value;
+                const email = form.email.value;
+
+                // Use temp image if new one selected, else keep existing
+                const avatar = this.state.tempProfileImage || this.state.userProfile.avatar;
+
+                this.state.userProfile = {
+                    ...this.state.userProfile,
+                    name, username, phone, email, avatar
+                };
+
+                this.state.userName = name; 
+                this.updateTime();
+                
+                // Update Profile Screen Texts & Image
+                const profileName = document.querySelector('#screen-profile h2');
+                const profileUser = document.querySelector('#screen-profile p');
+                const profileAvatar = document.getElementById('profile-screen-avatar');
+                const headerAvatar = document.getElementById('user-avatar');
+
+                if(profileName) profileName.textContent = name;
+                if(profileUser) profileUser.textContent = `${username} • Nível 12`;
+                if(profileAvatar) profileAvatar.src = avatar;
+                if(headerAvatar) headerAvatar.src = avatar;
+
+                // Show Toast
+                const toast = document.getElementById('toast');
+                const msg = document.getElementById('toast-message');
+                if (toast && msg) {
+                    msg.textContent = 'Perfil atualizado!';
+                    toast.classList.remove('opacity-0', 'translate-y-4');
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'translate-y-4');
+                    }, 3000);
+                }
+
+                // Save to LocalStorage
+                localStorage.setItem('workout_buddy_profile', JSON.stringify(this.state.userProfile));
+
+                this.closeEditProfile();
+            },
+
+            toggleScannerMenu() {
+                const modal = document.getElementById('scanner-menu-modal');
+                const content = document.getElementById('scanner-menu-content');
+                
+                if (modal && content) {
+                    if (modal.classList.contains('hidden')) {
+                        // Open
+                        modal.classList.remove('hidden');
+                        // Animate in
+                        setTimeout(() => {
+                            content.classList.remove('scale-95', 'opacity-0', 'translate-y-4');
+                        }, 10);
+                    } else {
+                        // Close
+                        content.classList.add('scale-95', 'opacity-0', 'translate-y-4');
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                        }, 300);
+                    }
+                }
+            },
+
+            navigate(screen) {
+                const prev = this.state.currentScreen;
+
+                // Close Scanner Menu if open
+                const scannerMenu = document.getElementById('scanner-menu-modal');
+                if (scannerMenu && !scannerMenu.classList.contains('hidden')) {
+                    this.toggleScannerMenu();
+                }
+
+                // HEADER BUTTONS TOGGLE
+                const profileBtn = document.getElementById('header-profile-btn');
+                const editBtn = document.getElementById('header-edit-btn');
+                
+                if (screen === 'profile') {
+                    if(profileBtn) profileBtn.classList.add('hidden');
+                    if(editBtn) editBtn.classList.remove('hidden');
+                } else {
+                    if(profileBtn) profileBtn.classList.remove('hidden');
+                    if(editBtn) editBtn.classList.add('hidden');
+                }
+
+                // Hide all screens 
+                document.querySelectorAll('.screen').forEach(s => {
+                    s.classList.add('hidden');
+                    s.classList.remove('animate-fade-in');
+                });
+
+                // Show target 
+                const target = document.getElementById(`screen-${screen}`);
+                if (target) {
+                    target.classList.remove('hidden');
+                    target.classList.add('animate-fade-in');
+                }
+
+                this.state.currentScreen = screen;
+
+                if (prev === 'scanner' && screen !== 'scanner') {
+                    this.stopCamera();
+                }
+                if (screen === 'dashboard') {
+                    this.renderTodayMeals();
+                    this.renderRecents();
+                }
+                if (screen === 'scanner') {
+                    // Reset scanner state
+                    this.state.lastAnalysis = null;
+                    const panel = document.getElementById('analysis-panel');
+                    if (panel) panel.classList.add('hidden');
+                    const actions = document.getElementById('scanner-action-bar');
+                    if (actions) actions.classList.remove('opacity-0', 'pointer-events-none');
+                    
+                    // Reset to camera mode
+                    this.state.usingGallery = false;
+                    if (this.state.galleryURL) {
+                        URL.revokeObjectURL(this.state.galleryURL);
+                        this.state.galleryURL = null;
+                    }
+
+                    const video = document.getElementById('camera-feed');
+                    const img = document.getElementById('gallery-image');
+                    
+                    // Clear image
+                    if (img) {
+                        img.src = '';
+                        img.classList.add('hidden');
+                    }
+
+                    if (this.state.usingGallery) {
+                        if (img && !img.classList.contains('hidden')) {
+                            const u = this.state.galleryURL;
+                            if (u) img.src = u;
+                        } else if (video) {
+                            video.classList.remove('hidden');
+                            if (video.src) {
+                                video.play().catch(() => { });
+                            } else {
+                                this.initCamera();
+                            }
+                        }
+                    } else {
+                        if (img) img.classList.add('hidden');
+                        if (video) {
+                            video.classList.remove('hidden');
+                            this.initCamera();
+                        }
+                    }
+                    // setTimeout(() => this.analyzeMedia(), 400);
+                }
+
+                // Update nav icons 
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    const isActive = btn.dataset.screen === screen;
+                    if (isActive) {
+                        btn.classList.remove('text-ios-gray', 'dark:text-dark-gray');
+                        btn.classList.add('text-brand-neon');
+                    } else {
+                        btn.classList.add('text-ios-gray', 'dark:text-dark-gray');
+                        btn.classList.remove('text-brand-neon');
+                    }
+                });
+
+                lucide.createIcons();
+            },
+
+            updateTime() {
+                const hour = new Date().getHours();
+                let greeting = 'Bom dia';
+                if (hour >= 12) greeting = 'Boa tarde';
+                if (hour >= 18) greeting = 'Boa noite';
+                const greetingEl = document.getElementById('header-greeting');
+                if (greetingEl) {
+                    const name = (this.state.userName || '').trim();
+                    const display = name ? name.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ') : '';
+                    greetingEl.textContent = display ? `${greeting}, ${display}` : greeting;
+                }
+            },
+
+            toggleExercise(id, btn) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                
+                el.classList.toggle('hidden');
+                
+                const icon = btn.querySelector('svg, i');
+                if (icon) {
+                    // If hidden, rotate back to 0 (down). If visible, rotate to 180 (up).
+                    // Assuming default is down.
+                    if (el.classList.contains('hidden')) {
+                         icon.style.transform = 'rotate(0deg)';
+                    } else {
+                         icon.style.transform = 'rotate(180deg)';
+                    }
+                    icon.style.transition = 'transform 0.3s ease';
+                }
+            },
+
+            handleCarouselScroll() {
+                const carousel = document.getElementById('workout-carousel');
+                if (!carousel) return;
+
+                const cards = carousel.querySelectorAll('.workout-card');
+                let minDiff = Infinity;
+                let activeCard = null;
+                
+                // Calculate center of carousel viewport relative to the document or scroll parent
+                // But offsetLeft is relative to offsetParent.
+                // Simplest way: Check which element's center is closest to carousel's center.
+                const carouselRect = carousel.getBoundingClientRect();
+                const carouselCenter = carouselRect.left + carouselRect.width / 2;
+
+                cards.forEach(card => {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenter = cardRect.left + cardRect.width / 2;
+                    const diff = Math.abs(carouselCenter - cardCenter);
+                    
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        activeCard = card;
+                    }
+                });
+
+                if (activeCard) {
+                    const workoutId = activeCard.dataset.workoutId;
+                    if (workoutId && workoutId !== this.state.currentWorkoutId) {
+                        this.state.currentWorkoutId = workoutId;
+                        this.renderExercises(workoutId);
+                    }
+                }
+            },
+
+            handleDashboardScroll() {
+                const carousel = document.getElementById('dashboard-carousel');
+                const indicators = document.getElementById('dashboard-indicators');
+                if (!carousel || !indicators) return;
+
+                const scrollLeft = carousel.scrollLeft;
+                const width = carousel.offsetWidth;
+                const index = Math.round(scrollLeft / width);
+                
+                const dots = indicators.children;
+                const safeIndex = Math.min(Math.max(index, 0), dots.length - 1);
+
+                Array.from(dots).forEach((dot, i) => {
+                    if (i === safeIndex) {
+                        dot.classList.remove('opacity-20');
+                        dot.classList.add('opacity-100');
+                    } else {
+                        dot.classList.add('opacity-20');
+                        dot.classList.remove('opacity-100');
+                    }
+                });
+            },
+
+            renderExercises(workoutId) {
+                const container = document.getElementById('exercise-list-container');
+                const countLabel = document.getElementById('exercise-count');
+                if (!container) return;
+
+                const workout = this.workouts[workoutId];
+                if (!workout) return;
+
+                // Update count
+                if (countLabel) {
+                    const totalSets = workout.exercises.reduce((acc, ex) => acc + ex.sets, 0);
+                    countLabel.textContent = `${workout.exercises.length} exercícios • ${totalSets} séries`;
+                }
+
+                container.innerHTML = '';
+
+                workout.exercises.forEach((ex, index) => {
+                    const exId = `exercise-${workoutId}-${index}`;
+                    const detailsId = `details-${workoutId}-${index}`;
+                    
+                    const html = `
+                    <div class="bg-white dark:bg-dark-card rounded-3xl p-5 shadow-soft border border-ios-separator/30 dark:border-gray-800 animate-fade-in">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-dark-elevated overflow-hidden">
+                                    <img src="${ex.image}" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">${ex.name}</h4>
+                                    <p class="text-sm text-ios-gray">${ex.sets} séries • ${ex.reps} reps</p>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded font-bold">
+                                            ${ex.weight > 0 ? ex.weight + 'kg' : 'Bodyweight'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="app.toggleExercise('${detailsId}', this)" class="w-10 h-10 rounded-full bg-ios-bg dark:bg-dark-elevated flex items-center justify-center btn-press transition-transform">
+                                <i data-lucide="chevron-down" class="w-5 h-5" style="transform: rotate(0deg); transition: transform 0.3s ease;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Exercise Details (Collapsible) -->
+                        <div id="${detailsId}" class="hidden">
+                            <!-- Load Progression Chart -->
+                            <div class="bg-ios-bg dark:bg-dark-elevated rounded-2xl p-4 mb-3">
+                                <div class="flex justify-between text-xs text-ios-gray mb-2">
+                                    <span>Histórico de Carga (últimas 4 semanas)</span>
+                                </div>
+                                <div class="flex items-end justify-between h-16 gap-2">
+                                    ${ex.history.map((h, i) => `
+                                    <div class="flex flex-col items-center gap-1 flex-1">
+                                        <span class="text-[10px] font-bold ${i === 3 ? 'text-brand-neon' : ''}">${h}kg</span>
+                                        <div class="w-full ${i === 3 ? 'bg-brand-neon shadow-neon' : 'bg-gray-300 dark:bg-gray-700'} rounded-full chart-bar" style="height: ${h > 0 ? Math.max(20, (h / Math.max(...ex.history)) * 100) : 5}%"></div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- Sets Input -->
+                            <div class="space-y-2">
+                                ${Array(ex.sets).fill(0).map((_, i) => `
+                                <div class="flex items-center gap-3 text-sm ${i > 0 ? 'opacity-50' : ''}">
+                                    <span class="w-8 font-bold text-ios-gray">S${i + 1}</span>
+                                    <input type="number" class="w-16 bg-ios-bg dark:bg-dark-bg rounded-lg p-2 text-center font-bold outline-none focus:ring-2 focus:ring-brand-neon" value="${ex.weight}">
+                                    <span class="text-xs text-ios-gray">kg</span>
+                                    <input type="number" class="w-16 bg-ios-bg dark:bg-dark-bg rounded-lg p-2 text-center font-bold outline-none focus:ring-2 focus:ring-brand-neon" value="${ex.reps.replace(/[^0-9]/g, '') || 10}">
+                                    <span class="text-xs text-ios-gray">reps</span>
+                                    <button class="ml-auto w-8 h-8 rounded-full ${i === 0 ? 'bg-brand-neon text-black shadow-neon' : 'bg-gray-200 dark:bg-gray-800 text-gray-500'} flex items-center justify-center btn-press">
+                                        <i data-lucide="check" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+                
+                lucide.createIcons();
+            },
+
+            async initCamera() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                    const video = document.getElementById('camera-feed');
+                    if (video) {
+                        const img = document.getElementById('gallery-image');
+                        if (img) img.classList.add('hidden');
+                        video.classList.remove('hidden');
+                        video.src = '';
+                        video.srcObject = stream;
+                        this.state.cameraStream = stream;
+                    }
+                } catch (e) {
+                    console.log('Camera not available');
+                }
+            },
+
+            stopCamera() {
+                const video = document.getElementById('camera-feed');
+                if (video) {
+                    if (video.srcObject && video.srcObject.getTracks) {
+                        video.srcObject.getTracks().forEach(t => t.stop());
+                    }
+                    video.srcObject = null;
+                    video.removeAttribute('src');
+                }
+            },
+
+            openGallery() {
+                const input = document.getElementById('gallery-input');
+                if (input) input.click();
+            },
+
+            handleGalleryChange(event) {
+                const file = event.target.files && event.target.files[0];
+                if (file) this.loadGalleryMedia(file);
+            },
+
+            loadGalleryMedia(file) {
+                if (this.state.galleryURL) {
+                    URL.revokeObjectURL(this.state.galleryURL);
+                }
+                const url = URL.createObjectURL(file);
+                this.state.galleryURL = url;
+                const video = document.getElementById('camera-feed');
+                const img = document.getElementById('gallery-image');
+                this.state.usingGallery = true;
+                this.stopCamera();
+                if (file.type.startsWith('video')) {
+                    if (img) img.classList.add('hidden');
+                    if (video) {
+                        video.classList.remove('hidden');
+                        video.srcObject = null;
+                        video.src = url;
+                        // video.onloadeddata = () => this.analyzeMedia(); // Removed auto-analyze
+                        video.play().catch(() => { });
+                    }
+                } else {
+                    if (video) video.classList.add('hidden');
+                    if (img) {
+                        img.classList.remove('hidden');
+                        img.src = url;
+                        img.crossOrigin = 'anonymous'; // Fix CORS/ORB
+                        // img.onload = () => this.analyzeMedia(); // Removed auto-analyze
+                    }
+                }
+                this.showToast('Mídia carregada. Toque no botão para analisar.');
+            },
+
+            bindMediaReady() {
+                // Removed auto-analyze binding
+                // const video = document.getElementById('camera-feed'); 
+                // if (video) video.onloadeddata = () => this.analyzeMedia(); 
+            },
+
+            openMealDetails(id) {
+                const meal = this.state.recentMeals.find(m => m.id === id);
+                if (!meal) return;
+                
+                // Hide Navbar
+                const nav = document.getElementById('nav-bar');
+                if (nav) nav.classList.add('hidden');
+
+                this.state.currentDetailId = id; // Store ID for potential updates
+
+                // Populate data
+                const img = document.getElementById('detail-meal-image');
+                if (img) {
+                    img.src = meal.image || '';
+                    img.style.display = meal.image ? 'block' : 'none';
+                    if (!meal.image) {
+                        // Fallback if no image
+                        img.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800"><span class="text-4xl">🍽️</span></div>';
+                    }
+                }
+
+                document.getElementById('detail-meal-name').textContent = meal.name;
+                document.getElementById('detail-meal-time').textContent = meal.time || 'Hoje';
+                
+                document.getElementById('detail-meal-cal').textContent = meal.macros.cal;
+                document.getElementById('detail-meal-prot').textContent = meal.macros.p + 'g';
+                document.getElementById('detail-meal-carb').textContent = meal.macros.c + 'g';
+                document.getElementById('detail-meal-fat').textContent = meal.macros.f + 'g';
+
+                // Ingredients
+                const ingList = document.getElementById('detail-meal-ingredients');
+                if (ingList) {
+                    ingList.innerHTML = '';
+                    // Handle standard ingredients or pendingResult items
+                    let ingredients = meal.ingredients;
+                    if (!ingredients || ingredients.length === 0) {
+                        if (meal.pendingResult && (meal.pendingResult.items || meal.pendingResult.ingredients)) {
+                            ingredients = meal.pendingResult.items || meal.pendingResult.ingredients;
+                        }
+                    }
+
+                    if (ingredients && ingredients.length > 0) {
+                        ingredients.forEach(ing => {
+                            const div = document.createElement('div');
+                            div.className = 'flex items-center justify-between p-3 bg-gray-50 dark:bg-dark-elevated rounded-2xl border border-gray-100 dark:border-gray-700';
+                            div.innerHTML = `
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2 h-2 rounded-full bg-brand-neon"></div>
+                                    <span class="font-medium text-sm">${ing.name}</span>
+                                </div>
+                                <span class="text-xs text-ios-gray font-bold">${ing.grams || ing.weight || '-'}g</span>
+                            `;
+                            ingList.appendChild(div);
+                        });
+                    } else {
+                        // Default view if no ingredients details
+                        ingList.innerHTML = `
+                            <div class="text-center py-8 text-ios-gray text-sm">
+                                Sem detalhes de ingredientes
+                            </div>
+                        `;
+                    }
+                }
+
+                // Show screen
+                const screen = document.getElementById('screen-meal-details');
+                if (screen) {
+                    screen.classList.remove('hidden');
+                    // Add animation class if needed, or just standard view
+                }
+            },
+
+            editCurrentMeal() {
+                const id = this.state.currentDetailId;
+                if (id) {
+                    this.closeMealDetails();
+                    this.resumeAnalysis(id);
+                }
+            },
+
+            finishMealDetails() {
+                const id = this.state.currentDetailId;
+                if (id) {
+                    const mealIndex = this.state.recentMeals.findIndex(m => m.id === id);
+                    if (mealIndex >= 0) {
+                        const meal = this.state.recentMeals[mealIndex];
+                        if (meal.pendingResult) {
+                            // Extract ingredients BEFORE deleting pendingResult
+                            let ingredients = meal.ingredients || [];
+                            if (ingredients.length === 0 && meal.pendingResult) {
+                                ingredients = meal.pendingResult.items || meal.pendingResult.ingredients || [];
+                            }
+
+                            // Convert pending to confirmed
+                            delete meal.pendingResult;
+                            delete meal.isAnalyzing;
+                            
+                            // Add to daily log
+                            this.mealAddEntry(meal.name, 0, meal.macros, ingredients, meal.image);
+                            
+                            this.showToast('Refeição confirmada!');
+                        }
+                    }
+                }
+                this.closeMealDetails();
+            },
+
+            closeMealDetails() {
+                const screen = document.getElementById('screen-meal-details');
+                if (screen) {
+                    screen.classList.add('hidden');
+                }
+                
+                // Show Navbar
+                const nav = document.getElementById('nav-bar');
+                if (nav) nav.classList.remove('hidden');
+
+                this.state.currentDetailId = null;
+            },
+
+            resumeAnalysis(id) {
+                const item = this.state.recentMeals.find(m => m.id === id);
+                if (!item || !item.pendingResult) return;
+                
+                this.navigate('scanner');
+                // Allow UI to update
+                setTimeout(() => {
+                    this.applyVisionResult(item.pendingResult);
+                    this.showToast('Análise carregada. Adicione áudio se desejar.');
+                }, 200);
+            },
+
+            analyzeMedia() {
+                const video = document.getElementById('camera-feed');
+                const img = document.getElementById('gallery-image');
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                // Increased resolution for better AI analysis
+                const w = 512, h = 512;
+                canvas.width = w;
+                canvas.height = h;
+                if (!ctx) return;
+                let drew = false;
+                if (img && !img.classList.contains('hidden') && img.naturalWidth) {
+                    const nw = img.naturalWidth, nh = img.naturalHeight;
+                    const side = Math.min(nw, nh);
+                    const sx = Math.floor((nw - side) / 2);
+                    const sy = Math.floor((nh - side) / 2);
+                    ctx.drawImage(img, sx, sy, side, side, 0, 0, w, h);
+                    drew = true;
+                } else if (video && !video.classList.contains('hidden') && video.videoWidth) {
+                    const nw = video.videoWidth, nh = video.videoHeight;
+                    const side = Math.min(nw, nh);
+                    const sx = Math.floor((nw - side) / 2);
+                    const sy = Math.floor((nh - side) / 2);
+                    ctx.drawImage(video, sx, sy, side, side, 0, 0, w, h);
+                    drew = true;
+                }
+                if (!drew) return;
+
+                // Create temporary item in Recent Meals
+                const tempId = 'temp-' + Date.now();
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                
+                this.state.recentMeals.unshift({
+                    id: tempId,
+                    name: 'Analisando...',
+                    macros: { cal: 0, p: 0, c: 0, f: 0 },
+                    isAnalyzing: true,
+                    image: dataUrl,
+                    timestamp: Date.now()
+                });
+                
+                // Limit to 10 items
+                if (this.state.recentMeals.length > 10) this.state.recentMeals.pop();
+                
+                // Save to local storage (excluding image to save space, or maybe keep it for temp?)
+                // We won't save temp items to LS to avoid issues on reload, 
+                // but we need them in state.
+                
+                this.navigate('dashboard');
+                this.renderRecents();
+
+                // Scroll to recent meals section so user sees the action
+                setTimeout(() => {
+                    const el = document.getElementById('recents-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+                
+                this.analyzeWithLLM(canvas, tempId);
+            },
+
+            getFoodDB() {
+                return {
+                    alface: { cal: 15, p: 1.5, c: 2.9, f: 0.2 },
+                    rúcula: { cal: 25, p: 2.6, c: 3.7, f: 0.7 },
+                    tomate: { cal: 18, p: 0.9, c: 3.9, f: 0.2 },
+                    cenoura: { cal: 41, p: 0.9, c: 10, f: 0.2 },
+                    milho: { cal: 86, p: 3.4, c: 19, f: 1.2 },
+                    ovo: { cal: 155, p: 13, c: 1.1, f: 10.6 },
+                    frango: { cal: 165, p: 31, c: 0, f: 3.6 },
+                    'carne bovina': { cal: 250, p: 26, c: 0, f: 15 },
+                    arroz: { cal: 130, p: 2.7, c: 28, f: 0.3 },
+                    mirtilo: { cal: 57, p: 0.7, c: 14, f: 0.3 },
+                    salada: { cal: 25, p: 2, c: 4, f: 0.3 }
+                };
+            },
+
+            buildAnalysisEditor() {
+                const cont = document.getElementById('analysis-editor');
+                if (!cont || !this.state.lastAnalysis) return;
+                cont.innerHTML = '';
+                const foods = Object.keys(this.getFoodDB());
+                this.state.lastAnalysis.items.forEach((name, i) => {
+                    const row = document.createElement('div');
+                    row.className = 'flex items-center gap-2 bg-black/30 rounded-xl p-2 border border-white/10';
+                    const sel = document.createElement('select');
+                    sel.className = 'bg-black/40 text-white text-xs rounded-md px-2 py-1';
+                    foods.forEach(f => {
+                        const opt = document.createElement('option');
+                        opt.value = f;
+                        opt.textContent = f;
+                        if (f === name) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                    sel.dataset.index = String(i);
+                    sel.onchange = (e) => this.onItemChange(e);
+                    const gIn = document.createElement('input');
+                    gIn.type = 'number';
+                    gIn.min = '10';
+                    gIn.step = '5';
+                    gIn.value = String(this.state.lastAnalysis.weights[i]);
+                    gIn.className = 'w-20 bg-black/40 text-white text-xs rounded-md px-2 py-1';
+                    gIn.dataset.index = String(i);
+                    gIn.onchange = (e) => this.onItemWeightChange(e);
+                    const mac = document.createElement('span');
+                    mac.id = `item-macros-${i}`;
+                    mac.className = 'text-xs text-white font-bold';
+                    const m = this.state.lastAnalysis.itemMacros[i];
+                    mac.textContent = `${m.p}gP ${m.c}gC ${m.f}gF`;
+                    const add = document.createElement('button');
+                    add.className = 'ml-auto bg-brand-neon text-black px-2 py-1 rounded-md text-xs font-bold';
+                    add.id = `add-item-${i}`;
+                    add.textContent = 'Adicionar';
+                    add.onclick = () => this.addItem(i);
+                    row.appendChild(sel);
+                    row.appendChild(gIn);
+                    row.appendChild(mac);
+                    row.appendChild(add);
+                    cont.appendChild(row);
+                });
+            },
+
+            openVisionSheet() {
+                const sheet = document.getElementById('vision-sheet');
+                if (!sheet) return;
+                sheet.classList.remove('hidden');
+                setTimeout(() => sheet.classList.add('active'), 10);
+
+                const vp = document.getElementById('vision-provider');
+                const ve = document.getElementById('vision-endpoint');
+                const vk = document.getElementById('vision-key');
+                const en = document.getElementById('vision-enabled');
+                if (vp) vp.value = this.state.vision.provider;
+                if (ve) ve.value = this.state.vision.endpoint || '';
+                if (vk) vk.value = this.state.vision.apiKey || '';
+                if (en) en.checked = !!this.state.vision.enabled;
+                lucide.createIcons();
+            },
+
+            closeVisionSheet() {
+                const sheet = document.getElementById('vision-sheet');
+                if (!sheet) return;
+                sheet.classList.remove('active');
+                setTimeout(() => sheet.classList.add('hidden'), 300);
+            },
+
+            async analyzeWithLLM(canvas, tempId = null) {
+                // Background analysis mode
+                
+                const toDataUrl = () => new Promise(resolve => {
+                    canvas.toBlob(b => {
+                        const fr = new FileReader();
+                        fr.onload = () => resolve(fr.result);
+                        fr.readAsDataURL(b);
+                    }, 'image/jpeg', 0.9);
+                });
+
+                try {
+                    const dataUrl = await toDataUrl();
+                    
+                    const res = await fetch('/api/analyze-image', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ image: dataUrl })
+                    });
+
+                    if (!res.ok) {
+                        const errText = await res.text();
+                        let errMsg = 'Falha na análise';
+                        try {
+                            const errJson = JSON.parse(errText);
+                            errMsg = errJson.error || errJson.details || errText;
+                        } catch (e) {
+                            errMsg = errText || 'Erro ' + res.status;
+                        }
+                        throw new Error(errMsg);
+                    }
+                    const json = await res.json();
+
+                    if (json.error) throw new Error(json.error);
+
+                    if (tempId) {
+                         const mealIndex = this.state.recentMeals.findIndex(m => m.id === tempId);
+                         if (mealIndex >= 0) {
+                             const meal = this.state.recentMeals[mealIndex];
+                             meal.isAnalyzing = false;
+                             meal.pendingResult = json.result;
+                             
+                             // Try to get a name from result
+                             const items = json.result.items || json.result.ingredients || [];
+                             const name = items.length > 0 ? (items[0].name || items[0]) : 'Refeição';
+                             meal.name = typeof name === 'string' ? name : 'Refeição';
+                             
+                             // Calculate rough calories for display if available
+                             let totalCal = 0;
+                             if (json.result.totals && json.result.totals.cal) {
+                                 totalCal = json.result.totals.cal;
+                             }
+                             meal.macros = meal.macros || {};
+                             meal.macros.cal = totalCal;
+                             
+                             this.renderRecents();
+                             this.showToast('Análise pronta! Toque no item para confirmar.');
+                         }
+                    } else {
+                         this.applyVisionResult(json.result);
+                    }
+
+                } catch (e) {
+                    console.error(e);
+                    if (tempId) {
+                         const mealIndex = this.state.recentMeals.findIndex(m => m.id === tempId);
+                         if (mealIndex >= 0) {
+                             // Fallback / Simulation logic
+                             const meal = this.state.recentMeals[mealIndex];
+                             meal.isAnalyzing = false;
+                             
+                             // Create a simulated result
+                             const mockResult = {
+                                 items: [
+                                     { name: "Frango Grelhado", grams: 150, calories: 240, protein: 45, carbs: 0, fat: 5 },
+                                     { name: "Arroz Branco", grams: 100, calories: 130, protein: 2, carbs: 28, fat: 0 },
+                                     { name: "Brócolis", grams: 80, calories: 30, protein: 3, carbs: 4, fat: 0 }
+                                 ],
+                                 totals: { cal: 400, p: 50, c: 32, f: 5 },
+                                 confidence: 0.85
+                             };
+                             
+                             meal.pendingResult = mockResult;
+                             meal.name = "Refeição Detectada (Sim)";
+                             meal.macros = { cal: 400, p: 50, c: 32, f: 5 };
+                             
+                             this.renderRecents();
+                             this.showToast('Erro na IA. Usando análise simulada.');
+                             return; 
+                         }
+                    }
+                    this.showToast('Erro: ' + (e.message || 'Falha desconhecida'));
+                }
+            },
+
+            applyVisionResult(result, image = null) {
+                const arr = result.items || result.ingredients || [];
+                if (!Array.isArray(arr) || !arr.length) {
+                    this.showToast('Nenhum item detectado');
+                    return;
+                }
+
+                // Show panel
+                const panel = document.getElementById('analysis-panel');
+                const actions = document.getElementById('scanner-action-bar');
+                if (panel) panel.classList.remove('hidden');
+                if (actions) actions.classList.add('opacity-0', 'pointer-events-none');
+
+                const db = this.getFoodDB();
+                const items = [];
+                const weights = [];
+                const itemMacros = [];
+                let cal = 0, p = 0, c = 0, f = 0;
+                arr.slice(0, 8).forEach(it => {
+                    const name = String(it.name || '').toLowerCase();
+                    const grams = Math.max(10, Math.round(Number(it.grams || it.weight || 0)));
+                    let ic = Math.round(Number(it.calories || it.cal || 0));
+                    let ip = Math.round(Number(it.protein || it.p || 0));
+                    let icb = Math.round(Number(it.carbs || it.c || 0));
+                    let iff = Math.round(Number(it.fat || it.f || 0));
+                    if (!(ic && ip && icb && iff)) {
+                        const ref = db[name] || db['salada'];
+                        ic = Math.round(ref.cal * grams / 100);
+                        ip = Math.round(ref.p * grams / 100);
+                        icb = Math.round(ref.c * grams / 100);
+                        iff = Math.round(ref.f * grams / 100);
+                    }
+                    items.push(name);
+                    weights.push(grams);
+                    itemMacros.push({ cal: ic, p: ip, c: icb, f: iff });
+                    cal += ic; p += ip; c += icb; f += iff;
+                });
+                const conf = Math.round((result.confidence || 0.85) * 100);
+                this.state.lastAnalysis = { items, weights, totals: { cal, p, c, f }, confidence: conf, itemMacros, added: Array(items.length).fill(false), image: image };
+                const t = document.getElementById('analysis-title');
+                const ci = document.getElementById('analysis-confidence');
+                const prevCals = document.getElementById('preview-cals');
+                const prevProt = document.getElementById('preview-prot');
+                const prevCarbs = document.getElementById('preview-carbs');
+                const prevFat = document.getElementById('preview-fat');
+                if (t) t.textContent = items.some(n => ['alface', 'tomate', 'cenoura'].includes(n)) ? 'Salada' : 'Refeição';
+                if (ci) ci.textContent = `Confiança ${conf}% • ${items.join(', ')}`;
+                if (prevCals) prevCals.textContent = cal;
+                if (prevProt) prevProt.textContent = p + 'g';
+                if (prevCarbs) prevCarbs.textContent = c + 'g';
+                if (prevFat) prevFat.textContent = f + 'g';
+                const itemsEl = document.getElementById('analysis-items');
+                if (itemsEl) {
+                    itemsEl.innerHTML = '';
+                    for (let i = 0; i < items.length; i++) {
+                        const tag = document.createElement('span');
+                        tag.className = 'text-xs font-bold text-white bg-black/40 border border-white/10 px-2 py-1 rounded-md';
+                        tag.textContent = `${items[i]} ${weights[i]}g`;
+                        itemsEl.appendChild(tag);
+                    }
+                }
+                this.buildAnalysisEditor();
+            },
+
+            onItemChange(e) {
+                const i = parseInt(e.target.dataset.index);
+                const name = e.target.value;
+                if (!this.state.lastAnalysis) return;
+                this.state.lastAnalysis.items[i] = name;
+                this.recalcItem(i);
+            },
+
+            onItemWeightChange(e) {
+                const i = parseInt(e.target.dataset.index);
+                const g = Math.max(10, parseInt(e.target.value || '0'));
+                if (!this.state.lastAnalysis) return;
+                this.state.lastAnalysis.weights[i] = g;
+                this.recalcItem(i);
+            },
+
+            recalcItem(i) {
+                const db = this.getFoodDB();
+                const la = this.state.lastAnalysis;
+                const name = la.items[i];
+                const g = la.weights[i];
+                const ref = db[name] || db['salada'];
+                const ic = Math.round(ref.cal * g / 100);
+                const ip = Math.round(ref.p * g / 100);
+                const icb = Math.round(ref.c * g / 100);
+                const iff = Math.round(ref.f * g / 100);
+                la.itemMacros[i] = { cal: ic, p: ip, c: icb, f: iff };
+                const mac = document.getElementById(`item-macros-${i}`);
+                if (mac) mac.textContent = `${ip}gP ${icb}gC ${iff}gF`;
+                const totals = la.itemMacros.reduce((acc, m) => ({
+                    cal: acc.cal + m.cal, p: acc.p + m.p, c: acc.c + m.c, f: acc.f + m.f
+                }), { cal: 0, p: 0, c: 0, f: 0 });
+                la.totals = totals;
+                const prevCals = document.getElementById('preview-cals');
+                const prevProt = document.getElementById('preview-prot');
+                const prevCarbs = document.getElementById('preview-carbs');
+                const prevFat = document.getElementById('preview-fat');
+                if (prevCals) prevCals.textContent = totals.cal;
+                if (prevProt) prevProt.textContent = totals.p + 'g';
+                if (prevCarbs) prevCarbs.textContent = totals.c + 'g';
+                if (prevFat) prevFat.textContent = totals.f + 'g';
+            },
+
+            captureMeal(event) {
+                const btn = event.currentTarget;
+                btn.classList.add('scale-90');
+                setTimeout(() => btn.classList.remove('scale-90'), 200);
+                const res = this.state.lastAnalysis;
+                if (!res) {
+                    this.analyzeMedia();
+                    return;
+                }
+                this.state.totals.calories += res.totals.cal;
+                this.state.totals.protein += res.totals.p;
+                this.state.totals.carbs += res.totals.c;
+                this.state.totals.fat += res.totals.f;
+                this.updateDashboardTotals();
+                res.items.forEach((name, idx) => {
+                    const grams = res.weights[idx];
+                    const m = res.itemMacros[idx];
+                    this.mealAddEntry(name, grams, m);
+                });
+                this.renderTodayMeals();
+                this.showToast('Refeição adicionada');
+            },
+
+            addItem(i) {
+                const la = this.state.lastAnalysis;
+                if (!la || la.added[i]) return;
+                la.added[i] = true;
+                const m = la.itemMacros[i];
+                this.state.totals.calories += m.cal;
+                this.state.totals.protein += m.p;
+                this.state.totals.carbs += m.c;
+                this.state.totals.fat += m.f;
+                this.updateDashboardTotals();
+                this.mealAddEntry(la.items[i], la.weights[i], m, [{name: la.items[i], grams: la.weights[i]}], la.image);
+                this.renderTodayMeals();
+                const btn = document.getElementById(`add-item-${i}`);
+                if (btn) {
+                    btn.textContent = 'Adicionado';
+                    btn.disabled = true;
+                    btn.classList.add('opacity-60');
+                }
+                this.showToast(`Item adicionado: ${la.items[i]} ${la.weights[i]}g`);
+            },
+
+            addAllItems(event) {
+                const la = this.state.lastAnalysis;
+                if (!la) return;
+                for (let i = 0; i < la.items.length; i++) {
+                    if (!la.added[i]) this.addItem(i);
+                }
+                this.showToast('Todos os itens adicionados');
+            },
+
+            startWorkout() {
+                this.showToast('Treino iniciado! Timer ativo');
+            },
+
+            showToast(message) {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toast-message');
+                if (toast && toastMsg) {
+                    toastMsg.textContent = message;
+                    toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                    }, 3000);
+                }
+            },
+
+            showProfile() {
+                this.navigate('profile');
+            },
+
+            updateDashboardTotals() {
+                const pr = document.getElementById('protein-remaining');
+                const cr = document.getElementById('carbs-remaining');
+                const fr = document.getElementById('fat-remaining');
+                
+                const dcRemaining = document.getElementById('dash-cals-remaining');
+                const dcGoal = document.getElementById('dash-cals-goal');
+                const dcConsumed = document.getElementById('dash-cals-consumed');
+                const dashRing = document.getElementById('dash-ring-progress');
+
+                const pRing = document.getElementById('protein-ring');
+                const cRing = document.getElementById('carbs-ring');
+                const fRing = document.getElementById('fat-ring');
+
+                // Calculate remaining
+                const pRem = Math.max(0, this.state.goals.protein - this.state.totals.protein);
+                const cRem = Math.max(0, this.state.goals.carbs - this.state.totals.carbs);
+                const fRem = Math.max(0, this.state.goals.fat - this.state.totals.fat);
+                const calRem = Math.max(0, this.state.goals.calories - this.state.totals.calories);
+
+                if (pr) pr.textContent = Math.round(pRem);
+                if (cr) cr.textContent = Math.round(cRem);
+                if (fr) fr.textContent = Math.round(fRem);
+
+                if (dcRemaining) dcRemaining.textContent = new Intl.NumberFormat('pt-BR').format(Math.round(calRem));
+                if (dcGoal) dcGoal.textContent = this.state.goals.calories;
+                if (dcConsumed) dcConsumed.textContent = Math.round(this.state.totals.calories);
+
+                if (dashRing) {
+                    const radius = 70;
+                    const circumference = 2 * Math.PI * radius; // approx 440
+                    const percent = Math.min(1, this.state.totals.calories / this.state.goals.calories);
+                    const offset = circumference - (percent * circumference);
+                    dashRing.style.strokeDashoffset = offset;
+                }
+
+                // Update Macro Rings (radius 28, circ ~175)
+                const macroRadius = 28;
+                const macroCirc = 2 * Math.PI * macroRadius;
+
+                if (pRing) {
+                    const percent = Math.min(1, this.state.totals.protein / this.state.goals.protein);
+                    const offset = macroCirc - (percent * macroCirc);
+                    pRing.style.strokeDashoffset = offset;
+                }
+                if (cRing) {
+                    const percent = Math.min(1, this.state.totals.carbs / this.state.goals.carbs);
+                    const offset = macroCirc - (percent * macroCirc);
+                    cRing.style.strokeDashoffset = offset;
+                }
+                if (fRing) {
+                    const percent = Math.min(1, this.state.totals.fat / this.state.goals.fat);
+                    const offset = macroCirc - (percent * macroCirc);
+                    fRing.style.strokeDashoffset = offset;
+                }
+            }
+            ,
+
+            mealAddEntry(name, grams, macros, ingredients = [], image = null) {
+                const time = new Date();
+                const entry = {
+                    id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                    name,
+                    grams: Math.round(grams),
+                    macros: { cal: Math.round(macros.cal), p: Math.round(macros.p), c: Math.round(macros.c), f: Math.round(macros.f) },
+                    ingredients: ingredients.length ? ingredients : [{ name, grams: Math.round(grams) }],
+                    image: image,
+                    time: `${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}`
+                };
+                this.state.mealsToday.push(entry);
+                try {
+                    localStorage.setItem('wb_meals_today', JSON.stringify(this.state.mealsToday));
+                } catch { }
+
+                // Add to Recents
+                this.addToRecents(entry);
+            },
+
+            addToRecents(meal) {
+                // Check if already exists in recent by name
+                const existing = this.state.recentMeals.findIndex(m => m.name.toLowerCase() === meal.name.toLowerCase());
+                if (existing >= 0) {
+                    this.state.recentMeals.splice(existing, 1);
+                }
+
+                // Add to start
+                this.state.recentMeals.unshift({
+                    id: meal.id || Date.now().toString(36) + Math.random().toString(36).substr(2),
+                    name: meal.name,
+                    macros: meal.macros,
+                    image: meal.image || null, // Preserve image if available
+                    time: meal.time || '00:00'
+                });
+
+                // Limit to 10
+                if (this.state.recentMeals.length > 10) this.state.recentMeals.pop();
+
+                try {
+                    localStorage.setItem('wb_meals_recent', JSON.stringify(this.state.recentMeals));
+                } catch { }
+
+                this.renderRecents();
+            },
+
+            loadRecentMeals() {
+                try {
+                    const saved = localStorage.getItem('wb_meals_recent');
+                    if (saved) {
+                        this.state.recentMeals = JSON.parse(saved) || [];
+                        // Backfill IDs for legacy items
+                        this.state.recentMeals.forEach(m => {
+                            if (!m.id) m.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+                        });
+                    }
+                } catch { }
+            },
+
+            renderRecents() {
+                const cont = document.getElementById('recents-list');
+                if (!cont) return;
+
+                let html = '';
+
+                this.state.recentMeals.slice(0, 5).forEach(m => {
+                    if (m.isAnalyzing) {
+                         html += `
+                            <div class="w-full bg-white dark:bg-dark-card rounded-2xl p-3 shadow-sm border border-brand-neon/50 dark:border-brand-neon/50 animate-pulse flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-800 overflow-hidden flex items-center justify-center relative flex-shrink-0">
+                                    ${m.image ? `<img src="${m.image}" class="w-full h-full object-cover opacity-50" />` : ''}
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <i data-lucide="loader-2" class="w-6 h-6 text-brand-neon animate-spin"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-bold truncate text-brand-neon">Analisando...</div>
+                                    <div class="text-xs text-ios-gray">Aguarde um momento</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (m.pendingResult) {
+                         // Item analyzed but not yet added/confirmed
+                         html += `
+                            <button onclick="app.openMealDetails('${m.id}')" class="w-full bg-white dark:bg-dark-card rounded-2xl p-3 shadow-sm border-2 border-brand-neon dark:border-brand-neon text-left relative overflow-hidden group flex items-center gap-4">
+                                <div class="absolute inset-0 bg-brand-neon/5 group-hover:bg-brand-neon/10 transition-colors"></div>
+                                <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-800 overflow-hidden flex items-center justify-center relative z-10 flex-shrink-0">
+                                     ${m.image ? `<img src="${m.image}" class="w-full h-full object-cover" />` : '<span class="text-xl">✨</span>'}
+                                     <div class="absolute bottom-1 right-1 bg-brand-neon text-black text-[8px] font-bold px-1.5 py-0.5 rounded-full">Pronto</div>
+                                </div>
+                                <div class="flex-1 z-10 relative">
+                                    <div class="text-sm font-bold truncate">${m.name}</div>
+                                    <div class="text-xs text-ios-gray">${m.macros.cal} kcal</div>
+                                </div>
+                                <div class="z-10 relative text-brand-neon">
+                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                                </div>
+                            </button>
+                        `;
+                    } else {
+                        html += `
+                            <button onclick="app.openMealDetails('${m.id}')" class="w-full bg-white dark:bg-dark-card rounded-2xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex items-center gap-4 text-left group">
+                                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 overflow-hidden flex items-center justify-center flex-shrink-0 relative">
+                                    ${m.image ? `<img src="${m.image}" class="w-full h-full object-cover" />` : '<span class="text-xl">🍽️</span>'}
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-white/5 transition-colors"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-sm font-bold truncate">${m.name}</div>
+                                    <div class="text-xs text-ios-gray">${m.macros.cal} kcal</div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-ios-gray/50 group-hover:text-brand-neon transition-colors"></i>
+                            </button>
+                        `;
+                    }
+                });
+
+                // Add button
+                html += `
+                    <button onclick="app.navigate('scanner')" class="w-full h-16 bg-gray-50 dark:bg-white/5 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700 flex items-center justify-center gap-2 text-ios-gray btn-press hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                        <i data-lucide="plus" class="w-5 h-5"></i>
+                        <span class="text-sm font-bold">Adicionar Refeição</span>
+                    </button>
+                `;
+
+                if (this.state.recentMeals.length === 0) {
+                    // Show default if empty
+                    html = `
+                        <div class="w-full bg-white dark:bg-dark-card rounded-2xl p-3 shadow-sm border border-ios-separator/30 dark:border-gray-800 opacity-50 flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-xl bg-gray-100 dark:bg-gray-800 flex-shrink-0"></div>
+                            <div class="flex-1">
+                                <div class="text-sm font-bold truncate">Exemplo</div>
+                                <div class="text-xs text-ios-gray">-- kcal</div>
+                            </div>
+                        </div>
+                     ` + html;
+                }
+
+                cont.innerHTML = html;
+                lucide.createIcons();
+            },
+
+            resumeAnalysis(id) {
+                const item = this.state.recentMeals.find(m => m.id === id);
+                if (!item || !item.pendingResult) return;
+                
+                this.navigate('scanner');
+                // Small delay to ensure view is ready
+                setTimeout(() => {
+                    this.applyVisionResult(item.pendingResult, item.image);
+                    // Remove from pending state (optional, or keep until added)
+                    // this.state.recentMeals = this.state.recentMeals.filter(m => m.id !== id);
+                    // this.renderRecents();
+                }, 100);
+            },
+
+            // --- AUDIO LOGIC ---
+            async toggleRecording() {
+                if (this.state.isRecording) {
+                    this.stopRecording();
+                } else {
+                    this.startRecording();
+                }
+            },
+
+            async startRecording() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "audio/webm";
+                    this.state.mediaRecorder = new MediaRecorder(stream, { mimeType });
+                    this.state.audioChunks = [];
+
+                    this.state.mediaRecorder.ondataavailable = (event) => {
+                        this.state.audioChunks.push(event.data);
+                    };
+
+                    this.state.mediaRecorder.onstop = () => {
+                        this.processAudio();
+                    };
+
+                    this.state.mediaRecorder.start();
+                    this.state.isRecording = true;
+
+                    const overlay = document.getElementById('recording-overlay');
+                    if (overlay) {
+                        overlay.classList.remove('hidden');
+                        overlay.classList.add('flex');
+                    }
+
+                } catch (e) {
+                    console.error(e);
+                    this.showToast('Erro ao acessar microfone');
+                }
+            },
+
+            stopRecording() {
+                if (this.state.mediaRecorder && this.state.isRecording) {
+                    this.state.mediaRecorder.stop();
+                    this.state.isRecording = false;
+
+                    const stream = this.state.mediaRecorder.stream;
+                    stream.getTracks().forEach(track => track.stop());
+
+                    const overlay = document.getElementById('recording-overlay');
+                    if (overlay) {
+                        overlay.classList.add('hidden');
+                        overlay.classList.remove('flex');
+                    }
+                }
+            },
+
+            async processAudio() {
+                const audioBlob = new Blob(this.state.audioChunks, { type: 'audio/webm' });
+
+                const toBase64 = (blob) => new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64 = reader.result.split(',')[1];
+                        resolve(base64);
+                    };
+                    reader.readAsDataURL(blob);
+                });
+
+                try {
+                    this.showToast('Buscando alimentos...');
+                    const base64Audio = await toBase64(audioBlob);
+
+                    // Call backend with audio (removed search:true to use standard item identification)
+                    const res = await fetch('/api/analyze-image', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ audio: base64Audio, provider: 'gemini' })
+                    });
+
+                    if (!res.ok) {
+                        const errText = await res.text();
+                        throw new Error(errText || 'Erro na análise');
+                    }
+
+                    const json = await res.json();
+
+                    if (json.error) throw new Error(json.error);
+
+                    // Standard behavior: show analysis panel (same as gallery/camera)
+                    if (json.result && (json.result.items || json.result.ingredients)) {
+                        this.navigate('scanner');
+                        this.applyVisionResult(json.result);
+                    } else if (json.result && json.result.options) {
+                        // Fallback if backend still sends options
+                        this.showAudioSearchResults(json.result.options);
+                    } else {
+                        throw new Error('Formato de resposta desconhecido');
+                    }
+
+                } catch (e) {
+                    console.error(e);
+                    this.showToast('Erro: ' + e.message);
+                }
+            },
+
+            showAudioSearchResults(options) {
+                const resultsOverlay = document.getElementById('audio-search-results');
+                const list = document.getElementById('audio-search-list');
+                if (!resultsOverlay || !list) return;
+
+                list.innerHTML = '';
+
+                // Add "Concluir" button at the top
+                const header = document.querySelector('#audio-search-results h3');
+                if (header) header.textContent = 'Alimentos Encontrados';
+
+                options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'w-full bg-white/10 hover:bg-white/20 text-left p-4 rounded-2xl border border-white/10 flex items-center justify-between transition-colors group';
+                    btn.id = `search-item-${idx}`;
+
+                    // Create click handler that passes the specific button element
+                    btn.onclick = (e) => this.selectSearchItem(opt, idx);
+
+                    btn.innerHTML = `
+                        <div>
+                            <div class="font-bold text-white text-lg group-hover:text-brand-neon transition-colors">${opt.name}</div>
+                            <div class="text-sm text-white/60">${opt.grams}g • ${opt.calories} kcal</div>
+                            <div class="text-xs text-brand-neon mt-1">${opt.protein}g P • ${opt.carbs}g C • ${opt.fat}g G</div>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                            <i data-lucide="plus" class="w-5 h-5 text-white"></i>
+                        </div>
+                    `;
+                    list.appendChild(btn);
+                });
+
+                resultsOverlay.classList.remove('hidden');
+                resultsOverlay.classList.add('flex');
+                lucide.createIcons();
+            },
+
+            closeAudioSearch() {
+                const resultsOverlay = document.getElementById('audio-search-results');
+                if (resultsOverlay) {
+                    resultsOverlay.classList.add('hidden');
+                    resultsOverlay.classList.remove('flex');
+                }
+            },
+
+            selectSearchItem(item, idx) {
+                // Add to meals
+                this.mealAddEntry(item.name, item.grams, {
+                    cal: item.calories,
+                    p: item.protein,
+                    c: item.carbs,
+                    f: item.fat
+                });
+
+                // Add to daily totals
+                this.state.totals.calories += item.calories;
+                this.state.totals.protein += item.protein;
+                this.state.totals.carbs += item.carbs;
+                this.state.totals.fat += item.fat;
+                this.updateDashboardTotals();
+
+                this.renderTodayMeals();
+                this.showToast('Adicionado: ' + item.name);
+
+                // Visual feedback - change button state
+                const btn = document.getElementById(`search-item-${idx}`);
+                if (btn) {
+                    btn.classList.add('opacity-50', 'pointer-events-none', 'bg-brand-neon/10');
+                    btn.classList.remove('bg-white/10');
+                    const iconDiv = btn.querySelector('.w-8');
+                    if (iconDiv) {
+                        iconDiv.classList.add('bg-brand-neon');
+                        iconDiv.innerHTML = '<i data-lucide="check" class="w-5 h-5 text-black"></i>';
+                    }
+                }
+                lucide.createIcons();
+
+                // Don't close automatically anymore
+                // this.closeAudioSearch(); 
+            },
+
+            renderTodayMeals() {
+                try {
+                    const saved = localStorage.getItem('wb_meals_today');
+                    if (saved) this.state.mealsToday = JSON.parse(saved) || [];
+                } catch { }
+                const cont = document.getElementById('today-meals-list');
+                if (!cont) return;
+                cont.innerHTML = '';
+                if (!this.state.mealsToday.length) {
+                    const empty = document.createElement('div');
+                    empty.className = 'text-xs text-ios-gray dark:text-dark-gray';
+                    empty.textContent = 'Sem refeições ainda';
+                    cont.appendChild(empty);
+                    return;
+                }
+                this.state.mealsToday.slice().reverse().slice(0, 6).forEach(e => {
+                    const chip = document.createElement('div');
+                    chip.className = 'px-3 py-1 rounded-full bg-black/10 dark:bg-white/10 border border-white/10 text-xs font-bold flex items-center gap-2';
+                    const dot = document.createElement('span');
+                    dot.className = 'w-2 h-2 rounded-full bg-brand-neon';
+                    const label = document.createElement('span');
+                    label.textContent = `${e.name} ${e.grams}g • ${e.macros.p}P ${e.macros.c}C ${e.macros.f}G`;
+                    const time = document.createElement('span');
+                    time.className = 'text-[10px] text-ios-gray dark:text-dark-gray';
+                    time.textContent = e.time;
+                    chip.appendChild(dot);
+                    chip.appendChild(label);
+                    chip.appendChild(time);
+                    cont.appendChild(chip);
+                });
+            },
+
+            loadUserName() {
+                try {
+                    const saved = localStorage.getItem('wb_user_name');
+                    if (saved) this.state.userName = saved;
+                } catch { }
+            },
+
+            setUserName(name) {
+                this.state.userName = String(name || '').trim();
+                try { localStorage.setItem('wb_user_name', this.state.userName); } catch { }
+                this.updateTime();
+            }
+        };
+
+        // Initialize 
+        window.addEventListener('load', () => app.init());
+
+        // Handle system theme changes 
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (e.matches) app.toggleTheme(true);
+            else app.toggleTheme(false);
+        }); 
+    </script>
+</body>
+
+</html>
