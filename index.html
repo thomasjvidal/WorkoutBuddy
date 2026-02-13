@@ -732,173 +732,6 @@
                         <i data-lucide="mic" class="w-5 h-5"></i>
                         Gravar Áudio
                     </button>
-                    <button onclick="app.navigate('workout')"
-                        class="flex-shrink-0 bg-white dark:bg-dark-card border border-ios-separator/30 dark:border-gray-700 text-black dark:text-white px-6 py-4 rounded-2xl font-bold flex items-center gap-2 btn-press">
-                        <i data-lucide="play" class="w-5 h-5"></i>
-                        Iniciar Treino
-                    </button>
-                </div>
-            </div>
-
-            <!-- WORKOUT SCREEN -->
-            <div id="screen-workout" class="screen hidden px-5 pt-6 space-y-6">
-                <!-- Workout Carousel -->
-                <div id="workout-carousel" class="flex overflow-x-auto gap-4 snap-x snap-mandatory no-scrollbar pb-4 -mx-5 px-5" onscroll="app.handleCarouselScroll()">
-                    
-                    <!-- Card 1: Peito & Tríceps (HOJE) -->
-                    <div data-workout-id="chest-triceps" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
-                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=600&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-
-                        <div class="absolute top-4 right-4">
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
-                                <i data-lucide="bookmark" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span
-                                    class="bg-brand-neon text-black text-xs font-black px-2 py-1 rounded-md uppercase">Hoje</span>
-                                <span class="text-white/80 text-sm font-medium">45-60 min • Intenso</span>
-                            </div>
-                            <h2 class="text-3xl font-black text-white mb-2">Peito & Tríceps</h2>
-                            <p class="text-white/70 text-sm mb-4">Foco em hipertrofia com ênfase no peitoral superior</p>
-
-                            <button onclick="app.startWorkout()"
-                                class="w-full bg-brand-neon text-black py-4 rounded-2xl font-black text-lg btn-press shadow-neon flex items-center justify-center gap-2">
-                                <i data-lucide="play-circle" class="w-6 h-6"></i>
-                                Começar Agora
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Bíceps & Costas -->
-                    <div data-workout-id="back-biceps" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
-                        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&h=600&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-
-                        <div class="absolute top-4 right-4">
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
-                                <i data-lucide="bookmark" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-white/80 text-sm font-medium">50-65 min • Moderado</span>
-                            </div>
-                            <h2 class="text-3xl font-black text-white mb-2">Bíceps & Costas</h2>
-                            <p class="text-white/70 text-sm mb-4">Desenvolvimento de dorsais e pico de bíceps</p>
-
-                            <button onclick="app.startWorkout()"
-                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
-                                <i data-lucide="play-circle" class="w-6 h-6"></i>
-                                Ver Treino
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Pernas & Panturrilha -->
-                    <div data-workout-id="legs" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
-                        <img src="https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=800&h=600&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-
-                        <div class="absolute top-4 right-4">
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
-                                <i data-lucide="bookmark" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-white/80 text-sm font-medium">60-75 min • Muito Intenso</span>
-                            </div>
-                            <h2 class="text-3xl font-black text-white mb-2">Pernas & Panturrilha</h2>
-                            <p class="text-white/70 text-sm mb-4">Foco total em quadríceps e posteriores</p>
-
-                            <button onclick="app.startWorkout()"
-                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
-                                <i data-lucide="play-circle" class="w-6 h-6"></i>
-                                Ver Treino
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: Trapézio & Ombro -->
-                    <div data-workout-id="shoulders" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
-                        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&h=600&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-
-                        <div class="absolute top-4 right-4">
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
-                                <i data-lucide="bookmark" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-white/80 text-sm font-medium">40-50 min • Moderado</span>
-                            </div>
-                            <h2 class="text-3xl font-black text-white mb-2">Trapézio & Ombro</h2>
-                            <p class="text-white/70 text-sm mb-4">Construção de deltoides 3D e trapézio denso</p>
-
-                            <button onclick="app.startWorkout()"
-                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
-                                <i data-lucide="play-circle" class="w-6 h-6"></i>
-                                Ver Treino
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card 5: Abdominal -->
-                    <div data-workout-id="abs" class="workout-card relative rounded-3xl overflow-hidden h-64 shadow-2xl group flex-shrink-0 w-full snap-center">
-                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=600&fit=crop"
-                            class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-
-                        <div class="absolute top-4 right-4">
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white btn-press">
-                                <i data-lucide="bookmark" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-white/80 text-sm font-medium">15-20 min • Intenso</span>
-                            </div>
-                            <h2 class="text-3xl font-black text-white mb-2">Abdominal</h2>
-                            <p class="text-white/70 text-sm mb-4">Fortalecimento do core e definição</p>
-
-                            <button onclick="app.startWorkout()"
-                                class="w-full bg-white/20 backdrop-blur text-white py-4 rounded-2xl font-black text-lg btn-press border border-white/30 flex items-center justify-center gap-2">
-                                <i data-lucide="play-circle" class="w-6 h-6"></i>
-                                Ver Treino
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Exercise List with Progression -->
-                <div class="space-y-4">
-                    <div class="flex justify-between items-end">
-                        <h3 class="font-black text-xl">Exercícios</h3>
-                        <span id="exercise-count" class="text-sm text-ios-gray">4 exercícios • 16 séries</span>
-                    </div>
-
-                    <div id="exercise-list-container" class="space-y-4">
-                        <!-- Exercises will be injected here by JS -->
-                    </div>
                 </div>
             </div>
 
@@ -1364,13 +1197,6 @@
                         <span class="text-[10px] font-bold">Início</span>
                     </button>
 
-                    <button onclick="app.navigate('stats')"
-                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
-                        data-screen="stats">
-                        <i data-lucide="bar-chart-2" class="w-6 h-6 mb-0.5"></i>
-                        <span class="text-[10px] font-bold">Stats</span>
-                    </button>
-
                     <!-- Center Action Button -->
                     <div class="relative -top-6">
                         <button onclick="app.toggleScannerMenu()"
@@ -1379,17 +1205,18 @@
                         </button>
                     </div>
 
+                    <button onclick="app.navigate('stats')"
+                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
+                        data-screen="stats">
+                        <i data-lucide="bar-chart-2" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Stats</span>
+                    </button>
+
                     <button onclick="app.navigate('profile')"
                         class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
                         data-screen="profile">
                         <i data-lucide="user" class="w-6 h-6 mb-0.5"></i>
                         <span class="text-[10px] font-bold">Perfil</span>
-                    </button>
-
-                    <button onclick="app.showToast('Configurações em breve!')"
-                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300">
-                        <i data-lucide="settings" class="w-6 h-6 mb-0.5"></i>
-                        <span class="text-[10px] font-bold">Ajustes</span>
                     </button>
                 </div>
             </div>
