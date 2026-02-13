@@ -1197,14 +1197,6 @@
                         <span class="text-[10px] font-bold">Início</span>
                     </button>
 
-                    <!-- Center Action Button -->
-                    <div class="relative -top-6">
-                        <button onclick="app.toggleScannerMenu()"
-                            class="w-16 h-16 rounded-full bg-brand-neon text-black flex items-center justify-center shadow-neon btn-press transform hover:scale-105 transition-transform border-4 border-ios-bg dark:border-dark-bg">
-                            <i data-lucide="plus" class="w-8 h-8"></i>
-                        </button>
-                    </div>
-
                     <button onclick="app.navigate('stats')"
                         class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
                         data-screen="stats">
@@ -1218,6 +1210,14 @@
                         <i data-lucide="user" class="w-6 h-6 mb-0.5"></i>
                         <span class="text-[10px] font-bold">Perfil</span>
                     </button>
+
+                    <!-- Scanner Button on the right -->
+                    <div class="relative">
+                        <button onclick="app.toggleScannerMenu()"
+                            class="w-12 h-12 rounded-full bg-brand-neon text-black flex items-center justify-center shadow-neon btn-press transform hover:scale-105 transition-transform border-2 border-ios-bg dark:border-dark-bg">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
