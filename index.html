@@ -270,7 +270,7 @@
                         <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-neon to-brand-lime flex items-center justify-center shadow-neon mx-auto mb-6 transform -rotate-6">
                             <i data-lucide="zap" class="w-10 h-10 text-black"></i>
                         </div>
-                        <h1 class="text-4xl font-black tracking-tight">Macro AI</h1>
+                        <h1 class="text-4xl font-extrabold tracking-tight">Macro AI</h1>
                         <p class="text-ios-gray dark:text-dark-gray font-medium">Seu parceiro de evolução diária</p>
                     </div>
 
@@ -279,36 +279,36 @@
                         <div id="form-login" class="space-y-4">
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-ios-gray uppercase ml-1">Email</label>
-                                <input type="email" id="login-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="exemplo@email.com">
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Senha</label>
-                                <input type="password" id="login-password" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="••••••••">
-                            </div>
-                            <button onclick="app.handleAuth('login')" class="w-full bg-brand-neon text-black font-black py-4 rounded-2xl shadow-neon btn-press mt-2">
-                                Entrar
-                            </button>
+                                <input type="email" id="login-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-semibold transition-all" placeholder="exemplo@email.com">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-ios-gray uppercase ml-1">Senha</label>
+                            <input type="password" id="login-password" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-semibold transition-all" placeholder="••••••••">
+                        </div>
+                        <button onclick="app.handleAuth('login')" class="w-full bg-brand-neon text-black font-bold py-4 rounded-2xl shadow-neon btn-press mt-2">
+                            Entrar
+                        </button>
                         </div>
 
                         <!-- Register Form (Hidden) -->
                         <div id="form-register" class="space-y-4 hidden">
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-ios-gray uppercase ml-1">Nome Completo</label>
-                                <input type="text" id="reg-name" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="Seu nome">
+                                <input type="text" id="reg-name" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-semibold transition-all" placeholder="Seu nome">
                             </div>
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-ios-gray uppercase ml-1">Nome de Usuário (@)</label>
-                                <input type="text" id="reg-username" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="ex: @joao_fit">
+                                <input type="text" id="reg-username" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-semibold transition-all" placeholder="ex: @joao_fit">
                             </div>
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-ios-gray uppercase ml-1">Email</label>
-                                <input type="email" id="reg-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="exemplo@email.com">
+                                <input type="email" id="reg-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-semibold transition-all" placeholder="exemplo@email.com">
                             </div>
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-ios-gray uppercase ml-1">Senha</label>
-                                <input type="password" id="reg-password" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="Mínimo 6 caracteres">
+                                <input type="password" id="reg-password" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-semibold transition-all" placeholder="Mínimo 6 caracteres">
                             </div>
-                            <button onclick="app.handleAuth('register')" class="w-full bg-brand-neon text-black font-black py-4 rounded-2xl shadow-neon btn-press mt-2">
+                            <button onclick="app.handleAuth('register')" class="w-full bg-brand-neon text-black font-bold py-4 rounded-2xl shadow-neon btn-press mt-2">
                                 Criar Conta
                             </button>
                         </div>
@@ -352,7 +352,7 @@
                     <div>
                         <h1 class="text-xs font-bold uppercase tracking-widest text-ios-gray dark:text-dark-gray">
                             Macro AI</h1>
-                        <p class="text-lg font-black leading-none" id="header-greeting">Bom dia</p>
+                        <p class="text-lg font-bold leading-none" id="header-greeting">Bom dia</p>
                     </div>
                 </div>
 
@@ -424,9 +424,9 @@
                                 <div class="flex flex-col">
                                     <span class="text-[10px] font-bold text-ios-gray uppercase tracking-widest mb-1">Calorias Restantes</span>
                                     <div class="flex items-baseline gap-1">
-                                        <span class="text-4xl font-black text-black dark:text-white" id="dash-cals-remaining">--</span>
-                                        <span class="text-sm font-bold text-ios-gray">kcal</span>
-                                    </div>
+                                <span class="text-4xl font-extrabold text-black dark:text-white" id="dash-cals-remaining">--</span>
+                                <span class="text-sm font-bold text-ios-gray">kcal</span>
+                            </div>
                                 </div>
                                 <div class="bg-brand-neon/20 px-3 py-1 rounded-full">
                                     <span class="text-[10px] font-black text-brand-neon uppercase">Meta: <span id="dash-cals-goal">--</span></span>
@@ -1089,7 +1089,7 @@
                                      <i data-lucide="bookmark" class="w-5 h-5 text-ios-gray"></i>
                                      <span id="detail-meal-time" class="bg-gray-100 dark:bg-dark-elevated px-3 py-1 rounded-full text-xs font-bold text-ios-gray">00:00</span>
                                  </div>
-                                 <h1 id="detail-meal-name" class="text-3xl font-black leading-tight">Nome da Refeição</h1>
+                                 <h1 id="detail-meal-name" class="text-3xl font-extrabold leading-tight">Nome da Refeição</h1>
                              </div>
                              <button class="flex items-center gap-2 bg-white dark:bg-dark-card border border-ios-separator/30 dark:border-gray-800 px-4 py-2 rounded-2xl shadow-sm">
                                  <span class="font-bold">1</span>
