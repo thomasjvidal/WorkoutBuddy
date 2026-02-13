@@ -1560,7 +1560,10 @@
                 const savedAuth = localStorage.getItem('macro_ai_auth');
                 if (savedAuth === 'true') {
                     this.state.isLoggedIn = true;
-                    document.getElementById('screen-auth').classList.add('hidden');
+                    const authScreen = document.getElementById('screen-auth');
+                    if (authScreen) {
+                        authScreen.classList.add('hidden');
+                    }
                 }
 
                 // Check system preference for dark mode 
