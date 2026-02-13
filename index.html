@@ -297,6 +297,10 @@
                                 <input type="text" id="reg-name" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="Seu nome">
                             </div>
                             <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Nome de Usuário (@)</label>
+                                <input type="text" id="reg-username" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="ex: @joao_fit">
+                            </div>
+                            <div class="space-y-1">
                                 <label class="text-xs font-bold text-ios-gray uppercase ml-1">Email</label>
                                 <input type="email" id="reg-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="exemplo@email.com">
                             </div>
@@ -1600,9 +1604,37 @@
                 const email = type === 'login' ? document.getElementById('login-email').value : document.getElementById('reg-email').value;
                 const pass = type === 'login' ? document.getElementById('login-password').value : document.getElementById('reg-password').value;
                 
-                if (!email || !pass || (type === 'register' && !document.getElementById('reg-name').value)) {
-                    this.showToast('Por favor, preencha todos os campos');
-                    return;
+                if (type === 'register') {
+                    const name = document.getElementById('reg-name').value;
+                    const username = document.getElementById('reg-username').value;
+                    
+                    if (!name || !username || !email || !pass) {
+                        this.showToast('Por favor, preencha todos os campos');
+                        return;
+                    }
+
+                    // Validate username format (must start with @)
+                    if (!username.startsWith('@')) {
+                        this.showToast('O nome de usuário deve começar com @');
+                        return;
+                    }
+
+                    // Simulate username uniqueness check
+                    // In a real app, this would be a database query
+                    const existingUsers = JSON.parse(localStorage.getItem('macro_ai_registered_usernames') || '["@alexfit", "@macro_admin"]');
+                    if (existingUsers.includes(username.toLowerCase())) {
+                        this.showToast('Este @ já está em uso. Escolha outro.');
+                        return;
+                    }
+
+                    // Add to simulated registry
+                    existingUsers.push(username.toLowerCase());
+                    localStorage.setItem('macro_ai_registered_usernames', JSON.stringify(existingUsers));
+                } else {
+                    if (!email || !pass) {
+                        this.showToast('Por favor, preencha todos os campos');
+                        return;
+                    }
                 }
 
                 // Simulate auth process
@@ -1614,7 +1646,9 @@
                     
                     if (type === 'register') {
                         const name = document.getElementById('reg-name').value;
+                        const username = document.getElementById('reg-username').value;
                         this.state.userProfile.name = name;
+                        this.state.userProfile.username = username;
                         this.state.userName = name;
                         localStorage.setItem('macro_ai_profile', JSON.stringify(this.state.userProfile));
                         this.updateTime();
