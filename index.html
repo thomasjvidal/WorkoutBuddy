@@ -258,6 +258,84 @@
     <!-- App Container -->
     <div id="app" class="pb-24 max-w-md mx-auto relative min-h-screen flex flex-col">
 
+        <!-- AUTH SCREEN (Overlay) -->
+        <div id="screen-auth" class="fixed inset-0 z-[200] bg-ios-bg dark:bg-dark-bg flex flex-col animate-fade-in">
+            <div class="flex-1 px-8 flex flex-col justify-center relative overflow-hidden">
+                <!-- Decorative Elements -->
+                <div class="absolute top-[-10%] left-[-10%] w-64 h-64 bg-brand-neon/20 rounded-full blur-[80px]"></div>
+                <div class="absolute bottom-[-10%] right-[-10%] w-64 h-64 bg-brand-indigo/20 rounded-full blur-[80px]"></div>
+
+                <div class="relative z-10 space-y-8">
+                    <div class="text-center space-y-2">
+                        <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-neon to-brand-lime flex items-center justify-center shadow-neon mx-auto mb-6 transform -rotate-6">
+                            <i data-lucide="zap" class="w-10 h-10 text-black"></i>
+                        </div>
+                        <h1 class="text-4xl font-black tracking-tight">WorkoutBuddy</h1>
+                        <p class="text-ios-gray dark:text-dark-gray font-medium">Seu parceiro de evolução diária</p>
+                    </div>
+
+                    <div id="auth-forms" class="space-y-4">
+                        <!-- Login Form -->
+                        <div id="form-login" class="space-y-4">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Email</label>
+                                <input type="email" id="login-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="exemplo@email.com">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Senha</label>
+                                <input type="password" id="login-password" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="••••••••">
+                            </div>
+                            <button onclick="app.handleAuth('login')" class="w-full bg-brand-neon text-black font-black py-4 rounded-2xl shadow-neon btn-press mt-2">
+                                Entrar
+                            </button>
+                        </div>
+
+                        <!-- Register Form (Hidden) -->
+                        <div id="form-register" class="space-y-4 hidden">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Nome Completo</label>
+                                <input type="text" id="reg-name" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="Seu nome">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Email</label>
+                                <input type="email" id="reg-email" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="exemplo@email.com">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Senha</label>
+                                <input type="password" id="reg-password" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold transition-all" placeholder="Mínimo 6 caracteres">
+                            </div>
+                            <button onclick="app.handleAuth('register')" class="w-full bg-brand-neon text-black font-black py-4 rounded-2xl shadow-neon btn-press mt-2">
+                                Criar Conta
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button id="auth-toggle-btn" onclick="app.toggleAuthMode()" class="text-sm font-bold text-ios-gray dark:text-dark-gray hover:text-brand-neon transition-colors">
+                            Não tem uma conta? <span class="text-brand-neon">Cadastre-se</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-4 py-4">
+                        <div class="flex-1 h-px bg-ios-separator/20 dark:bg-gray-800"></div>
+                        <span class="text-[10px] font-bold text-ios-gray uppercase">Ou entre com</span>
+                        <div class="flex-1 h-px bg-ios-separator/20 dark:bg-gray-800"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="flex items-center justify-center gap-2 bg-white dark:bg-dark-card p-3 rounded-xl border border-ios-separator/20 dark:border-gray-800 btn-press">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                            <span class="text-xs font-bold">Google</span>
+                        </button>
+                        <button class="flex items-center justify-center gap-2 bg-white dark:bg-dark-card p-3 rounded-xl border border-ios-separator/20 dark:border-gray-800 btn-press">
+                            <i data-lucide="apple" class="w-5 h-5"></i>
+                            <span class="text-xs font-bold">Apple</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Header Global -->
         <header
             class="sticky top-0 z-40 px-5 py-3 glass-panel bg-white/80 dark:bg-dark-card/80 border-b border-ios-separator/30 dark:border-gray-800">
@@ -964,7 +1042,7 @@
                         </div>
                         <i data-lucide="chevron-right" class="w-5 h-5 text-ios-gray"></i>
                     </button>
-                    <button class="w-full px-5 py-4 flex items-center justify-between btn-press text-red-500">
+                    <button onclick="app.logout()" class="w-full px-5 py-4 flex items-center justify-between btn-press text-red-500">
                         <div class="flex items-center gap-3">
                             <i data-lucide="log-out" class="w-5 h-5"></i>
                             <span class="font-semibold">Sair</span>
@@ -1416,6 +1494,8 @@
                     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop'
                 },
                 currentWorkoutId: 'chest-triceps',
+                isLoggedIn: false,
+                authMode: 'login' // 'login' or 'register'
             },
 
             workouts: {
@@ -1472,6 +1552,13 @@
             },
 
             init() {
+                // Check if user is already logged in
+                const savedAuth = localStorage.getItem('workout_buddy_auth');
+                if (savedAuth === 'true') {
+                    this.state.isLoggedIn = true;
+                    document.getElementById('screen-auth').classList.add('hidden');
+                }
+
                 // Check system preference for dark mode 
                 const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 this.toggleTheme(prefersDark);
@@ -1487,6 +1574,68 @@
                 // Simulate camera 
                 this.initCamera();
                 this.bindMediaReady();
+            },
+
+            toggleAuthMode() {
+                const isLogin = this.state.authMode === 'login';
+                this.state.authMode = isLogin ? 'register' : 'login';
+                
+                const formLogin = document.getElementById('form-login');
+                const formRegister = document.getElementById('form-register');
+                const toggleBtn = document.getElementById('auth-toggle-btn');
+                
+                if (isLogin) {
+                    formLogin.classList.add('hidden');
+                    formRegister.classList.remove('hidden');
+                    toggleBtn.innerHTML = 'Já tem uma conta? <span class="text-brand-neon">Faça Login</span>';
+                } else {
+                    formLogin.classList.remove('hidden');
+                    formRegister.classList.add('hidden');
+                    toggleBtn.innerHTML = 'Não tem uma conta? <span class="text-brand-neon">Cadastre-se</span>';
+                }
+            },
+
+            handleAuth(type) {
+                // Basic validation
+                const email = type === 'login' ? document.getElementById('login-email').value : document.getElementById('reg-email').value;
+                const pass = type === 'login' ? document.getElementById('login-password').value : document.getElementById('reg-password').value;
+                
+                if (!email || !pass || (type === 'register' && !document.getElementById('reg-name').value)) {
+                    this.showToast('Por favor, preencha todos os campos');
+                    return;
+                }
+
+                // Simulate auth process
+                this.showToast(type === 'login' ? 'Entrando...' : 'Criando conta...');
+                
+                setTimeout(() => {
+                    this.state.isLoggedIn = true;
+                    localStorage.setItem('workout_buddy_auth', 'true');
+                    
+                    if (type === 'register') {
+                        const name = document.getElementById('reg-name').value;
+                        this.state.userProfile.name = name;
+                        this.state.userName = name;
+                        localStorage.setItem('workout_buddy_profile', JSON.stringify(this.state.userProfile));
+                        this.updateTime();
+                    }
+
+                    // Hide auth screen with animation
+                    const authScreen = document.getElementById('screen-auth');
+                    authScreen.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        authScreen.classList.add('hidden');
+                        this.showToast('Bem-vindo ao WorkoutBuddy!');
+                    }, 300);
+                }, 1500);
+            },
+
+            logout() {
+                this.state.isLoggedIn = false;
+                localStorage.removeItem('workout_buddy_auth');
+                const authScreen = document.getElementById('screen-auth');
+                authScreen.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+                this.showToast('Sessão encerrada');
             },
 
             loadUserProfile() {
