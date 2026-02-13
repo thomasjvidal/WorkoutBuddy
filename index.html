@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://images.pexels.com; connect-src 'self' https://*.vercel.app https://api.openai.com https://generativelanguage.googleapis.com; media-src 'self' blob:;">
-    <title>WorkoutBuddy Pro</title>
+    <title>Macro AI Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -270,7 +270,7 @@
                         <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-neon to-brand-lime flex items-center justify-center shadow-neon mx-auto mb-6 transform -rotate-6">
                             <i data-lucide="zap" class="w-10 h-10 text-black"></i>
                         </div>
-                        <h1 class="text-4xl font-black tracking-tight">WorkoutBuddy</h1>
+                        <h1 class="text-4xl font-black tracking-tight">Macro AI</h1>
                         <p class="text-ios-gray dark:text-dark-gray font-medium">Seu parceiro de evolução diária</p>
                     </div>
 
@@ -347,7 +347,7 @@
                     </div>
                     <div>
                         <h1 class="text-xs font-bold uppercase tracking-widest text-ios-gray dark:text-dark-gray">
-                            WorkoutBuddy</h1>
+                            Macro AI</h1>
                         <p class="text-lg font-black leading-none" id="header-greeting">Bom dia</p>
                     </div>
                 </div>
@@ -1553,7 +1553,7 @@
 
             init() {
                 // Check if user is already logged in
-                const savedAuth = localStorage.getItem('workout_buddy_auth');
+                const savedAuth = localStorage.getItem('macro_ai_auth');
                 if (savedAuth === 'true') {
                     this.state.isLoggedIn = true;
                     document.getElementById('screen-auth').classList.add('hidden');
@@ -1610,36 +1610,46 @@
                 
                 setTimeout(() => {
                     this.state.isLoggedIn = true;
-                    localStorage.setItem('workout_buddy_auth', 'true');
+                    localStorage.setItem('macro_ai_auth', 'true');
                     
                     if (type === 'register') {
                         const name = document.getElementById('reg-name').value;
                         this.state.userProfile.name = name;
                         this.state.userName = name;
-                        localStorage.setItem('workout_buddy_profile', JSON.stringify(this.state.userProfile));
+                        localStorage.setItem('macro_ai_profile', JSON.stringify(this.state.userProfile));
                         this.updateTime();
                     }
 
                     // Hide auth screen with animation
                     const authScreen = document.getElementById('screen-auth');
-                    authScreen.classList.add('opacity-0', 'pointer-events-none');
-                    setTimeout(() => {
-                        authScreen.classList.add('hidden');
-                        this.showToast('Bem-vindo ao WorkoutBuddy!');
-                    }, 300);
+                    if (authScreen) {
+                        authScreen.classList.add('opacity-0', 'pointer-events-none');
+                        setTimeout(() => {
+                            authScreen.classList.add('hidden');
+                            this.showToast('Bem-vindo ao Macro AI!');
+                        }, 300);
+                    }
                 }, 1500);
             },
 
             logout() {
-                this.state.isLoggedIn = false;
-                localStorage.removeItem('workout_buddy_auth');
-                const authScreen = document.getElementById('screen-auth');
-                authScreen.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
-                this.showToast('Sessão encerrada');
-            },
+                 this.state.isLoggedIn = false;
+                 localStorage.removeItem('macro_ai_auth');
+                 
+                 const authScreen = document.getElementById('screen-auth');
+                 if (authScreen) {
+                     authScreen.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+                     authScreen.classList.add('animate-fade-in');
+                 }
+                 
+                 this.showToast('Sessão encerrada');
+                 
+                 // Voltar para a tela inicial do dashboard por trás do login
+                 this.navigate('dashboard');
+             },
 
             loadUserProfile() {
-                const savedProfile = localStorage.getItem('workout_buddy_profile');
+                const savedProfile = localStorage.getItem('macro_ai_profile');
                 if (savedProfile) {
                     try {
                         this.state.userProfile = JSON.parse(savedProfile);
@@ -1761,7 +1771,7 @@
                 }
 
                 // Save to LocalStorage
-                localStorage.setItem('workout_buddy_profile', JSON.stringify(this.state.userProfile));
+                localStorage.setItem('macro_ai_profile', JSON.stringify(this.state.userProfile));
 
                 this.closeEditProfile();
             },
