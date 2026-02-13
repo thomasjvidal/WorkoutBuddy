@@ -1364,11 +1364,11 @@
                         <span class="text-[10px] font-bold">Início</span>
                     </button>
 
-                    <button onclick="app.navigate('workout')"
+                    <button onclick="app.navigate('stats')"
                         class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
-                        data-screen="workout">
-                        <i data-lucide="dumbbell" class="w-6 h-6 mb-0.5"></i>
-                        <span class="text-[10px] font-bold">Treino</span>
+                        data-screen="stats">
+                        <i data-lucide="bar-chart-2" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Stats</span>
                     </button>
 
                     <!-- Center Action Button -->
@@ -1379,18 +1379,17 @@
                         </button>
                     </div>
 
-                    <button onclick="app.navigate('stats')"
-                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
-                        data-screen="stats">
-                        <i data-lucide="bar-chart-2" class="w-6 h-6 mb-0.5"></i>
-                        <span class="text-[10px] font-bold">Stats</span>
-                    </button>
-
                     <button onclick="app.navigate('profile')"
                         class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
                         data-screen="profile">
                         <i data-lucide="user" class="w-6 h-6 mb-0.5"></i>
                         <span class="text-[10px] font-bold">Perfil</span>
+                    </button>
+
+                    <button onclick="app.showToast('Configurações em breve!')"
+                        class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300">
+                        <i data-lucide="settings" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">Ajustes</span>
                     </button>
                 </div>
             </div>
