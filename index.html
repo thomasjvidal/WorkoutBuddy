@@ -2743,7 +2743,7 @@
                     typingDiv.className = 'flex gap-3 animate-fade-in';
                     typingDiv.innerHTML = `
                         <div class="w-8 h-8 rounded-full bg-brand-neon flex items-center justify-center shadow-neon shrink-0">
-                            <i data-lucide="bot" class="w-5 h-5 text-black"></i>
+                            <i data-lucide="utensils" class="w-5 h-5 text-black"></i>
                         </div>
                         <div class="bg-white dark:bg-dark-elevated p-4 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 dark:border-gray-800 flex items-center gap-1">
                             <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
@@ -2753,6 +2753,7 @@
                     `;
                     container.appendChild(typingDiv);
                     container.scrollTop = container.scrollHeight;
+                    if(window.lucide) lucide.createIcons();
                 }
 
                 setTimeout(() => {
@@ -2762,38 +2763,82 @@
 
                     let response = '';
                     const lower = userText.toLowerCase();
-                    const name = this.state.userName.split(' ')[0];
+                    const name = (this.state.userName || 'Atleta').split(' ')[0];
+                    const now = new Date();
+                    const hour = now.getHours();
+
+                    // Context Data
+                    const totals = this.state.totals || { calories: 0, protein: 0, water: 0 };
+                    const goalCal = this.state.userProfile.goal === 'gain' ? 2500 : 1800;
+                    const goalProt = this.state.userProfile.goal === 'gain' ? 160 : 140;
+                    const lastMeal = this.state.recentMeals && this.state.recentMeals.length > 0 ? this.state.recentMeals[0] : null;
+
+                    // Time Context
+                    let timeGreeting = 'Bom dia';
+                    if (hour >= 12) timeGreeting = 'Boa tarde';
+                    if (hour >= 18) timeGreeting = 'Boa noite';
 
                     // CONVERSATION RULES
+
+                    // 1. Actions & Commands
                     if (actionType === 'photo' || lower.includes('foto')) {
                         response = `Analisei sua foto. Parece uma refeição equilibrada! 🥗\n\nIdentifiquei:\n• Proteína magra (~25g)\n• Carboidratos complexos (~40g)\n• Vegetais variados\n\nEstimativa: 450 kcal. Posso registrar para você?`;
                     }
                     else if (actionType === 'suggest_diet' || lower.includes('dieta') || lower.includes('sugira')) {
-                        const calGoal = this.state.userProfile.goal === 'gain' ? '2500' : '1800';
-                        response = `Aqui está uma sugestão para hoje (baseada em seus favoritos):\n\n• Café: Ovos mexidos + Fruta\n• Almoço: Frango grelhado + Arroz + Salada\n• Lanche: Whey Protein + Aveia\n• Janta: Peixe + Legumes\n\nEstimativa: ~${calGoal}kcal | 160g Prot`;
+                        response = `Aqui está uma sugestão para hoje (baseada em seus favoritos):\n\n• Café: Ovos mexidos + Fruta\n• Almoço: Frango grelhado + Arroz + Salada\n• Lanche: Whey Protein + Aveia\n• Janta: Peixe + Legumes\n\nEstimativa: ~${goalCal}kcal | ${goalProt}g Prot`;
                     } 
                     else if (actionType === 'analyze_7days' || lower.includes('analise') || lower.includes('7 dias')) {
                         const meals = this.state.recentMeals || [];
                         const count = meals.length;
                         const consistency = count > 5 ? 'Alta' : (count > 0 ? 'Média' : 'Baixa');
-                        response = `📊 Análise Semanal:\n\n• Refeições registradas: ${count}\n• Consistência: ${consistency}\n• Média Calórica: ~2100kcal\n\nVocê está no caminho certo! Mantenha o foco nas proteínas.`;
+                        response = `📊 Análise Semanal:\n\n• Refeições registradas: ${count}\n• Consistência: ${consistency}\n• Média Calórica: ~${Math.round(totals.calories * 0.8)}kcal\n\nVocê está no caminho certo! Mantenha o foco nas proteínas.`;
                     }
-                    else if (lower.includes('oi') || lower.includes('olá') || lower.includes('e aí') || lower.includes('bom dia') || lower.includes('boa tarde') || lower.includes('boa noite')) {
-                        const greetings = [
-                            `Olá, ${name}! Como está sua energia hoje?`,
-                            `Oi, ${name}. Pronto para bater suas metas?`,
-                            `Fala, ${name}! Em que posso ajudar na sua dieta agora?`
-                        ];
-                        response = greetings[Math.floor(Math.random() * greetings.length)];
+                    
+                    // 2. Greetings & Personal Status
+                    else if (['oi', 'olá', 'ola', 'e aí', 'bom dia', 'boa tarde', 'boa noite'].some(g => lower.includes(g))) {
+                        const calPercent = Math.round((totals.calories / goalCal) * 100);
+                        let statusMsg = "";
+                        if (calPercent < 30) statusMsg = "Vamos começar a abastecer esse corpo?";
+                        else if (calPercent < 70) statusMsg = "Seguindo bem o plano hoje!";
+                        else statusMsg = "Meta quase batida. Ótimo trabalho!";
+
+                        response = `${timeGreeting}, ${name}! ${statusMsg} Como posso ajudar agora?`;
                     }
-                    else if (lower.includes('obrigado') || lower.includes('valeu') || lower.includes('tks')) {
-                        response = "Conte comigo. Vamos juntos nessa! 💪";
+                    
+                    // 3. Progress / Stats Queries
+                    else if (['progresso', 'meta', 'como estou', 'calorias', 'proteina', 'quanto falta'].some(w => lower.includes(w))) {
+                        const calLeft = Math.max(0, goalCal - totals.calories);
+                        const protLeft = Math.max(0, goalProt - totals.protein);
+                        
+                        if (calLeft === 0) {
+                             response = `Você já bateu sua meta de calorias hoje! 🔥 Foco total na hidratação agora.`;
+                        } else {
+                             response = `Resumo do seu dia:\n\n🔥 ${Math.round(totals.calories)} / ${goalCal} kcal\n🥩 ${Math.round(totals.protein)} / ${goalProt} g proteína\n\nFaltam ${Math.round(calLeft)} kcal e ${Math.round(protLeft)}g de proteína. Bora buscar?`;
+                        }
                     }
+
+                    // 4. Last Meal Context
+                    else if (['o que comi', 'ultima refeição', 'última refeição'].some(w => lower.includes(w))) {
+                        if (lastMeal) {
+                            response = `Sua última refeição foi "${lastMeal.name}" com ${lastMeal.calories} kcal. Estava boa? 😋`;
+                        } else {
+                            response = `Ainda não registrei nenhuma refeição hoje. Que tal começar agora?`;
+                        }
+                    }
+
+                    // 5. Contextual Needs
                     else if (lower.includes('fome') || lower.includes('faminto')) {
-                        response = "Se está com fome, priorize proteínas e fibras para maior saciedade. Que tal um iogurte com whey ou ovos agora?";
+                        const calLeft = Math.max(0, goalCal - totals.calories);
+                        if (calLeft < 200) {
+                            response = `Cuidado, você já está perto do limite calórico. Tente beber água, chá ou comer vegetais à vontade (pepino, aipo) para enganar a fome.`;
+                        } else {
+                            const suggestions = hour < 12 ? "ovos ou iogurte" : (hour < 18 ? "uma fruta com whey" : "uma proteína leve (peixe/frango)");
+                            response = `Com fome? Você ainda tem ${Math.round(calLeft)} kcal disponíveis. Minha sugestão para agora: ${suggestions}.`;
+                        }
                     }
                     else if (lower.includes('cansado') || lower.includes('preguiça') || lower.includes('desanimo')) {
-                        response = "O descanso também faz parte do treino, mas não deixe a peteca cair. Se for treinar, tome um café preto e vá sem pensar. A motivação vem depois do primeiro exercício! ⚡";
+                        const workoutTip = hour < 15 ? "um café preto" : "uma música animada";
+                        response = `Eu sei, ${name}. Mas o descanso também faz parte. Se ainda não treinou, tente ${workoutTip} e vá sem pensar. A motivação vem depois do primeiro exercício! ⚡`;
                     }
                     else if (lower.includes('doce') || lower.includes('chocolate') || lower.includes('açucar')) {
                         response = "Vontade de doce? Tente uma fruta com canela ou um quadradinho de chocolate 70%. O equilíbrio é a chave, não a restrição total.";
@@ -2802,21 +2847,20 @@
                         response = "Uma refeição livre não estraga seu progresso, desde que seja a exceção. Aproveite com moderação e volte ao foco na próxima refeição!";
                     }
                     else if (lower.includes('agua') || lower.includes('água') || lower.includes('sede')) {
-                        response = "Hidratação é fundamental para o metabolismo e performance. Já bebeu seus 500ml de água nesta manhã?";
+                        const waterLeft = Math.max(0, 3000 - totals.water);
+                        response = `Hidratação é fundamental. Você já bebeu ${totals.water}ml hoje. ${waterLeft > 0 ? `Faltam ${waterLeft}ml.` : 'Meta batida!'} Mantenha a garrafa por perto.`;
                     }
                     else if (lower.includes('treino') || lower.includes('academia') || lower.includes('musculação')) {
                         response = "Treino é constância. Lembre-se de registrar seu pós-treino para garantir a recuperação muscular. O que vai treinar hoje?";
                     }
-                    else if (lower.includes('objetivo') || lower.includes('meta')) {
-                        const goal = this.state.userProfile.goal === 'gain' ? 'ganhar massa' : 'perder gordura';
-                        response = `Seu objetivo atual é ${goal}. Mantenha o déficit calórico controlado e proteína alta. Estou aqui para monitorar isso com você.`;
+                    else if (lower.includes('obrigado') || lower.includes('valeu') || lower.includes('tks')) {
+                        response = `Tamo junto, ${name}! Qualquer coisa, é só chamar. 💪`;
                     }
-                    else if (lower.includes('receita') || lower.includes('cozinhar')) {
-                        response = "Posso sugerir receitas rápidas e fit. O que você tem na geladeira? Frango, ovos, atum?";
-                    }
+                    
+                    // 6. Fallback
                     else {
                         const fallbacks = [
-                            "Entendi. O importante é manter a constância.",
+                            `Entendi, ${name}. O importante é manter a constância.`,
                             "Pode me dar mais detalhes sobre isso?",
                             "Interessante. Como isso se encaixa na sua dieta hoje?",
                             "Estou aqui para ajudar. Quer registrar alguma refeição?",
