@@ -259,7 +259,7 @@
     <div id="app" class="pb-24 max-w-md mx-auto relative min-h-screen flex flex-col">
 
         <!-- AUTH SCREEN (Overlay) -->
-        <div id="screen-auth" class="fixed inset-0 z-[200] bg-ios-bg dark:bg-dark-bg flex flex-col animate-fade-in">
+        <div id="screen-auth" class="fixed inset-0 z-[200] bg-ios-bg dark:bg-dark-bg flex flex-col animate-fade-in transition-all duration-500">
             <div class="flex-1 px-8 flex flex-col justify-center relative overflow-hidden">
                 <!-- Decorative Elements -->
                 <div class="absolute top-[-10%] left-[-10%] w-64 h-64 bg-brand-neon/20 rounded-full blur-[80px]"></div>
@@ -267,8 +267,8 @@
 
                 <div class="relative z-10 space-y-8">
                     <div class="text-center space-y-2">
-                        <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-neon to-brand-lime flex items-center justify-center shadow-neon mx-auto mb-6 transform -rotate-6">
-                            <i data-lucide="zap" class="w-10 h-10 text-black"></i>
+                        <div class="w-20 h-20 rounded-3xl bg-black flex items-center justify-center shadow-neon mx-auto mb-6 transform -rotate-6 overflow-hidden border border-brand-neon/20">
+                            <img src="logo.png" alt="Macro AI" class="w-full h-full object-cover">
                         </div>
                         <h1 class="text-4xl font-extrabold tracking-tight">Macro AI</h1>
                         <p class="text-ios-gray dark:text-dark-gray font-medium">Seu parceiro de evolução diária</p>
@@ -316,8 +316,8 @@
 
                     <div class="text-center">
                         <button id="auth-toggle-btn" onclick="app.toggleAuthMode()" class="text-sm font-bold text-ios-gray dark:text-dark-gray hover:text-brand-neon transition-colors">
-                            Não tem uma conta? <span class="text-brand-neon">Cadastre-se</span>
-                        </button>
+                    Não tem uma conta? <span class="text-brand-neon">Cadastre-se</span>
+                </button>
                     </div>
 
                     <div class="flex items-center gap-4 py-4">
@@ -328,7 +328,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <button class="flex items-center justify-center gap-2 bg-white dark:bg-dark-card p-3 rounded-xl border border-ios-separator/20 dark:border-gray-800 btn-press">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                            <svg class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.43-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
                             <span class="text-xs font-bold">Google</span>
                         </button>
                         <button class="flex items-center justify-center gap-2 bg-white dark:bg-dark-card p-3 rounded-xl border border-ios-separator/20 dark:border-gray-800 btn-press">
@@ -340,19 +340,129 @@
             </div>
         </div>
 
+        <!-- ONBOARDING SCREEN (Diagnostic) -->
+        <div id="screen-onboarding" class="screen hidden fixed inset-0 z-[150] bg-ios-bg dark:bg-dark-bg flex flex-col overflow-y-auto px-8 py-12">
+            <div class="max-w-md mx-auto w-full space-y-8">
+                <div class="text-center space-y-2">
+                    <h1 class="text-3xl font-extrabold tracking-tight">Pré-diagnóstico</h1>
+                    <p class="text-ios-gray dark:text-dark-gray">Vamos configurar seu plano personalizado</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Step 1: Physical Data -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold">Dados Físicos</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Peso (kg)</label>
+                                <input type="number" id="onb-weight" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold" placeholder="00.0">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Altura (cm)</label>
+                                <input type="number" id="onb-height" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold" placeholder="000">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Idade</label>
+                                <input type="number" id="onb-age" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold" placeholder="00">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-ios-gray uppercase ml-1">Gênero</label>
+                                <select id="onb-gender" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold appearance-none">
+                                    <option value="male">Masculino</option>
+                                    <option value="female">Feminino</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Goal -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold">Qual seu objetivo?</h3>
+                        <div class="grid grid-cols-1 gap-3">
+                            <button onclick="app.selectOnboardingGoal('loss', this)" class="onb-goal-btn w-full p-4 rounded-2xl border-2 border-transparent bg-white dark:bg-dark-card flex items-center gap-4 transition-all">
+                                <div class="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-500">
+                                    <i data-lucide="flame" class="w-6 h-6"></i>
+                                </div>
+                                <div class="text-left">
+                                    <div class="font-bold">Emagrecimento</div>
+                                    <div class="text-xs text-ios-gray">Queimar gordura e definir</div>
+                                </div>
+                            </button>
+                            <button onclick="app.selectOnboardingGoal('gain', this)" class="onb-goal-btn w-full p-4 rounded-2xl border-2 border-transparent bg-white dark:bg-dark-card flex items-center gap-4 transition-all">
+                                <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-500">
+                                    <i data-lucide="armchair" class="w-6 h-6"></i>
+                                </div>
+                                <div class="text-left">
+                                    <div class="font-bold">Ganho de Massa</div>
+                                    <div class="text-xs text-ios-gray">Hipertrofia e força</div>
+                                </div>
+                            </button>
+                            <button onclick="app.selectOnboardingGoal('maintain', this)" class="onb-goal-btn w-full p-4 rounded-2xl border-2 border-transparent bg-white dark:bg-dark-card flex items-center gap-4 transition-all">
+                                <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-500">
+                                    <i data-lucide="scale" class="w-6 h-6"></i>
+                                </div>
+                                <div class="text-left">
+                                    <div class="font-bold">Manutenção</div>
+                                    <div class="text-xs text-ios-gray">Saúde e longevidade</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Activity Level -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold">Nível de Atividade</h3>
+                        <select id="onb-activity" class="w-full bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800 focus:border-brand-neon outline-none font-bold appearance-none">
+                            <option value="1.2">Sedentário (pouco exercício)</option>
+                            <option value="1.375">Leve (1-3 dias/semana)</option>
+                            <option value="1.55">Moderado (3-5 dias/semana)</option>
+                            <option value="1.725">Ativo (6-7 dias/semana)</option>
+                            <option value="1.9">Atleta (muito intenso)</option>
+                        </select>
+                    </div>
+
+                    <!-- Step 4: Meal Times -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold">Horários das Refeições</h3>
+                        <p class="text-xs text-ios-gray">Defina quando cada refeição costuma fechar</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800">
+                                <span class="font-bold">Café da Manhã</span>
+                                <input type="time" id="onb-time-cafe" value="10:00" class="bg-transparent font-bold outline-none text-brand-neon">
+                            </div>
+                            <div class="flex items-center justify-between bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800">
+                                <span class="font-bold">Almoço</span>
+                                <input type="time" id="onb-time-almoco" value="15:00" class="bg-transparent font-bold outline-none text-brand-neon">
+                            </div>
+                            <div class="flex items-center justify-between bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800">
+                                <span class="font-bold">Lanche</span>
+                                <input type="time" id="onb-time-lanche" value="18:00" class="bg-transparent font-bold outline-none text-brand-neon">
+                            </div>
+                            <div class="flex items-center justify-between bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800">
+                                <span class="font-bold">Janta</span>
+                                <input type="time" id="onb-time-janta" value="22:00" class="bg-transparent font-bold outline-none text-brand-neon">
+                            </div>
+                            <div class="flex items-center justify-between bg-white dark:bg-dark-card p-4 rounded-2xl border border-ios-separator/20 dark:border-gray-800">
+                                <span class="font-bold">Ceia</span>
+                                <input type="time" id="onb-time-ceia" value="23:59" class="bg-transparent font-bold outline-none text-brand-neon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="app.handleOnboarding()" class="w-full bg-brand-neon text-black font-black py-5 rounded-2xl shadow-neon btn-press text-lg">
+                        Começar Minha Evolução
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Header Global -->
         <header
             class="sticky top-0 z-40 px-5 py-3 glass-panel bg-white/80 dark:bg-dark-card/80 border-b border-ios-separator/30 dark:border-gray-800">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-neon to-brand-lime flex items-center justify-center shadow-neon">
-                        <i data-lucide="zap" class="w-5 h-5 text-black"></i>
-                    </div>
                     <div>
-                        <h1 class="text-xs font-bold uppercase tracking-widest text-ios-gray dark:text-dark-gray">
-                            Macro AI</h1>
-                        <p class="text-lg font-bold leading-none" id="header-greeting">Bom dia</p>
+                        <p class="text-xl font-bold tracking-tight" id="header-greeting">Bom dia</p>
                     </div>
                 </div>
 
@@ -389,21 +499,57 @@
             <div id="screen-dashboard" class="screen space-y-6 animate-fade-in">
 
                 <!-- Top Stats: Streak & Health Score -->
-                <div class="flex items-center justify-between">
-                    <div
-                        class="flex items-center gap-2 bg-white dark:bg-dark-card px-4 py-2 rounded-full shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                <div class="flex items-center bg-white dark:bg-dark-card rounded-2xl shadow-soft border border-ios-separator/30 dark:border-gray-800 p-1.5">
+                    <button onclick="app.navigate('streak')"
+                        class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl btn-press active:scale-95 transition-all hover:bg-ios-bg/50 dark:hover:bg-dark-elevated/50">
                         <span class="text-lg">🔥</span>
-                        <div class="flex flex-col leading-none">
-                            <span class="text-[10px] text-ios-gray uppercase font-bold">Streak</span>
+                        <div class="flex flex-col leading-none text-left">
+                            <span class="text-[10px] text-ios-gray uppercase font-bold tracking-tight">Streak</span>
                             <span class="text-sm font-black">3 dias</span>
                         </div>
-                    </div>
-                    <div
-                        class="flex items-center gap-2 bg-white dark:bg-dark-card px-4 py-2 rounded-full shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    </button>
+                    <div class="w-px h-8 bg-ios-separator/20 dark:bg-gray-800 mx-1"></div>
+                    <button onclick="app.navigate('health')"
+                        class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl btn-press active:scale-95 transition-all hover:bg-ios-bg/50 dark:hover:bg-dark-elevated/50">
                         <span class="text-lg">❤️</span>
-                        <div class="flex flex-col leading-none">
-                            <span class="text-[10px] text-ios-gray uppercase font-bold">Health Score</span>
+                        <div class="flex flex-col leading-none text-left">
+                            <span class="text-[10px] text-ios-gray uppercase font-bold tracking-tight">Health Score</span>
                             <span class="text-sm font-black">85</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Current Meal Card (Apple/Nike Style) -->
+                <div id="current-meal-card" class="bg-white dark:bg-dark-card rounded-[2.5rem] p-7 shadow-soft dark:shadow-2xl border border-ios-separator/30 dark:border-none relative overflow-hidden mb-6 text-black dark:text-white group">
+                    <!-- Background Glow -->
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-brand-neon/10 dark:bg-brand-neon/20 blur-[60px] rounded-full -mr-10 -mt-10 group-hover:bg-brand-neon/20 dark:group-hover:bg-brand-neon/30 transition-all duration-700"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 id="greeting-text" class="text-ios-gray font-medium text-sm tracking-tight mb-1">Refeição Atual</h4>
+                                <h2 id="current-meal-name-header" class="text-3xl font-bold tracking-tighter">Café da Manhã</h2>
+                            </div>
+                            <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/10 backdrop-blur-md flex items-center justify-center border border-gray-200 dark:border-white/10">
+                                <i data-lucide="utensils" class="w-6 h-6 text-brand-neon"></i>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div id="current-meal-status" class="w-full">
+                                <div class="flex items-center gap-3">
+                                    <div class="px-3 py-1 bg-brand-neon text-black text-[10px] font-black uppercase tracking-widest rounded-full">
+                                        Em Aberto
+                                    </div>
+                                    <span class="text-sm font-medium text-black/60 dark:text-white/80">Carregando...</span>
+                                </div>
+                            </div>
+
+                            <button onclick="app.navigate('scanner')" 
+                                class="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-lg hover:shadow-brand-neon/20">
+                                <i data-lucide="scan-line" class="w-5 h-5"></i>
+                                Escanear agora
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -560,125 +706,140 @@
                             </div>
                         </div>
 
-                        <!-- PAGE 3: Steps & Burned Cals -->
-                        <div class="w-full flex-shrink-0 snap-center flex gap-3">
-                            <!-- Steps (Large) -->
-                            <div class="bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex-1 flex flex-col justify-between relative overflow-hidden">
-                                <div>
-                                    <div class="text-[10px] text-ios-gray font-bold uppercase tracking-wide mb-1">Passos</div>
-                                    <div class="flex items-baseline gap-1">
-                                        <span class="text-3xl font-black">2.520</span>
-                                        <span class="text-xs text-ios-gray">/10.000</span>
+                        <!-- PAGE 3: Steps, Burned Cals, Water & Supplements (Premium UI) -->
+                        <div class="w-full flex-shrink-0 snap-center flex flex-col gap-3">
+                            <!-- Top Row: Activity Stats (Prominent) -->
+                            <div class="flex flex-col gap-3">
+                                <!-- Steps Card -->
+                                <div
+                                    class="bg-gray-50 dark:bg-dark-elevated rounded-[1.75rem] p-5 border border-ios-separator/20 dark:border-white/5 flex items-center justify-between h-32 relative overflow-hidden group">
+                                    <div
+                                        class="absolute -right-4 -top-4 w-32 h-32 bg-ios-blue/5 dark:bg-ios-blue/10 rounded-full blur-2xl group-hover:bg-ios-blue/20 transition-all duration-700">
                                     </div>
-                                </div>
-                                <div class="self-center relative w-32 h-32 flex items-center justify-center mt-4">
-                                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-100 dark:text-gray-800" />
-                                        <circle cx="50" cy="50" r="45" stroke="#1C1C1E" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="210" stroke-linecap="round" class="dark:stroke-white" />
-                                    </svg>
-                                    <i data-lucide="footprints" class="w-8 h-8 text-black dark:text-white absolute"></i>
-                                </div>
-                            </div>
-
-                            <!-- Burned Cals (Small) -->
-                            <div class="w-1/3 flex flex-col gap-3">
-                                <div class="bg-white dark:bg-dark-card rounded-3xl p-4 shadow-sm border border-ios-separator/30 dark:border-gray-800 h-full flex flex-col justify-center items-center text-center relative overflow-hidden group">
-                                    <!-- Streak Badge -->
-                                    <div class="absolute top-3 right-3 flex items-center gap-1 bg-brand-hot/10 dark:bg-brand-hot/20 px-2 py-1 rounded-xl border border-brand-hot/20">
-                                        <span class="text-[10px] font-black text-brand-hot">3</span>
-                                        <i data-lucide="flame" class="w-3 h-3 text-brand-hot fill-current"></i>
-                                    </div>
-
-                                    <div class="relative mb-3">
-                                        <div class="absolute inset-0 bg-brand-hot/20 blur-xl rounded-full -z-10 animate-pulse"></div>
-                                        <i data-lucide="flame" class="w-10 h-10 text-brand-hot fill-brand-hot/20"></i>
-                                    </div>
-                                    
-                                    <div class="text-3xl font-black leading-none text-black dark:text-white">148</div>
-                                    <div class="text-[10px] text-ios-gray font-bold uppercase tracking-widest mt-2">Calorias</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- PAGE 4: Walking, Exercise & Water -->
-                        <div class="w-full flex-shrink-0 snap-center flex flex-col gap-3 h-full">
-                            <!-- Top Row: Walking & Exercise (2/3 height) -->
-                            <div class="flex gap-3" style="flex: 2;">
-                                <!-- Walking (Passos) -->
-                                <div class="flex-1 bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between relative overflow-hidden">
-                                    <div class="relative z-10">
-                                        <div class="text-xs text-ios-gray font-bold uppercase tracking-wide mb-1">Passos</div>
-                                        <div class="flex items-baseline gap-1">
-                                            <span class="text-4xl font-black">2.520</span>
-                                            <span class="text-sm text-ios-gray">/10k</span>
+                                    <div class="relative z-10 flex flex-col justify-center">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-ios-blue/10 flex items-center justify-center">
+                                                <i data-lucide="footprints" class="w-4 h-4 text-ios-blue"></i>
+                                            </div>
+                                            <span
+                                                class="text-[10px] font-black text-ios-gray uppercase tracking-widest">Passos</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-3xl font-black text-black dark:text-white tracking-tighter">2.520</span>
+                                            <span class="text-[10px] font-bold text-ios-gray">Meta: 10.000</span>
                                         </div>
                                     </div>
-                                    <div class="self-center relative w-32 h-32 flex items-center justify-center my-auto">
-                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                                            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-100 dark:text-gray-800" />
-                                            <circle cx="50" cy="50" r="45" stroke="#1C1C1E" stroke-width="8" fill="transparent" stroke-dasharray="283" stroke-dashoffset="210" stroke-linecap="round" class="dark:stroke-white" />
-                                        </svg>
-                                        <i data-lucide="footprints" class="w-8 h-8 text-black dark:text-white absolute"></i>
+
+                                    <div class="w-1/2 space-y-3 relative z-10 flex flex-col justify-center">
+                                        <div class="relative h-2.5 w-full bg-ios-blue/10 rounded-full overflow-hidden">
+                                            <div
+                                                class="absolute top-0 left-0 h-full bg-ios-blue rounded-full w-[25%] shadow-[0_0_15px_rgba(0,122,255,0.4)] transition-all duration-1000">
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center text-[10px] font-black text-ios-gray uppercase tracking-widest">
+                                            <span>Progresso diário</span>
+                                            <span class="text-ios-blue text-xs">25%</span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Exercise (Calorias Queimadas) -->
-                                <div class="flex-1 bg-white dark:bg-dark-card rounded-3xl p-5 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex flex-col justify-between relative overflow-hidden group">
-                                    <!-- Background Decoration -->
-                                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-hot/5 rounded-full blur-2xl group-hover:bg-brand-hot/10 transition-colors"></div>
-                                    
-                                    <div class="relative z-10">
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <div class="text-xs text-ios-gray font-bold uppercase tracking-wide mb-1">Calorias</div>
-                                                <div class="flex items-baseline gap-1">
-                                                    <span class="text-4xl font-black text-black dark:text-white">148</span>
-                                                    <span class="text-sm text-ios-gray font-bold">cal</span>
-                                                </div>
+                                <!-- Calories Burned Card -->
+                                <div
+                                    class="bg-gray-50 dark:bg-dark-elevated rounded-[1.75rem] p-5 border border-ios-separator/20 dark:border-white/5 flex items-center justify-between h-32 relative overflow-hidden group">
+                                    <div
+                                        class="absolute -right-4 -top-4 w-32 h-32 bg-brand-hot/5 dark:bg-brand-hot/10 rounded-full blur-2xl group-hover:bg-brand-hot/20 transition-all duration-700">
+                                    </div>
+                                    <div class="relative z-10 flex flex-col justify-center">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-brand-hot/10 flex items-center justify-center">
+                                                <i data-lucide="flame" class="w-4 h-4 text-brand-hot"></i>
                                             </div>
-                                            <!-- Streak indicator inside large card -->
-                                            <div class="flex items-center gap-1.5 bg-brand-hot/10 dark:bg-brand-hot/20 px-3 py-1.5 rounded-2xl border border-brand-hot/20 shadow-sm shadow-brand-hot/5">
-                                                <i data-lucide="flame" class="w-4 h-4 text-brand-hot fill-brand-hot"></i>
-                                                <span class="text-sm font-black text-brand-hot">3 dias</span>
+                                            <span
+                                                class="text-[10px] font-black text-ios-gray uppercase tracking-widest">Energia</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <div class="flex items-baseline gap-1">
+                                                <span class="text-3xl font-black text-black dark:text-white tracking-tighter">148</span>
+                                                <span class="text-xs font-bold text-ios-gray uppercase">kcal</span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5">
+                                                <div class="flex h-2 w-2 rounded-full bg-brand-neon animate-pulse"></div>
+                                                <span class="text-[9px] font-black text-brand-neon uppercase tracking-widest">Metabolismo Ativo</span>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <div class="flex flex-col items-center justify-center flex-1 py-4">
-                                        <div class="relative">
-                                            <div class="absolute inset-0 bg-brand-hot/20 blur-2xl rounded-full scale-150 animate-pulse"></div>
-                                            <i data-lucide="flame" class="w-16 h-16 text-brand-hot fill-brand-hot/10 relative z-10 transform group-hover:scale-110 transition-transform duration-500"></i>
-                                        </div>
-                                    </div>
 
-                                    <div class="flex items-center justify-between mt-2 pt-4 border-t border-ios-separator/30 dark:border-gray-800/50 relative z-10">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-8 h-8 bg-brand-hot/10 rounded-full flex items-center justify-center">
-                                                <i data-lucide="trending-up" class="w-4 h-4 text-brand-hot"></i>
-                                            </div>
-                                            <span class="text-[10px] font-bold text-ios-gray uppercase">Meta: 500</span>
-                                        </div>
-                                        <div class="text-[10px] font-black text-brand-hot bg-brand-hot/10 px-2 py-0.5 rounded-lg">
-                                            29%
-                                        </div>
+                                    <div class="w-1/2 h-16 flex items-end gap-1.5 px-1 relative z-10">
+                                        <div class="flex-1 bg-brand-hot/10 rounded-t-lg h-[40%] transition-all"
+                                            title="08:00"></div>
+                                        <div class="flex-1 bg-brand-hot/10 rounded-t-lg h-[60%] transition-all"
+                                            title="10:00"></div>
+                                        <div class="flex-1 bg-brand-hot/10 rounded-t-lg h-[30%] transition-all"
+                                            title="12:00"></div>
+                                        <div class="flex-1 bg-brand-hot rounded-t-lg h-[90%] shadow-[0_0_15px_rgba(255,59,48,0.3)] transition-all"
+                                            title="Agora"></div>
+                                        <div class="flex-1 bg-brand-hot/10 rounded-t-lg h-[20%] transition-all"
+                                            title="16:00"></div>
+                                        <div class="flex-1 bg-brand-hot/10 rounded-t-lg h-[45%] transition-all"
+                                            title="18:00"></div>
+                                        <div class="flex-1 bg-brand-hot/10 rounded-t-lg h-[35%] transition-all"
+                                            title="20:00"></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Bottom Row: Water (1/3 height) -->
-                            <div class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-sm border border-ios-separator/30 dark:border-gray-800 flex items-center justify-between" style="flex: 1;">
-                                <div class="flex items-center gap-5">
-                                    <div class="w-14 h-14 rounded-2xl bg-ios-blue/10 flex items-center justify-center text-ios-blue">
-                                        <i data-lucide="glass-water" class="w-7 h-7"></i>
+                            <!-- Bottom Row: Quick Actions (Compact) -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <!-- Water Card -->
+                                <div
+                                    class="bg-ios-blue/5 dark:bg-ios-blue/10 rounded-[1.5rem] p-3 border border-ios-blue/10 flex flex-col justify-between h-28 relative overflow-hidden group active:scale-[0.98] transition-all cursor-pointer">
+                                    <div class="flex justify-between items-center relative z-10">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-ios-blue/20 flex items-center justify-center text-ios-blue shadow-inner">
+                                            <i data-lucide="glass-water" class="w-3.5 h-3.5"></i>
+                                        </div>
+                                        <div class="flex flex-col items-end">
+                                            <span class="text-[8px] font-black text-ios-blue/60 uppercase tracking-widest">Água</span>
+                                            <div class="flex items-baseline gap-0.5">
+                                                <span class="text-lg font-black text-black dark:text-white">750</span>
+                                                <span class="text-[8px] font-bold text-ios-gray">ml</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div class="text-xs text-ios-gray font-bold uppercase tracking-wide mb-1">Hidratação</div>
-                                        <div class="text-3xl font-black">750 <span class="text-lg text-ios-gray font-bold">ml</span></div>
-                                    </div>
+                                    <button
+                                        class="w-full bg-ios-blue text-white py-1 rounded-lg flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all relative z-10">
+                                        <i data-lucide="plus" class="w-3 h-3"></i>
+                                        <span class="text-[8px] font-black uppercase tracking-widest">Adicionar</span>
+                                    </button>
+                                    <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-ios-blue/5 to-transparent pointer-events-none"></div>
                                 </div>
-                                <button class="px-6 py-3 bg-ios-blue/10 text-ios-blue border border-ios-blue/20 rounded-2xl text-sm font-bold shadow-sm active:scale-95 transition-transform">
-                                    + Copo
-                                </button>
+
+                                <!-- Supplements Card -->
+                                <div
+                                    class="bg-ios-purple/5 dark:bg-ios-purple/10 rounded-[1.5rem] p-3 border border-ios-purple/10 flex flex-col justify-between h-28 relative overflow-hidden group active:scale-[0.98] transition-all cursor-pointer">
+                                    <div class="flex justify-between items-center relative z-10">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-ios-purple/20 flex items-center justify-center text-ios-purple shadow-inner">
+                                            <i data-lucide="pill" class="w-3.5 h-3.5"></i>
+                                        </div>
+                                        <div class="flex flex-col items-end">
+                                            <span class="text-[8px] font-black text-ios-purple/60 uppercase tracking-widest">Doses</span>
+                                            <div class="flex items-baseline gap-0.5">
+                                                <span class="text-lg font-black text-black dark:text-white">2</span>
+                                                <span class="text-[8px] font-bold text-ios-gray">/4</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        class="w-full bg-ios-purple text-white py-1 rounded-lg flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all relative z-10">
+                                        <i data-lucide="plus" class="w-3 h-3"></i>
+                                        <span class="text-[8px] font-black uppercase tracking-widest">Registrar</span>
+                                    </button>
+                                    <div class="absolute -right-4 -bottom-4 w-12 h-12 bg-ios-purple/10 rounded-full blur-xl"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -687,7 +848,6 @@
                     <!-- Carousel Indicators -->
                     <div class="flex justify-center gap-1.5 mt-4 mb-0" id="dashboard-indicators">
                         <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-100 transition-opacity"></div>
-                        <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-20 transition-opacity"></div>
                         <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-20 transition-opacity"></div>
                         <div class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white opacity-20 transition-opacity"></div>
                     </div>
@@ -715,8 +875,6 @@
                             <i data-lucide="target" class="w-5 h-5 text-brand-neon"></i>
                             Missão do Dia
                         </h3>
-                        <span class="text-xs font-bold text-brand-neon bg-brand-neon/10 px-2 py-1 rounded-md">+50
-                            Buddy</span>
                     </div>
                     <p class="text-sm font-medium mb-3">Bata 120g de proteína hoje</p>
                     <div class="flex items-center gap-3">
@@ -724,70 +882,6 @@
                             <div class="h-full bg-brand-neon rounded-full" style="width: 76%"></div>
                         </div>
                         <span class="text-xs font-bold text-ios-gray">92g/120g</span>
-                    </div>
-                </div>
-
-                <!-- Weekly Consistency -->
-                <div
-                    class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
-                    <h3 class="font-bold text-lg mb-4">Consistência Semanal</h3>
-                    <div class="flex justify-between items-end h-32 gap-2">
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 100%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">S</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 80%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">T</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 100%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">Q</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-gray-300 dark:bg-gray-700 rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 0%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">Q</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-brand-neon/50 rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 60%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">S</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 0%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">S</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2 flex-1">
-                            <div
-                                class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
-                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar"
-                                    style="height: 0%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-ios-gray">D</span>
-                        </div>
                     </div>
                 </div>
 
@@ -822,41 +916,40 @@
                 <h2 class="text-3xl font-black mb-4">Seu Progresso</h2>
 
                 <!-- Sleep Analysis Card -->
-                <div
-                    class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                <div class="bg-white dark:bg-gradient-to-br dark:from-indigo-500 dark:to-purple-600 rounded-3xl p-6 text-black dark:text-white shadow-soft dark:shadow-lg border border-ios-separator/30 dark:border-none relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-indigo-500/5 dark:bg-white/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
                     <div class="flex justify-between items-start mb-4 relative z-10">
                         <div>
                             <h3 class="font-bold text-lg flex items-center gap-2">
-                                <i data-lucide="moon" class="w-5 h-5"></i>
+                                <i data-lucide="moon" class="w-5 h-5 text-indigo-600 dark:text-white"></i>
                                 Análise do Sono
                             </h3>
-                            <p class="text-indigo-100 text-sm">Sem dados</p>
+                            <p class="text-ios-gray dark:text-indigo-100 text-sm">Sem dados</p>
                         </div>
-                        <span class="bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">--</span>
+                        <span class="bg-indigo-50 dark:bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-indigo-600 dark:text-white">--</span>
                     </div>
 
                     <!-- Sleep Stages Chart -->
                     <div class="flex items-end justify-between h-24 gap-2 mb-3 relative z-10">
                         <div class="flex-1 flex flex-col justify-end gap-1">
-                            <div class="text-[10px] text-center text-indigo-200">Profundo</div>
-                            <div class="bg-white/30 rounded-t-lg chart-bar" style="height: 0%"></div>
+                            <div class="text-[10px] text-center text-ios-gray dark:text-indigo-200">Profundo</div>
+                            <div class="bg-indigo-100 dark:bg-white/30 rounded-t-lg chart-bar" style="height: 0%"></div>
                         </div>
                         <div class="flex-1 flex flex-col justify-end gap-1">
-                            <div class="text-[10px] text-center text-indigo-200">Leve</div>
-                            <div class="bg-white/50 rounded-t-lg chart-bar" style="height: 0%"></div>
+                            <div class="text-[10px] text-center text-ios-gray dark:text-indigo-200">Leve</div>
+                            <div class="bg-indigo-200 dark:bg-white/50 rounded-t-lg chart-bar" style="height: 0%"></div>
                         </div>
                         <div class="flex-1 flex flex-col justify-end gap-1">
-                            <div class="text-[10px] text-center text-indigo-200">REM</div>
-                            <div class="bg-white/40 rounded-t-lg chart-bar" style="height: 0%"></div>
+                            <div class="text-[10px] text-center text-ios-gray dark:text-indigo-200">REM</div>
+                            <div class="bg-indigo-300 dark:bg-white/40 rounded-t-lg chart-bar" style="height: 0%"></div>
                         </div>
                         <div class="flex-1 flex flex-col justify-end gap-1">
-                            <div class="text-[10px] text-center text-indigo-200">Acordado</div>
-                            <div class="bg-white/20 rounded-t-lg chart-bar" style="height: 10%"></div>
+                            <div class="text-[10px] text-center text-ios-gray dark:text-indigo-200">Acordado</div>
+                            <div class="bg-indigo-50 dark:bg-white/20 rounded-t-lg chart-bar" style="height: 10%"></div>
                         </div>
                     </div>
 
-                    <div class="flex justify-between text-xs text-indigo-200 relative z-10">
+                    <div class="flex justify-between text-xs text-ios-gray dark:text-indigo-200 relative z-10">
                         <span>22:30</span>
                         <span>05:50</span>
                     </div>
@@ -908,6 +1001,55 @@
                                         120kg</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Consistency -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-6 shadow-soft border border-ios-separator/30 dark:border-gray-800">
+                    <h3 class="font-bold text-lg mb-4">Consistência Semanal</h3>
+                    <div class="flex justify-between items-end h-32 gap-2">
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar" style="height: 100%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">S</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar" style="height: 80%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">T</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon rounded-2xl transition-all duration-1000 chart-bar" style="height: 100%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Q</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-300 dark:bg-gray-700 rounded-2xl transition-all duration-1000 chart-bar" style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">Q</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-brand-neon/50 rounded-2xl transition-all duration-1000 chart-bar" style="height: 60%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">S</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar" style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">S</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2 flex-1">
+                            <div class="w-full bg-gray-100 dark:bg-dark-elevated rounded-2xl relative h-24 overflow-hidden">
+                                <div class="absolute bottom-0 w-full bg-gray-200 dark:bg-gray-800 rounded-2xl transition-all duration-1000 chart-bar" style="height: 0%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-ios-gray">D</span>
                         </div>
                     </div>
                 </div>
@@ -1264,6 +1406,257 @@
                     </div>
                 </div>
             </div>
+
+            <!-- STREAK (OFENSIVA) SCREEN -->
+            <div id="screen-streak" class="screen hidden flex-1 bg-ios-bg dark:bg-dark-bg ios-scroll px-5 py-8 space-y-8">
+                <header class="flex items-center gap-4">
+                    <button onclick="app.navigate('dashboard')" class="w-10 h-10 bg-gray-100 dark:bg-dark-elevated rounded-full flex items-center justify-center">
+                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                    </button>
+                    <h1 class="text-3xl font-black">Ofensiva</h1>
+                </header>
+
+                <div class="flex flex-col items-center justify-center py-10 bg-brand-hot/5 rounded-[3rem] border border-brand-hot/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-brand-hot/10 blur-[100px] rounded-full -z-10 animate-pulse"></div>
+                    <div class="relative mb-6">
+                        <i data-lucide="flame" class="w-32 h-32 text-brand-hot fill-brand-hot/20"></i>
+                        <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-black text-brand-hot">3</span>
+                    </div>
+                    <h2 class="text-2xl font-bold">3 Dias Seguidos!</h2>
+                    <p class="text-ios-gray font-medium">Você está pegando fogo!</p>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2">
+                    <!-- Days of the week -->
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">S</span>
+                        <div class="w-10 h-10 rounded-full bg-brand-hot flex items-center justify-center shadow-lg shadow-brand-hot/20">
+                            <i data-lucide="check" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">T</span>
+                        <div class="w-10 h-10 rounded-full bg-brand-hot flex items-center justify-center shadow-lg shadow-brand-hot/20">
+                            <i data-lucide="check" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">Q</span>
+                        <div class="w-10 h-10 rounded-full bg-brand-hot flex items-center justify-center shadow-lg shadow-brand-hot/20">
+                            <i data-lucide="check" class="w-5 h-5 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">Q</span>
+                        <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center"></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">S</span>
+                        <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center"></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">S</span>
+                        <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center"></div>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="text-[10px] font-bold text-ios-gray">D</span>
+                        <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-elevated flex items-center justify-center"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-[2rem] p-6 border border-ios-separator/30 dark:border-gray-800">
+                    <h3 class="font-bold text-lg mb-4">Por que manter a ofensiva?</h3>
+                    <p class="text-sm text-ios-gray leading-relaxed">Manter uma constância ajuda a criar hábitos sólidos. Usuários com mais de 7 dias de ofensiva têm 3x mais chances de atingir seus objetivos de saúde.</p>
+                </div>
+            </div>
+
+            <!-- HEALTH (SAÚDE) SCREEN -->
+            <div id="screen-health" class="screen hidden flex-1 bg-ios-bg dark:bg-dark-bg ios-scroll px-5 py-8 space-y-8">
+                <header class="flex items-center gap-4">
+                    <button onclick="app.navigate('dashboard')" class="w-10 h-10 bg-gray-100 dark:bg-dark-elevated rounded-full flex items-center justify-center">
+                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                    </button>
+                    <h1 class="text-3xl font-black">Saúde</h1>
+                </header>
+
+                <div class="bg-gradient-to-br from-ios-blue to-blue-600 rounded-[3rem] p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-500/20">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="relative z-10 flex justify-between items-end">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest opacity-80">Score de Saúde</span>
+                            <div class="text-7xl font-black mt-2">85</div>
+                            <div class="flex items-center gap-2 mt-4 bg-white/20 px-3 py-1 rounded-full w-fit">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                <span class="text-xs font-bold">+5 pts vs ontem</span>
+                            </div>
+                        </div>
+                        <i data-lucide="heart" class="w-20 h-20 text-white/20 fill-white/10"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white dark:bg-dark-card p-5 rounded-[2rem] border border-ios-separator/30 dark:border-gray-800 space-y-3">
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500">
+                            <i data-lucide="droplet" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-ios-gray uppercase">Hidratação</div>
+                            <div class="text-xl font-bold">Excelente</div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-dark-card p-5 rounded-[2rem] border border-ios-separator/30 dark:border-gray-800 space-y-3">
+                        <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-green-500">
+                            <i data-lucide="apple" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-ios-gray uppercase">Nutrição</div>
+                            <div class="text-xl font-bold">No Alvo</div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-dark-card p-5 rounded-[2rem] border border-ios-separator/30 dark:border-gray-800 space-y-3">
+                        <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-orange-500">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-ios-gray uppercase">Atividade</div>
+                            <div class="text-xl font-bold">Moderada</div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-dark-card p-5 rounded-[2rem] border border-ios-separator/30 dark:border-gray-800 space-y-3">
+                        <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-purple-500">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-ios-gray uppercase">Sono</div>
+                            <div class="text-xl font-bold">Regular</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- SCREEN: STREAK / SOCIAL -->
+        <main id="screen-streak" class="hidden flex-col h-full bg-ios-bg dark:bg-dark-bg pt-12 pb-24 px-6 overflow-y-auto">
+            <div class="flex items-center justify-between mb-8">
+                <button onclick="app.navigate('dashboard')" class="w-10 h-10 rounded-full bg-white dark:bg-dark-card shadow-sm flex items-center justify-center border border-ios-separator/20">
+                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                </button>
+                <h1 class="text-xl font-black">Ofensiva de Amigos</h1>
+                <div class="w-10"></div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-2 gap-3 mb-8">
+                <div class="bg-brand-neon/10 dark:bg-brand-neon/20 p-5 rounded-3xl border border-brand-neon/20">
+                    <div class="text-brand-neon text-2xl font-black mb-1">3 dias</div>
+                    <div class="text-[10px] font-bold text-brand-neon/60 uppercase tracking-widest leading-none">Minha Ofensiva</div>
+                </div>
+                <div class="bg-ios-purple/10 dark:bg-ios-purple/20 p-5 rounded-3xl border border-ios-purple/20">
+                    <div class="text-ios-purple text-2xl font-black mb-1">#2</div>
+                    <div class="text-[10px] font-bold text-ios-purple/60 uppercase tracking-widest leading-none">No Ranking</div>
+                </div>
+            </div>
+
+            <!-- Friends List -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between px-2">
+                    <h2 class="text-sm font-black uppercase tracking-widest text-ios-gray">Status do Grupo</h2>
+                    <span class="text-[10px] font-bold bg-white dark:bg-dark-card px-2 py-1 rounded-full shadow-sm border border-ios-separator/20">4 Amigos Ativos</span>
+                </div>
+
+                <!-- Friend 1: Active -->
+                <div class="bg-white dark:bg-dark-card p-4 rounded-3xl border border-ios-separator/30 dark:border-gray-800 shadow-sm flex items-center gap-4">
+                    <div class="relative">
+                        <div class="w-14 h-14 rounded-2xl bg-ios-blue/10 flex items-center justify-center overflow-hidden border-2 border-brand-neon">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lucas" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 bg-brand-neon text-black text-[8px] font-black px-1.5 py-0.5 rounded-full border-2 border-white dark:border-dark-card">🔥 12</div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-sm">Lucas Silva</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse"></span>
+                        </div>
+                        <div class="text-[10px] text-ios-gray font-bold uppercase mt-0.5">Lanche da Tarde: <span class="text-brand-neon">OK</span></div>
+                        <div class="mt-2 flex gap-1 h-1 w-full bg-gray-100 dark:bg-dark-elevated rounded-full overflow-hidden">
+                            <div class="bg-brand-neon w-[85%] rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs font-black text-black dark:text-white">85%</div>
+                        <div class="text-[8px] text-ios-gray font-bold uppercase">Meta</div>
+                    </div>
+                </div>
+
+                <!-- Friend 2: Missing Meal (Lanche da Tarde) -->
+                <div class="bg-white dark:bg-dark-card p-4 rounded-3xl border border-ios-separator/30 dark:border-gray-800 shadow-sm flex items-center gap-4 border-l-4 border-l-brand-hot">
+                    <div class="relative">
+                        <div class="w-14 h-14 rounded-2xl bg-ios-purple/10 flex items-center justify-center overflow-hidden grayscale">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Beatriz" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 bg-ios-gray text-white text-[8px] font-black px-1.5 py-0.5 rounded-full border-2 border-white dark:border-dark-card">🔥 5</div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-sm">Beatriz Melo</span>
+                        </div>
+                        <div class="text-[10px] text-brand-hot font-black uppercase mt-0.5 flex items-center gap-1">
+                            <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                            Falta: Lanche da Tarde
+                        </div>
+                        <div class="mt-2 flex gap-1 h-1 w-full bg-gray-100 dark:bg-dark-elevated rounded-full overflow-hidden">
+                            <div class="bg-brand-hot w-[42%] rounded-full"></div>
+                        </div>
+                    </div>
+                    <button onclick="app.showToast('Você mandou um alerta para Beatriz! 🔔')" class="bg-brand-hot text-white text-[9px] font-black uppercase tracking-widest px-3 py-2 rounded-xl shadow-lg active:scale-95 transition-transform">
+                        Alertar
+                    </button>
+                </div>
+
+                <!-- Friend 3 -->
+                <div class="bg-white dark:bg-dark-card p-4 rounded-3xl border border-ios-separator/30 dark:border-gray-800 shadow-sm flex items-center gap-4">
+                    <div class="relative">
+                        <div class="w-14 h-14 rounded-2xl bg-ios-orange/10 flex items-center justify-center overflow-hidden">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Gabriel" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 bg-brand-neon text-black text-[8px] font-black px-1.5 py-0.5 rounded-full border-2 border-white dark:border-dark-card">🔥 8</div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-sm">Gabriel Costa</span>
+                        </div>
+                        <div class="text-[10px] text-ios-gray font-bold uppercase mt-0.5">Lanche da Tarde: <span class="text-brand-neon">OK</span></div>
+                        <div class="mt-2 flex gap-1 h-1 w-full bg-gray-100 dark:bg-dark-elevated rounded-full overflow-hidden">
+                            <div class="bg-brand-neon w-[70%] rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs font-black text-black dark:text-white">70%</div>
+                        <div class="text-[8px] text-ios-gray font-bold uppercase">Meta</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Activity Chart -->
+            <div class="mt-8 bg-black dark:bg-dark-elevated rounded-[2.5rem] p-6 text-white relative overflow-hidden">
+                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-brand-neon/10 rounded-full blur-3xl"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-black text-sm uppercase tracking-widest">Atividade do Grupo</h3>
+                        <span class="text-[10px] font-bold text-brand-neon">Últimas 24h</span>
+                    </div>
+                    <div class="flex items-end justify-between h-24 gap-2 px-1">
+                        <div class="flex-1 bg-white/10 rounded-t-lg h-[30%]"></div>
+                        <div class="flex-1 bg-white/10 rounded-t-lg h-[45%]"></div>
+                        <div class="flex-1 bg-white/10 rounded-t-lg h-[60%]"></div>
+                        <div class="flex-1 bg-brand-neon rounded-t-lg h-[95%] shadow-neon"></div>
+                        <div class="flex-1 bg-white/10 rounded-t-lg h-[40%]"></div>
+                        <div class="flex-1 bg-white/10 rounded-t-lg h-[25%]"></div>
+                        <div class="flex-1 bg-white/10 rounded-t-lg h-[55%]"></div>
+                    </div>
+                    <p class="text-[10px] text-white/40 font-bold uppercase text-center mt-4 tracking-tighter">O grupo está 12% mais ativo hoje!</p>
+                </div>
+            </div>
         </main>
 
         <!-- BOTTOM NAVIGATION -->
@@ -1412,7 +1805,7 @@
             </div>
             
             <!-- Arrow/Pointer (Optional visual cue pointing to button) -->
-            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white dark:bg-dark-card rotate-45 border-r border-b border-ios-separator/30 dark:border-gray-800"></div>
+            <div class="absolute -bottom-2 right-12 w-4 h-4 bg-white dark:bg-dark-card rotate-45 border-r border-b border-ios-separator/30 dark:border-gray-800"></div>
         </div>
     </div>
 
@@ -1470,7 +1863,6 @@
             </form>
         </div>
     </div>
-
     <script>
         // App Logic
         const app = {
@@ -1495,11 +1887,25 @@
                     username: '@alexfit',
                     phone: '(11) 99999-9999',
                     email: 'alexandre@email.com',
-                    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop'
+                    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop',
+                    weight: 75,
+                    height: 175,
+                    age: 28,
+                    gender: 'male',
+                    goal: 'maintain',
+                    activity: 1.375,
+                    mealTimes: {
+                        cafe: { name: 'Café da Manhã', start: '06:00', end: '11:00' },
+                        almoco: { name: 'Almoço', start: '11:00', end: '16:00' },
+                        lanche: { name: 'Lanche', start: '16:00', end: '19:00' },
+                        janta: { name: 'Janta', start: '19:00', end: '22:00' },
+                        ceia: { name: 'Ceia', start: '22:00', end: '06:00' }
+                    }
                 },
                 currentWorkoutId: 'chest-triceps',
                 isLoggedIn: false,
-                authMode: 'login' // 'login' or 'register'
+                authMode: 'login', // 'login' or 'register'
+                selectedOnboardingGoal: 'maintain'
             },
 
             workouts: {
@@ -1556,6 +1962,8 @@
             },
 
             init() {
+                window.app = this;
+                
                 // Check if user is already logged in
                 const savedAuth = localStorage.getItem('macro_ai_auth');
                 if (savedAuth === 'true') {
@@ -1573,6 +1981,11 @@
                 this.loadUserName();
                 this.loadUserProfile(); // Load saved profile
                 this.loadRecentMeals();
+                this.renderRecents();
+                
+                // Load today's meals and recalculate totals
+                this.loadTodayMeals();
+                
                 this.updateTime();
                 setInterval(() => this.updateTime(), 60000);
                 lucide.createIcons();
@@ -1581,6 +1994,38 @@
                 // Simulate camera 
                 this.initCamera();
                 this.bindMediaReady();
+            },
+
+            loadTodayMeals() {
+                try {
+                    const todayStr = new Date().toLocaleDateString('pt-BR');
+                    const savedDate = localStorage.getItem('wb_meals_date');
+                    const saved = localStorage.getItem('wb_meals_today');
+
+                    if (savedDate !== todayStr) {
+                        // New day or first time, clear today's meals
+                        this.state.mealsToday = [];
+                        localStorage.removeItem('wb_meals_today');
+                        localStorage.setItem('wb_meals_date', todayStr);
+                    } else if (saved) {
+                        this.state.mealsToday = JSON.parse(saved) || [];
+                    }
+
+                    // Recalculate totals based on loaded meals
+                    this.state.totals = { protein: 0, carbs: 0, fat: 0, calories: 0 };
+                    this.state.mealsToday.forEach(m => {
+                        this.state.totals.calories += (m.macros.cal || 0);
+                        this.state.totals.protein += (m.macros.p || 0);
+                        this.state.totals.carbs += (m.macros.c || 0);
+                        this.state.totals.fat += (m.macros.f || 0);
+                    });
+                    
+                    this.updateDashboardTotals();
+                    this.renderTodayMeals();
+                    
+                } catch (e) {
+                    console.error('Error loading today meals:', e);
+                }
             },
 
             toggleAuthMode() {
@@ -1603,34 +2048,46 @@
             },
 
             handleAuth(type) {
-                // Basic validation
-                const email = type === 'login' ? document.getElementById('login-email').value : document.getElementById('reg-email').value;
-                const pass = type === 'login' ? document.getElementById('login-password').value : document.getElementById('reg-password').value;
+                console.log('handleAuth trigger:', type);
+                
+                let email, pass, name, username;
+                
+                try {
+                    if (type === 'login') {
+                        email = document.getElementById('login-email').value;
+                        pass = document.getElementById('login-password').value;
+                    } else {
+                        name = document.getElementById('reg-name').value;
+                        username = document.getElementById('reg-username').value;
+                        email = document.getElementById('reg-email').value;
+                        pass = document.getElementById('reg-password').value;
+                    }
+                    console.log('Form data captured');
+                } catch (e) {
+                    console.error('Error getting form values:', e);
+                    this.showToast('Erro ao ler formulário');
+                    return;
+                }
                 
                 if (type === 'register') {
-                    const name = document.getElementById('reg-name').value;
-                    const username = document.getElementById('reg-username').value;
-                    
                     if (!name || !username || !email || !pass) {
                         this.showToast('Por favor, preencha todos os campos');
                         return;
                     }
 
-                    // Validate username format (must start with @)
+                    // Auto-format username to include @ if missing
                     if (!username.startsWith('@')) {
-                        this.showToast('O nome de usuário deve começar com @');
-                        return;
+                        username = '@' + username;
                     }
 
-                    // Simulate username uniqueness check
-                    // In a real app, this would be a database query
+                    console.log('Registration details:', { name, username, email });
+
                     const existingUsers = JSON.parse(localStorage.getItem('macro_ai_registered_usernames') || '["@alexfit", "@macro_admin"]');
                     if (existingUsers.includes(username.toLowerCase())) {
                         this.showToast('Este @ já está em uso. Escolha outro.');
                         return;
                     }
 
-                    // Add to simulated registry
                     existingUsers.push(username.toLowerCase());
                     localStorage.setItem('macro_ai_registered_usernames', JSON.stringify(existingUsers));
                 } else {
@@ -1640,33 +2097,139 @@
                     }
                 }
 
-                // Simulate auth process
                 this.showToast(type === 'login' ? 'Entrando...' : 'Criando conta...');
                 
                 setTimeout(() => {
-                    this.state.isLoggedIn = true;
-                    localStorage.setItem('macro_ai_auth', 'true');
-                    
-                    if (type === 'register') {
-                        const name = document.getElementById('reg-name').value;
-                        const username = document.getElementById('reg-username').value;
-                        this.state.userProfile.name = name;
-                        this.state.userProfile.username = username;
-                        this.state.userName = name;
-                        localStorage.setItem('macro_ai_profile', JSON.stringify(this.state.userProfile));
-                        this.updateTime();
-                    }
+                    try {
+                        console.log('Finalizing auth...');
+                        this.state.isLoggedIn = true;
+                        localStorage.setItem('macro_ai_auth', 'true');
+                        
+                        if (type === 'register') {
+                            this.state.userProfile.name = name;
+                            this.state.userProfile.username = username;
+                            this.state.userName = name;
+                            localStorage.setItem('macro_ai_profile', JSON.stringify(this.state.userProfile));
+                            this.updateTime();
+                        }
 
-                    // Hide auth screen with animation
-                    const authScreen = document.getElementById('screen-auth');
-                    if (authScreen) {
-                        authScreen.classList.add('opacity-0', 'pointer-events-none');
-                        setTimeout(() => {
-                            authScreen.classList.add('hidden');
-                            this.showToast('Bem-vindo ao Macro AI!');
-                        }, 300);
+                        const authScreen = document.getElementById('screen-auth');
+                        if (authScreen) {
+                            authScreen.classList.add('opacity-0', 'pointer-events-none');
+                            setTimeout(() => {
+                                authScreen.classList.add('hidden');
+                                if (type === 'register') {
+                                    this.showToast('Bem-vindo! Vamos configurar seu plano.');
+                                    this.navigate('onboarding');
+                                } else {
+                                    this.showToast('Bem-vindo ao Macro AI!');
+                                    this.navigate('dashboard');
+                                }
+                            }, 500);
+                        }
+                    } catch (err) {
+                        console.error('Auth completion error:', err);
+                        this.showToast('Erro ao finalizar cadastro');
                     }
-                }, 1500);
+                }, 800);
+            },
+
+            selectOnboardingGoal(goal, btn) {
+                this.state.selectedOnboardingGoal = goal;
+                document.querySelectorAll('.onb-goal-btn').forEach(b => {
+                    b.classList.remove('border-brand-neon', 'bg-brand-neon/5');
+                    b.classList.add('border-transparent');
+                });
+                btn.classList.remove('border-transparent');
+                btn.classList.add('border-brand-neon', 'bg-brand-neon/5');
+            },
+
+            handleOnboarding() {
+                const weight = parseFloat(document.getElementById('onb-weight').value);
+                const height = parseFloat(document.getElementById('onb-height').value);
+                const age = parseInt(document.getElementById('onb-age').value);
+                const gender = document.getElementById('onb-gender').value;
+                const activity = parseFloat(document.getElementById('onb-activity').value);
+                const goal = this.state.selectedOnboardingGoal;
+
+                if (!weight || !height || !age) {
+                    this.showToast('Por favor, preencha todos os dados físicos');
+                    return;
+                }
+
+                // Calculate BMR (Mifflin-St Jeor Equation)
+                let bmr;
+                if (gender === 'male') {
+                    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+
+                // Maintenance Calories (TDEE)
+                const tdee = bmr * activity;
+
+                // Adjust based on goal
+                let targetCalories;
+                if (goal === 'loss') targetCalories = tdee - 500;
+                else if (goal === 'gain') targetCalories = tdee + 400;
+                else targetCalories = tdee;
+
+                // Macro breakdown
+                // Protein: 2g per kg (gain/loss) or 1.6g (maintain)
+                const proteinPerKg = (goal === 'maintain') ? 1.6 : 2.0;
+                const targetProtein = Math.round(weight * proteinPerKg);
+                
+                // Fat: 0.8g to 1g per kg
+                const targetFat = Math.round(weight * 0.9);
+                
+                // Carbs: Remaining calories
+                const proteinCals = targetProtein * 4;
+                const fatCals = targetFat * 9;
+                const targetCarbs = Math.round((targetCalories - proteinCals - fatCals) / 4);
+
+                // Update state
+                this.state.goals = {
+                    calories: Math.round(targetCalories),
+                    protein: targetProtein,
+                    carbs: targetCarbs,
+                    fat: targetFat
+                };
+
+                this.state.userProfile.weight = weight;
+                this.state.userProfile.height = height;
+                this.state.userProfile.age = age;
+                this.state.userProfile.gender = gender;
+                this.state.userProfile.goal = goal;
+                this.state.userProfile.activity = activity;
+
+                // Meal Times from onboarding
+                this.state.userProfile.mealTimes = {
+                    cafe: { name: 'Café da Manhã', start: '06:00', end: document.getElementById('onb-time-cafe').value },
+                    almoco: { name: 'Almoço', start: document.getElementById('onb-time-cafe').value, end: document.getElementById('onb-time-almoco').value },
+                    lanche: { name: 'Lanche', start: document.getElementById('onb-time-almoco').value, end: document.getElementById('onb-time-lanche').value },
+                    janta: { name: 'Janta', start: document.getElementById('onb-time-lanche').value, end: document.getElementById('onb-time-janta').value },
+                    ceia: { name: 'Ceia', start: document.getElementById('onb-time-janta').value, end: document.getElementById('onb-time-ceia').value }
+                };
+
+                // Reset simulated data for new user
+                this.state.recentMeals = [];
+                this.state.mealsToday = [];
+                this.state.totals = { protein: 0, carbs: 0, fat: 0, calories: 0 };
+
+                // Save to storage
+                localStorage.setItem('macro_ai_profile', JSON.stringify(this.state.userProfile));
+                localStorage.setItem('macro_ai_goals', JSON.stringify(this.state.goals));
+                localStorage.setItem('macro_ai_auth', 'true');
+                
+                // Reset daily data in storage
+                localStorage.removeItem('wb_meals_today');
+                
+                this.showToast('Plano gerado com sucesso!');
+                
+                setTimeout(() => {
+                    this.navigate('dashboard');
+                    this.loadUserProfile(); // Update UI
+                }, 500);
             },
 
             logout() {
@@ -1690,19 +2253,33 @@
                 if (savedProfile) {
                     try {
                         this.state.userProfile = JSON.parse(savedProfile);
-                        // Update UI with saved data
                         const p = this.state.userProfile;
                         this.state.userName = p.name;
                         
+                        // Sync with profile screen
                         const profileName = document.querySelector('#screen-profile h2');
                         const profileUser = document.querySelector('#screen-profile p');
                         const profileAvatar = document.getElementById('profile-screen-avatar');
                         const headerAvatar = document.getElementById('user-avatar');
 
                         if(profileName) profileName.textContent = p.name;
-                        if(profileUser) profileUser.textContent = `${p.username} • Nível 12`;
+                        if(profileUser) {
+                            const username = p.username.startsWith('@') ? p.username : `@${p.username}`;
+                            profileUser.textContent = `${username} • Nível 12`;
+                        }
                         if(profileAvatar && p.avatar) profileAvatar.src = p.avatar;
                         if(headerAvatar && p.avatar) headerAvatar.src = p.avatar;
+
+                        // Sync with Dashboard Goals
+                        const savedGoals = localStorage.getItem('macro_ai_goals');
+                        if (savedGoals) {
+                            this.state.goals = JSON.parse(savedGoals);
+                        } else if (p.goal) {
+                            // If no saved goals but has profile goal, goals are already in state from handleOnboarding
+                        }
+                        
+                        this.updateDashboardTotals();
+                        this.updateTime();
                     } catch (e) {
                         console.error('Error loading profile:', e);
                     }
@@ -1836,6 +2413,7 @@
             },
 
             navigate(screen) {
+                console.log('Navigating to:', screen);
                 const prev = this.state.currentScreen;
 
                 // Close Scanner Menu if open
@@ -1869,6 +2447,19 @@
                     target.classList.add('animate-fade-in');
                 }
 
+                // Header Visibility for special screens
+                const header = document.querySelector('header');
+                const nav = document.querySelector('nav');
+                if (['streak', 'health'].includes(screen)) {
+                    if (header) header.classList.add('hidden');
+                    if (nav) nav.classList.add('hidden');
+                    document.getElementById('app').classList.remove('pb-24');
+                } else {
+                    if (header) header.classList.remove('hidden');
+                    if (nav) nav.classList.remove('hidden');
+                    document.getElementById('app').classList.add('pb-24');
+                }
+
                 this.state.currentScreen = screen;
 
                 if (prev === 'scanner' && screen !== 'scanner') {
@@ -1877,6 +2468,7 @@
                 if (screen === 'dashboard') {
                     this.renderTodayMeals();
                     this.renderRecents();
+                    this.updateDashboardTotals();
                 }
                 if (screen === 'scanner') {
                     // Reset scanner state
@@ -1940,17 +2532,148 @@
             },
 
             updateTime() {
-                const hour = new Date().getHours();
+                const now = new Date();
+                const hour = now.getHours();
+                const minutes = now.getMinutes();
+                
                 let greeting = 'Bom dia';
                 if (hour >= 12) greeting = 'Boa tarde';
                 if (hour >= 18) greeting = 'Boa noite';
+                
+                // Update Main Header Greeting
                 const greetingEl = document.getElementById('header-greeting');
                 if (greetingEl) {
                     const name = (this.state.userName || '').trim();
                     const display = name ? name.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ') : '';
                     greetingEl.textContent = display ? `${greeting}, ${display}` : greeting;
                 }
+
+                // Update New Meal Card Greeting
+                const cardGreetingEl = document.getElementById('greeting-text');
+                if (cardGreetingEl) {
+                    cardGreetingEl.textContent = `Refeição Atual`;
+                }
+
+                // Update Meal Status & Timer
+                this.updateCurrentMealStatus(hour, minutes);
             },
+
+            updateCurrentMealStatus(h, m) {
+                 const mealStatus = document.getElementById('current-meal-status');
+                 const mealHeader = document.getElementById('current-meal-name-header');
+                 if (!mealStatus) return;
+
+                 const mealTimes = this.state.userProfile.mealTimes || {
+                     cafe: { name: 'Café da Manhã', start: '06:00', end: '11:00' },
+                     almoco: { name: 'Almoço', start: '11:00', end: '16:00' },
+                     lanche: { name: 'Lanche', start: '16:00', end: '19:00' },
+                     janta: { name: 'Janta', start: '19:00', end: '22:00' },
+                     ceia: { name: 'Ceia', start: '22:00', end: '06:00' }
+                 };
+
+                 const currentTimeMinutes = (h * 60) + m;
+                 let currentMeal = null;
+                 let nextMeal = null;
+                 let minDiff = Infinity;
+
+                 for (const key in mealTimes) {
+                     const meal = mealTimes[key];
+                     const [startH, startM] = meal.start.split(':').map(Number);
+                     const [endH, endM] = meal.end.split(':').map(Number);
+                     
+                     let startTotal = (startH * 60) + startM;
+                     let endTotal = (endH * 60) + endM;
+
+                     // Handle cross-midnight (e.g., 22:00 to 06:00)
+                     if (endTotal <= startTotal) {
+                         if (currentTimeMinutes >= startTotal || currentTimeMinutes < endTotal) {
+                             currentMeal = { ...meal, endTotal: endTotal <= startTotal && currentTimeMinutes >= startTotal ? endTotal + 1440 : endTotal };
+                             break;
+                         }
+                     } else {
+                         if (currentTimeMinutes >= startTotal && currentTimeMinutes < endTotal) {
+                             currentMeal = { ...meal, endTotal };
+                             break;
+                         }
+                     }
+
+                     // Find next meal for the "Próxima" case
+                     let diff = startTotal - currentTimeMinutes;
+                     if (diff < 0) diff += 1440;
+                     if (diff < minDiff) {
+                         minDiff = diff;
+                         nextMeal = { ...meal, startTotal: startTotal };
+                     }
+                 }
+
+                 if (currentMeal) {
+                     if (mealHeader) mealHeader.textContent = currentMeal.name;
+                     
+                     let remainingTotalMinutes = currentMeal.endTotal - currentTimeMinutes;
+                     const dH = Math.floor(remainingTotalMinutes / 60);
+                     const dM = remainingTotalMinutes % 60;
+                     const dS = 59 - (new Date().getSeconds());
+
+                     const timerHtml = `
+                        <div class="flex items-center gap-1.5 bg-brand-neon/10 dark:bg-brand-neon/20 px-3 py-1.5 rounded-xl border border-brand-neon/20">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-brand-neon animate-pulse"></i>
+                            <span id="meal-timer" class="text-sm font-black tabular-nums text-brand-neon tracking-tight">
+                                ${dH}h ${dM.toString().padStart(2, '0')}m ${dS.toString().padStart(2, '0')}s
+                            </span>
+                        </div>
+                     `;
+
+                     mealStatus.innerHTML = `
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-brand-neon animate-pulse shadow-[0_0_8px_rgba(191,255,0,0.8)]"></div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-ios-gray">Janela Aberta</span>
+                            </div>
+                            ${timerHtml}
+                        </div>
+                     `;
+                     
+                     // Re-create icons for the new clock icon
+                     if (window.lucide) lucide.createIcons();
+                     
+                     if (!this.state.mealTimerInterval) {
+                         this.state.mealTimerInterval = setInterval(() => {
+                             const now = new Date();
+                             this.updateCurrentMealStatus(now.getHours(), now.getMinutes());
+                         }, 1000);
+                     }
+                 } else if (nextMeal) {
+                     if (mealHeader) mealHeader.textContent = 'Intervalo';
+                     
+                     let diff = nextMeal.startTotal - currentTimeMinutes;
+                     if (diff < 0) diff += 1440;
+                     
+                     const dH = Math.floor(diff / 60);
+                     const dM = diff % 60;
+                     const timerHtml = `
+                        <div class="flex items-center gap-1.5 bg-ios-gray/10 dark:bg-white/5 px-3 py-1.5 rounded-xl border border-ios-separator/20">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5 text-ios-gray"></i>
+                            <span id="meal-timer" class="text-sm font-black tabular-nums text-ios-gray dark:text-dark-gray tracking-tight">
+                                em ${dH}h ${dM.toString().padStart(2, '0')}m ${dS.toString().padStart(2, '0')}s
+                            </span>
+                        </div>
+                     `;
+
+                     mealStatus.innerHTML = `
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-ios-gray/40"></div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-ios-gray">Próxima: ${nextMeal.name}</span>
+                            </div>
+                            ${timerHtml}
+                        </div>
+                     `;
+                     if (window.lucide) lucide.createIcons();
+                 } else {
+                     if (mealHeader) mealHeader.textContent = 'Refeição';
+                     mealStatus.innerHTML = `Próxima refeição em breve`;
+                 }
+             },
 
             toggleExercise(id, btn) {
                 const el = document.getElementById(id);
@@ -2362,9 +3085,12 @@
                 // Limit to 10 items
                 if (this.state.recentMeals.length > 10) this.state.recentMeals.pop();
                 
-                // Save to local storage (excluding image to save space, or maybe keep it for temp?)
-                // We won't save temp items to LS to avoid issues on reload, 
-                // but we need them in state.
+                // Save to LocalStorage immediately so it persists on refresh
+                try {
+                    localStorage.setItem('wb_meals_recent', JSON.stringify(this.state.recentMeals));
+                } catch (err) {
+                    console.warn('LocalStorage limit reached while saving temp meal');
+                }
                 
                 this.navigate('dashboard');
                 this.renderRecents();
@@ -2519,6 +3245,14 @@
                              meal.macros.cal = totalCal;
                              
                              this.renderRecents();
+                             
+                             // Save to LocalStorage after analysis is ready
+                             try {
+                                 localStorage.setItem('wb_meals_recent', JSON.stringify(this.state.recentMeals));
+                             } catch (err) {
+                                 console.warn('LocalStorage limit reached while saving image analysis');
+                             }
+                             
                              this.showToast('Análise pronta! Toque no item para confirmar.');
                          }
                     } else {
@@ -2550,6 +3284,14 @@
                              meal.macros = { cal: 400, p: 50, c: 32, f: 5 };
                              
                              this.renderRecents();
+                             
+                             // Save to LocalStorage even in simulation/fallback
+                             try {
+                                 localStorage.setItem('wb_meals_recent', JSON.stringify(this.state.recentMeals));
+                             } catch (err) {
+                                 console.warn('LocalStorage limit reached while saving simulation');
+                             }
+                             
                              this.showToast('Erro na IA. Usando análise simulada.');
                              return; 
                          }
@@ -2811,10 +3553,14 @@
                 this.state.mealsToday.push(entry);
                 try {
                     localStorage.setItem('wb_meals_today', JSON.stringify(this.state.mealsToday));
+                    localStorage.setItem('wb_meals_date', new Date().toLocaleDateString('pt-BR'));
                 } catch { }
 
                 // Add to Recents
                 this.addToRecents(entry);
+
+                // Sync with Dashboard
+                this.updateDashboardTotals();
             },
 
             addToRecents(meal) {
@@ -3115,6 +3861,8 @@
                 this.state.totals.protein += item.protein;
                 this.state.totals.carbs += item.carbs;
                 this.state.totals.fat += item.fat;
+                
+                // updateDashboardTotals is now called inside mealAddEntry, but we can call it here for safety
                 this.updateDashboardTotals();
 
                 this.renderTodayMeals();
@@ -3182,6 +3930,9 @@
                 this.updateTime();
             }
         };
+
+        // Global access
+        window.app = app;
 
         // Initialize 
         window.addEventListener('load', () => app.init());
