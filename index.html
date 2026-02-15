@@ -1665,15 +1665,12 @@
                 <!-- Top Bar -->
                 <header class="flex items-center justify-between px-5 py-4 border-b border-ios-separator/10 bg-white/50 dark:bg-dark-card/50 backdrop-blur-md sticky top-0 z-10">
                     <div>
-                        <h1 class="text-xl font-black tracking-tight">Macro AI Coach</h1>
+                        <h1 class="text-xl font-black tracking-tight">IA</h1>
                         <p class="text-[10px] font-bold text-ios-gray uppercase tracking-widest">Seu assistente alimentar</p>
                     </div>
                     <div class="flex gap-2">
-                        <button class="w-8 h-8 rounded-full bg-ios-gray/10 flex items-center justify-center">
-                            <i data-lucide="history" class="w-4 h-4 text-ios-gray"></i>
-                        </button>
-                        <button class="w-8 h-8 rounded-full bg-ios-gray/10 flex items-center justify-center">
-                            <i data-lucide="settings-2" class="w-4 h-4 text-ios-gray"></i>
+                        <button onclick="app.navigate('dashboard')" class="w-8 h-8 rounded-full bg-ios-gray/10 flex items-center justify-center">
+                            <i data-lucide="chevron-left" class="w-4 h-4 text-ios-gray"></i>
                         </button>
                     </div>
                 </header>
@@ -1784,8 +1781,8 @@
                     <button onclick="app.navigate('coach')"
                         class="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full text-ios-gray dark:text-dark-gray transition-all duration-300"
                         data-screen="coach">
-                        <i data-lucide="bot" class="w-6 h-6 mb-0.5"></i>
-                        <span class="text-[10px] font-bold">Coach</span>
+                        <i data-lucide="utensils" class="w-6 h-6 mb-0.5"></i>
+                        <span class="text-[10px] font-bold">IA</span>
                     </button>
 
                     <button onclick="app.navigate('profile')"
@@ -2830,7 +2827,7 @@
                 // Header Visibility for special screens
                 const header = document.querySelector('header');
                 const nav = document.querySelector('nav');
-                if (['streak', 'health'].includes(screen)) {
+                if (['streak', 'health', 'coach'].includes(screen)) {
                     if (header) header.classList.add('hidden');
                     if (nav) nav.classList.add('hidden');
                     document.getElementById('app').classList.remove('pb-24');
