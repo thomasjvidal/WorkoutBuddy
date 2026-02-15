@@ -2735,35 +2735,101 @@
             },
 
             simulateAIResponse(userText, actionType = null) {
+                // Show typing indicator
+                const container = document.getElementById('coach-chat-body');
+                if (container) {
+                    const typingDiv = document.createElement('div');
+                    typingDiv.id = 'coach-typing';
+                    typingDiv.className = 'flex gap-3 animate-fade-in';
+                    typingDiv.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-brand-neon flex items-center justify-center shadow-neon shrink-0">
+                            <i data-lucide="bot" class="w-5 h-5 text-black"></i>
+                        </div>
+                        <div class="bg-white dark:bg-dark-elevated p-4 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 dark:border-gray-800 flex items-center gap-1">
+                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+                        </div>
+                    `;
+                    container.appendChild(typingDiv);
+                    container.scrollTop = container.scrollHeight;
+                }
+
                 setTimeout(() => {
+                    // Remove typing indicator
+                    const typing = document.getElementById('coach-typing');
+                    if (typing) typing.remove();
+
                     let response = '';
                     const lower = userText.toLowerCase();
-                    
-                    if (actionType === 'suggest_diet' || lower.includes('dieta') || lower.includes('sugira')) {
+                    const name = this.state.userName.split(' ')[0];
+
+                    // CONVERSATION RULES
+                    if (actionType === 'photo' || lower.includes('foto')) {
+                        response = `Analisei sua foto. Parece uma refeição equilibrada! 🥗\n\nIdentifiquei:\n• Proteína magra (~25g)\n• Carboidratos complexos (~40g)\n• Vegetais variados\n\nEstimativa: 450 kcal. Posso registrar para você?`;
+                    }
+                    else if (actionType === 'suggest_diet' || lower.includes('dieta') || lower.includes('sugira')) {
                         const calGoal = this.state.userProfile.goal === 'gain' ? '2500' : '1800';
                         response = `Aqui está uma sugestão para hoje (baseada em seus favoritos):\n\n• Café: Ovos mexidos + Fruta\n• Almoço: Frango grelhado + Arroz + Salada\n• Lanche: Whey Protein + Aveia\n• Janta: Peixe + Legumes\n\nEstimativa: ~${calGoal}kcal | 160g Prot`;
-                    } else if (actionType === 'analyze_7days' || lower.includes('analise') || lower.includes('7 dias')) {
+                    } 
+                    else if (actionType === 'analyze_7days' || lower.includes('analise') || lower.includes('7 dias')) {
                         const meals = this.state.recentMeals || [];
                         const count = meals.length;
                         const consistency = count > 5 ? 'Alta' : (count > 0 ? 'Média' : 'Baixa');
-                        
-                        response = `Análise da semana:\n\n1. Registros recentes: ${count} refeições.\n2. Consistência: ${consistency}.\n3. Hidratação pode melhorar.\n\nAjuste para amanhã: Tente adicionar mais uma porção de vegetais no almoço.`;
-                    } else if (actionType === 'favorites' || lower.includes('favoritos')) {
-                        response = `Seus alimentos mais frequentes:\n• Frango\n• Arroz\n• Ovos\n• Whey Protein\n• Banana`;
-                    } else if (actionType === 'end_day' || lower.includes('encerrar')) {
-                        const totalCal = this.state.totals.calories;
-                        const totalProt = this.state.totals.protein;
-                        response = `Resumo do dia:\n• Kcal totais: ${totalCal}\n• Proteína: ${totalProt}g\n• Treino: ${this.state.currentWorkoutId ? 'Planejado' : 'Pendente'}\n\nFoco para amanhã: Priorize o descanso hoje à noite! 💤`;
-                    } else if (lower.includes('foto') || actionType === 'photo' || actionType === 'gallery') {
-                         response = `Bela refeição! 🥗\nIdentifiquei: Frango, Arroz e Brócolis.\n\nEstimativa:\n• 450 kcal\n• 35g Proteína\n• 40g Carbo\n\nDeseja registrar? (Responda "sim")`;
-                    } else {
-                        response = `Entendi. Para te ajudar melhor, tente pedir uma sugestão de dieta, análise semanal ou registrar uma refeição. Estou aqui para facilitar sua rotina!`;
+                        response = `📊 Análise Semanal:\n\n• Refeições registradas: ${count}\n• Consistência: ${consistency}\n• Média Calórica: ~2100kcal\n\nVocê está no caminho certo! Mantenha o foco nas proteínas.`;
                     }
-                    
+                    else if (lower.includes('oi') || lower.includes('olá') || lower.includes('e aí') || lower.includes('bom dia') || lower.includes('boa tarde') || lower.includes('boa noite')) {
+                        const greetings = [
+                            `Olá, ${name}! Como está sua energia hoje?`,
+                            `Oi, ${name}. Pronto para bater suas metas?`,
+                            `Fala, ${name}! Em que posso ajudar na sua dieta agora?`
+                        ];
+                        response = greetings[Math.floor(Math.random() * greetings.length)];
+                    }
+                    else if (lower.includes('obrigado') || lower.includes('valeu') || lower.includes('tks')) {
+                        response = "Conte comigo. Vamos juntos nessa! 💪";
+                    }
+                    else if (lower.includes('fome') || lower.includes('faminto')) {
+                        response = "Se está com fome, priorize proteínas e fibras para maior saciedade. Que tal um iogurte com whey ou ovos agora?";
+                    }
+                    else if (lower.includes('cansado') || lower.includes('preguiça') || lower.includes('desanimo')) {
+                        response = "O descanso também faz parte do treino, mas não deixe a peteca cair. Se for treinar, tome um café preto e vá sem pensar. A motivação vem depois do primeiro exercício! ⚡";
+                    }
+                    else if (lower.includes('doce') || lower.includes('chocolate') || lower.includes('açucar')) {
+                        response = "Vontade de doce? Tente uma fruta com canela ou um quadradinho de chocolate 70%. O equilíbrio é a chave, não a restrição total.";
+                    }
+                    else if (lower.includes('pizza') || lower.includes('hamburguer') || lower.includes('lixo')) {
+                        response = "Uma refeição livre não estraga seu progresso, desde que seja a exceção. Aproveite com moderação e volte ao foco na próxima refeição!";
+                    }
+                    else if (lower.includes('agua') || lower.includes('água') || lower.includes('sede')) {
+                        response = "Hidratação é fundamental para o metabolismo e performance. Já bebeu seus 500ml de água nesta manhã?";
+                    }
+                    else if (lower.includes('treino') || lower.includes('academia') || lower.includes('musculação')) {
+                        response = "Treino é constância. Lembre-se de registrar seu pós-treino para garantir a recuperação muscular. O que vai treinar hoje?";
+                    }
+                    else if (lower.includes('objetivo') || lower.includes('meta')) {
+                        const goal = this.state.userProfile.goal === 'gain' ? 'ganhar massa' : 'perder gordura';
+                        response = `Seu objetivo atual é ${goal}. Mantenha o déficit calórico controlado e proteína alta. Estou aqui para monitorar isso com você.`;
+                    }
+                    else if (lower.includes('receita') || lower.includes('cozinhar')) {
+                        response = "Posso sugerir receitas rápidas e fit. O que você tem na geladeira? Frango, ovos, atum?";
+                    }
+                    else {
+                        const fallbacks = [
+                            "Entendi. O importante é manter a constância.",
+                            "Pode me dar mais detalhes sobre isso?",
+                            "Interessante. Como isso se encaixa na sua dieta hoje?",
+                            "Estou aqui para ajudar. Quer registrar alguma refeição?",
+                            "Foco no longo prazo. Um dia de cada vez.",
+                            "Lembre-se: você é o que você come (na maioria das vezes). 😉"
+                        ];
+                        response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+                    }
+
                     this.renderCoachMessage('assistant', response);
                     this.state.coach.messages.push({ role: 'assistant', text: response, date: new Date().toISOString() });
                     this.saveCoachState();
-                    
+
                 }, 1500);
             },
 
