@@ -909,6 +909,27 @@
                         Gravar Áudio
                     </button>
                 </div>
+
+                <!-- Global Activity Chart -->
+                <div class="mt-8 bg-black dark:bg-dark-elevated rounded-[2.5rem] p-6 text-white relative overflow-hidden">
+                    <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-brand-neon/10 rounded-full blur-3xl"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-black text-sm uppercase tracking-widest">Atividade do Grupo</h3>
+                            <span class="text-[10px] font-bold text-brand-neon">Últimas 24h</span>
+                        </div>
+                        <div class="flex items-end justify-between h-24 gap-2 px-1">
+                            <div class="flex-1 bg-white/10 rounded-t-lg h-[30%]"></div>
+                            <div class="flex-1 bg-white/10 rounded-t-lg h-[45%]"></div>
+                            <div class="flex-1 bg-white/10 rounded-t-lg h-[60%]"></div>
+                            <div class="flex-1 bg-brand-neon rounded-t-lg h-[95%] shadow-neon"></div>
+                            <div class="flex-1 bg-white/10 rounded-t-lg h-[40%]"></div>
+                            <div class="flex-1 bg-white/10 rounded-t-lg h-[25%]"></div>
+                            <div class="flex-1 bg-white/10 rounded-t-lg h-[55%]"></div>
+                        </div>
+                        <p class="text-[10px] text-white/40 font-bold uppercase text-center mt-4 tracking-tighter">O grupo está 12% mais ativo hoje!</p>
+                    </div>
+                </div>
             </div>
 
             <!-- STATS SCREEN -->
@@ -1536,7 +1557,7 @@
         </main>
 
         <!-- SCREEN: STREAK / SOCIAL -->
-        <main id="screen-streak" class="hidden flex-col h-full bg-ios-bg dark:bg-dark-bg pt-12 pb-24 px-6 overflow-y-auto">
+        <main id="screen-social" class="hidden flex-col h-full bg-ios-bg dark:bg-dark-bg pt-12 pb-24 px-6 overflow-y-auto">
             <div class="flex items-center justify-between mb-8">
                 <button onclick="app.navigate('dashboard')" class="w-10 h-10 rounded-full bg-white dark:bg-dark-card shadow-sm flex items-center justify-center border border-ios-separator/20">
                     <i data-lucide="chevron-left" class="w-6 h-6"></i>
@@ -1737,26 +1758,7 @@
                 <input type="file" id="coach-file-input" class="hidden" accept="image/*" onchange="app.handleCoachFileSelect(event)">
             </div>
 
-            <!-- Global Activity Chart -->
-            <div class="mt-8 bg-black dark:bg-dark-elevated rounded-[2.5rem] p-6 text-white relative overflow-hidden">
-                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-brand-neon/10 rounded-full blur-3xl"></div>
-                <div class="relative z-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-black text-sm uppercase tracking-widest">Atividade do Grupo</h3>
-                        <span class="text-[10px] font-bold text-brand-neon">Últimas 24h</span>
-                    </div>
-                    <div class="flex items-end justify-between h-24 gap-2 px-1">
-                        <div class="flex-1 bg-white/10 rounded-t-lg h-[30%]"></div>
-                        <div class="flex-1 bg-white/10 rounded-t-lg h-[45%]"></div>
-                        <div class="flex-1 bg-white/10 rounded-t-lg h-[60%]"></div>
-                        <div class="flex-1 bg-brand-neon rounded-t-lg h-[95%] shadow-neon"></div>
-                        <div class="flex-1 bg-white/10 rounded-t-lg h-[40%]"></div>
-                        <div class="flex-1 bg-white/10 rounded-t-lg h-[25%]"></div>
-                        <div class="flex-1 bg-white/10 rounded-t-lg h-[55%]"></div>
-                    </div>
-                    <p class="text-[10px] text-white/40 font-bold uppercase text-center mt-4 tracking-tighter">O grupo está 12% mais ativo hoje!</p>
-                </div>
-            </div>
+
         </main>
 
         <!-- BOTTOM NAVIGATION -->
