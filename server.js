@@ -256,6 +256,12 @@ app.post('/api/analyze-image', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// Exporta o app para Vercel (serverless)
+export default app;
+
+// Inicia servidor apenas se não estiver em ambiente serverless (Vercel)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Servidor rodando em http://localhost:${PORT}`);
+    });
+}
